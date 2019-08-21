@@ -1,20 +1,18 @@
 //
-//  ViewController.swift
+//  SettingsViewController.swift
 //  MaybeYesMaybeNo
 //
-//  Created by Nugumanov Dmitriy on 8/21/19.
+//  Created by Nugumanov Dmitriy on 8/22/19.
 //  Copyright © 2019 Nugumanov Dmitriy. All rights reserved.
 //
 
+import Foundation
 import UIKit
 
-class ViewController: UIViewController {
-
+class SettingsViewController: BaseViewController {
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
     }
-
-
+    
 }
-

@@ -18,3 +18,7 @@ enum Link {
     static let url = "https://8ball.delegator.com/magic/JSON/"
     static let question = "question"
 }
+
+enum Screen {
+    static let settingsView = "SettingsView"
+}
