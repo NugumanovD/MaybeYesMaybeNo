@@ -33,6 +33,12 @@ class DataBaseManager {
             realm.add(answersList)
         }
     }
+    
+    static func delete(item: DefaultAnswersList, in realm: Realm = try! Realm()) {
+        try! realm.write {
+            realm.delete(item)
+        }
+    }
 
 
 }

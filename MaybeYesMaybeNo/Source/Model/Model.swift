@@ -13,5 +13,5 @@ struct Answer: Codable {
 }
 
 struct Magic: Codable {
-    var question, answer, type: String
+    var answer, type: String
 }

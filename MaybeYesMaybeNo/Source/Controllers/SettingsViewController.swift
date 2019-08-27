@@ -32,33 +32,7 @@ class SettingsViewController: BaseViewController {
     }
     
     @objc func addAnswer() {
-        addAlertForNewAnswer()
-    }
-    
-    
-    func addAlertForNewAnswer() {
-        
-        let alertController = UIAlertController(title: "New Answer", message: "Please fill in the field", preferredStyle: .alert)
-        
-        var alertTextField: UITextField!
-        alertController.addTextField { textField in
-            alertTextField = textField
-            textField.placeholder = "New Answer"
-        }
-        
-        let saveAction = UIAlertAction(title: "Save", style: .default) { action in
-            guard let text = alertTextField.text , !text.isEmpty else { return }
-            
-            DataBaseManager.add(text: text, in: self.realm)
-            self.tableView.reloadData()
-        }
-        
-        let cancelAction = UIAlertAction(title: "Отмена", style: .destructive, handler: nil)
-        
-        alertController.addAction(saveAction)
-        alertController.addAction(cancelAction)
-        
-        present(alertController, animated: true, completion: nil)
+        addAlertForNewAnswer(with: tableView)
     }
     
 }
@@ -81,7 +55,6 @@ extension SettingsViewController: UITableViewDataSource {
         return cell
     }
     
-    
 }
 
 extension SettingsViewController: UITableViewDelegate {
@@ -89,11 +62,9 @@ extension SettingsViewController: UITableViewDelegate {
         
         let editingRow = items[indexPath.row]
         
-        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { _,_ in
-            try! self.realm.write {
-                self.realm.delete(editingRow)
-                tableView.reloadData()
-            }
+        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { _, _ in
+            DataBaseManager.delete(item: editingRow, in: self.realm)
+            tableView.reloadData()
         }
         return [deleteAction]
     }
