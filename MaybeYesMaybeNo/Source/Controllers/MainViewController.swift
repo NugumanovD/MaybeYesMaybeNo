@@ -7,18 +7,29 @@
 //
 
 import UIKit
+import RealmSwift
 
 class MainViewController: BaseViewController {
     
     private let requestManager = NetworkManager()
+    let realm = try! Realm()
+    var items: Results<DefaultAnswersList>!
+    
+    var defaultAsnwer: String! {
+        didSet {
+            if let answer = DataBaseManager.all(in: realm).first {
+                defaultAsnwer = answer.answerDefault
+            }
+        }
+    }
     
     @IBOutlet private var answerLabel: UILabel!
     @IBOutlet private var settingsButton: UIButton!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSettingsButton()
+        items = DataBaseManager.all(in: realm)
     }
     
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -36,7 +47,8 @@ class MainViewController: BaseViewController {
             if let error = error {
                 print(error.localizedDescription)
                 DispatchQueue.main.async {
-                    self?.answerLabel.text = "Lol!"
+                   self?.items = DataBaseManager.all(in: self!.realm)
+                   self?.answerLabel.text = self?.items.first?.answerDefault
                 }
                 return
             }
