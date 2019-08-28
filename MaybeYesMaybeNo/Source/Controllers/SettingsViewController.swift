@@ -23,8 +23,8 @@ class SettingsViewController: BaseViewController {
         items = realm.objects(DefaultAnswersList.self)
     }
     
-    func cofigureNavigationBar() {
-        tableView.backgroundColor = .white
+    private func cofigureNavigationBar() {
+        tableView.backgroundColor = .black
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add",
                                                             style: .plain,
                                                             target: self,
@@ -48,9 +48,10 @@ extension SettingsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath)
-        
+        cell.backgroundColor = .clear
         let item = items[indexPath.row]
         cell.textLabel?.text = item.answerDefault
+        cell.textLabel?.textColor = UIColor.white
         
         return cell
     }
@@ -58,6 +59,7 @@ extension SettingsViewController: UITableViewDataSource {
 }
 
 extension SettingsViewController: UITableViewDelegate {
+    
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
         
         let editingRow = items[indexPath.row]

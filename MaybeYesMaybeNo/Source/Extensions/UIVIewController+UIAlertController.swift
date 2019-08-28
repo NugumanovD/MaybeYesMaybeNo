@@ -18,6 +18,7 @@ extension UIViewController {
         alertController.addTextField { textField in
             alertTextField = textField
             textField.placeholder = "New Answer"
+            textField.autocorrectionType = .yes
         }
         
         let saveAction = UIAlertAction(title: "Save", style: .default) { action in

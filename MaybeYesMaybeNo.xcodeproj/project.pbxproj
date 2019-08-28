@@ -21,6 +21,7 @@
 		7BCC61F8231508E5008BE745 /* DefaultAnswerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC61F7231508E5008BE745 /* DefaultAnswerModel.swift */; };
 		7BCC61FA23151B49008BE745 /* DataBaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC61F923151B49008BE745 /* DataBaseManager.swift */; };
 		7BCC61FC23152DC4008BE745 /* UIVIewController+UIAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC61FB23152DC4008BE745 /* UIVIewController+UIAlertController.swift */; };
+		7BCC61FF2316562E008BE745 /* UINavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCC61FE2316562E008BE745 /* UINavigationController.swift */; };
 		DBD9D32A227D12B8191EC1DC /* Pods_MaybeYesMaybeNo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A575923B28DD48ABCABFAC /* Pods_MaybeYesMaybeNo.framework */; };
 /* End PBXBuildFile section */
 
@@ -43,6 +44,7 @@
 		7BCC61F7231508E5008BE745 /* DefaultAnswerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultAnswerModel.swift; sourceTree = "<group>"; };
 		7BCC61F923151B49008BE745 /* DataBaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBaseManager.swift; sourceTree = "<group>"; };
 		7BCC61FB23152DC4008BE745 /* UIVIewController+UIAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIVIewController+UIAlertController.swift"; sourceTree = "<group>"; };
+		7BCC61FE2316562E008BE745 /* UINavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UINavigationController.swift; sourceTree = "<group>"; };
 		99A575923B28DD48ABCABFAC /* Pods_MaybeYesMaybeNo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MaybeYesMaybeNo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -167,6 +169,7 @@
 			isa = PBXGroup;
 			children = (
 				7BCC61FB23152DC4008BE745 /* UIVIewController+UIAlertController.swift */,
+				7BCC61FE2316562E008BE745 /* UINavigationController.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -303,6 +306,7 @@
 				7BC56B53230DD664008F13A7 /* AppDelegate.swift in Sources */,
 				7BC56B7B230DFF1B008F13A7 /* BaseViewController.swift in Sources */,
 				7BC56B74230DE4F8008F13A7 /* Common.swift in Sources */,
+				7BCC61FF2316562E008BE745 /* UINavigationController.swift in Sources */,
 				7BCC61FC23152DC4008BE745 /* UIVIewController+UIAlertController.swift in Sources */,
 				7BC56B5B230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld in Sources */,
 			);

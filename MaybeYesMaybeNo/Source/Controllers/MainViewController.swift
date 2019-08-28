@@ -34,7 +34,7 @@ class MainViewController: BaseViewController {
     
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            cofigureAnswer()
+            getAnswer()
         }
     }
     
@@ -42,13 +42,12 @@ class MainViewController: BaseViewController {
         navigationController?.pushViewController(transitionToController(with: Screen.settingsView), animated: true) 
     }
     
-    func cofigureAnswer() {
+    private func getAnswer() {
         requestManager.fetchAnswer { [weak self] (result, error) in
             if let error = error {
                 print(error.localizedDescription)
                 DispatchQueue.main.async {
-                   self?.items = DataBaseManager.all(in: self!.realm)
-                   self?.answerLabel.text = self?.items.first?.answerDefault
+                   self?.answerLabel.text = self?.items.randomElement()?.answerDefault
                 }
                 return
             }
@@ -60,7 +59,7 @@ class MainViewController: BaseViewController {
         }
     }
     
-    func configureSettingsButton() {
+    private func configureSettingsButton() {
         settingsButton.clipsToBounds = true
         settingsButton.layer.cornerRadius = settingsButton.bounds.size.width / 2
         settingsButton.backgroundColor = .clear
