@@ -13,14 +13,15 @@ import RealmSwift
 class SettingsViewController: BaseViewController {
     
     let realm = try! Realm()
-    var items: Results<DefaultAnswersList>!
+    var items: Results<DefaultAnswersModel>!
+    private let dataBase = DataBaseManager()
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         cofigureNavigationBar()
-        items = realm.objects(DefaultAnswersList.self)
+        items = realm.objects(DefaultAnswersModel.self)
     }
     
     private func cofigureNavigationBar() {
@@ -32,7 +33,7 @@ class SettingsViewController: BaseViewController {
     }
     
     @objc func addAnswer() {
-        addAlertForNewAnswer(with: tableView)
+        addAlertForNewAnswer(with: tableView, storage: dataBase)
     }
     
 }
@@ -40,10 +41,8 @@ class SettingsViewController: BaseViewController {
 extension SettingsViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if items.count != 0 {
-            return items.count
-        }
-        return 0
+        
+        return items.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -65,7 +64,7 @@ extension SettingsViewController: UITableViewDelegate {
         let editingRow = items[indexPath.row]
         
         let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { _, _ in
-            DataBaseManager.delete(item: editingRow, in: self.realm)
+            self.dataBase.delete(item: editingRow, in: self.realm)
             tableView.reloadData()
         }
         return [deleteAction]

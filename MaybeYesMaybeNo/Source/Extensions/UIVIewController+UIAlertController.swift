@@ -10,7 +10,7 @@ import UIKit
 
 extension UIViewController {
     
-    func addAlertForNewAnswer(with: UITableView? = nil) {
+    func addAlertForNewAnswer(with: UITableView? = nil, storage: DataBaseManager) {
         
         let alertController = UIAlertController(title: "New Answer", message: "Please fill in the field", preferredStyle: .alert)
         
@@ -24,7 +24,7 @@ extension UIViewController {
         let saveAction = UIAlertAction(title: "Save", style: .default) { action in
             guard let text = alertTextField.text , !text.isEmpty else { return }
             
-            DataBaseManager.add(text: text)
+            storage.add(text: text)
             with?.reloadData()
         }
         

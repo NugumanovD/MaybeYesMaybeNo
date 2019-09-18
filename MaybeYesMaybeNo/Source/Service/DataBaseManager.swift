@@ -13,20 +13,12 @@ class DataBaseManager {
     
     let realm = try! Realm()
     
-    private init() {}
-    
-    static func shared() -> DataBaseManager {
-        return DataBaseManager()
+    func all(in realm: Realm = try! Realm()) -> Results<DefaultAnswersModel> {
+        return realm.objects(DefaultAnswersModel.self)
     }
     
-    static func all(in realm: Realm = try! Realm()) -> Results<DefaultAnswersList> {
-        return realm.objects(DefaultAnswersList.self)
-        
-    }
-    
-    static func add(text: String, in realm: Realm = try! Realm()) {
-        
-        let answersList = DefaultAnswersList()
+    func add(text: String, in realm: Realm = try! Realm()) {
+        let answersList = DefaultAnswersModel()
         answersList.answerDefault = text
         
         try! realm.write {
@@ -34,11 +26,9 @@ class DataBaseManager {
         }
     }
     
-    static func delete(item: DefaultAnswersList, in realm: Realm = try! Realm()) {
+    func delete(item: DefaultAnswersModel, in realm: Realm = try! Realm()) {
         try! realm.write {
             realm.delete(item)
         }
     }
-
-
 }
