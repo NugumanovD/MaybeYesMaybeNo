@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7B55155C23395AEE00F47437 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B55155B23395AEE00F47437 /* UIColor.swift */; };
 		7BC56B53230DD664008F13A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B52230DD664008F13A7 /* AppDelegate.swift */; };
 		7BC56B55230DD664008F13A7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B54230DD664008F13A7 /* MainViewController.swift */; };
 		7BC56B58230DD664008F13A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7BC56B56230DD664008F13A7 /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 /* Begin PBXFileReference section */
 		2EF541D99880B8DC1B1B7C9A /* Pods-MaybeYesMaybeNo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaybeYesMaybeNo.debug.xcconfig"; path = "Target Support Files/Pods-MaybeYesMaybeNo/Pods-MaybeYesMaybeNo.debug.xcconfig"; sourceTree = "<group>"; };
 		33AB7FEBCD23D02B9390207A /* Pods-MaybeYesMaybeNo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaybeYesMaybeNo.release.xcconfig"; path = "Target Support Files/Pods-MaybeYesMaybeNo/Pods-MaybeYesMaybeNo.release.xcconfig"; sourceTree = "<group>"; };
+		7B55155B23395AEE00F47437 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		7BC56B4F230DD664008F13A7 /* MaybeYesMaybeNo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaybeYesMaybeNo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BC56B52230DD664008F13A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7BC56B54230DD664008F13A7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
@@ -170,6 +172,7 @@
 			children = (
 				7BCC61FB23152DC4008BE745 /* UIVIewController+UIAlertController.swift */,
 				7BCC61FE2316562E008BE745 /* UINavigationController.swift */,
+				7B55155B23395AEE00F47437 /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -194,6 +197,7 @@
 				7BC56B4C230DD664008F13A7 /* Frameworks */,
 				7BC56B4D230DD664008F13A7 /* Resources */,
 				D8BEC18BF0FCB356D9FCB763 /* [CP] Embed Pods Frameworks */,
+				7B55155A23394E3000F47437 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -273,6 +277,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		7B55155A23394E3000F47437 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+		};
 		D8BEC18BF0FCB356D9FCB763 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -306,6 +327,7 @@
 				7BC56B53230DD664008F13A7 /* AppDelegate.swift in Sources */,
 				7BC56B7B230DFF1B008F13A7 /* BaseViewController.swift in Sources */,
 				7BC56B74230DE4F8008F13A7 /* Common.swift in Sources */,
+				7B55155C23395AEE00F47437 /* UIColor.swift in Sources */,
 				7BCC61FF2316562E008BE745 /* UINavigationController.swift in Sources */,
 				7BCC61FC23152DC4008BE745 /* UIVIewController+UIAlertController.swift in Sources */,
 				7BC56B5B230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld in Sources */,

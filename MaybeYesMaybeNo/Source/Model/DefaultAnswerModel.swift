@@ -10,6 +10,6 @@ import Foundation
 import RealmSwift
 
 class DefaultAnswersModel: Object {
-    
+
     @objc dynamic var answerDefault = ""
 }

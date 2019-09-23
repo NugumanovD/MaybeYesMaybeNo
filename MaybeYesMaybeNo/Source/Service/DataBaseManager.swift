@@ -10,24 +10,20 @@ import Foundation
 import RealmSwift
 
 class DataBaseManager {
-    
-    let realm = try! Realm()
-    
-    func all(in realm: Realm = try! Realm()) -> Results<DefaultAnswersModel> {
+    func all(in realm: Realm) -> Results<DefaultAnswersModel> {
         return realm.objects(DefaultAnswersModel.self)
     }
-    
     func add(text: String, in realm: Realm = try! Realm()) {
         let answersList = DefaultAnswersModel()
         answersList.answerDefault = text
-        
-        try! realm.write {
+
+        try? realm.write {
             realm.add(answersList)
         }
     }
-    
-    func delete(item: DefaultAnswersModel, in realm: Realm = try! Realm()) {
-        try! realm.write {
+
+    func delete(item: DefaultAnswersModel, in realm: Realm) {
+        try? realm.write {
             realm.delete(item)
         }
     }

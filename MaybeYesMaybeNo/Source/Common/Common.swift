@@ -23,7 +23,6 @@ enum Screen {
     static let settingsView = "SettingsView"
 }
 
-
 enum Cell {
     static let identifier = "Cell"
 }

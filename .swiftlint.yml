@@ -1,0 +1,33 @@
+disabled_rules:
+- colon
+- comma
+- control_statement
+opt_in_rules:
+  - empty_count
+  - private_outlet
+file_length:
+warning: 500
+error: 1200
+line_length: 150
+type_body_length:
+  - 300 # warning
+  - 400 # error
+# or they can set both explicitly
+force_cast: warning # implicitly
+force_try:
+  severity: warning # explicitly
+excluded:
+  - Pods/
+  - Source/ExcludedFolder
+  - Source/ExcludedFile.swift
+  - Carthage/
+  - Frameworks/
+  - MaybeYesMaybeNo-bugfix-review-iOS.playground/
+  - MaybeYesMaybeNo-bugfix-review-tvOS.playground/
+  - Library/Strings.swift
+  - bin/strings.swift
+reporter: "xcode"
+
+
+
+
