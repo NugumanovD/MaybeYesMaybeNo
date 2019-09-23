@@ -1,0 +1,42 @@
+/* 
+  Localizable.strings
+  MaybeYesMaybeNo
+
+  Created by Nugumanov Dmitriy on 9/24/19.
+  Copyright © 2019 Nugumanov Dmitriy. All rights reserved.
+*/
+
+//Cell
+"cell.identifier" = "Cell";
+
+"screen.settingsView" = "SettingsView";
+
+//URL
+"link.url" = "https://8ball.delegator.com/magic/JSON/";
+"link.path" = "question";
+
+//Storyboard
+"storyboard.main" = "Main";
+
+//Assets
+"image.settingsButton" = "settings";
+
+//BarButtonItem
+"barButtonItem.add" = "Add";
+
+"deleteRowAction" = "Delete";
+
+//Model
+"defaultAnswer.type" = "";
+
+//ApllicationBundle
+"application.bundle.name" = "MaybeYesMaybeNo";
+
+//AlertController
+
+"alertController.title" = "New Answer";
+"alertController.message" = "Please fill in the field";
+"alertController.textField.placeholder" = "New Answer";
+"alertController.action.save" = "Save";
+"alertController.action.cancel" = "Cancel";
+

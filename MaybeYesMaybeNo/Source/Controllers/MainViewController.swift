@@ -60,7 +60,7 @@ class MainViewController: BaseViewController {
     private func configureSettingsButton() {
         settingsButton.clipsToBounds = true
         settingsButton.layer.cornerRadius = settingsButton.bounds.size.width / 2
-        let image = UIImage(named: "settings")
+        let image = UIImage(named: L10n.Image.settingsButton)
         let tintedImage = image?.withRenderingMode(.alwaysTemplate)
         settingsButton.setImage(tintedImage, for: .normal)
 

@@ -11,5 +11,5 @@ import RealmSwift
 
 class DefaultAnswersModel: Object {
 
-    @objc dynamic var answerDefault = ""
+    @objc dynamic var answerDefault = L10n.DefaultAnswer.type
 }

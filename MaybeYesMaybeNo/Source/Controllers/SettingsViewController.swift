@@ -26,7 +26,7 @@ class SettingsViewController: BaseViewController {
 
     private func cofigureNavigationBar() {
         tableView.backgroundColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Add",
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: L10n.BarButtonItem.add,
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(addAnswer))
@@ -35,7 +35,6 @@ class SettingsViewController: BaseViewController {
     @objc func addAnswer() {
         addAlertForNewAnswer(with: tableView, storage: dataBase)
     }
-
 }
 
 extension SettingsViewController: UITableViewDataSource {
@@ -54,7 +53,6 @@ extension SettingsViewController: UITableViewDataSource {
 
         return cell
     }
-
 }
 
 extension SettingsViewController: UITableViewDelegate {
@@ -63,7 +61,7 @@ extension SettingsViewController: UITableViewDelegate {
 
         let editingRow = items[indexPath.row]
 
-        let deleteAction = UITableViewRowAction(style: .default, title: "Delete") { _, _ in
+        let deleteAction = UITableViewRowAction(style: .default, title: L10n.deleteRowAction) { _, _ in
             self.dataBase.delete(item: editingRow, in: self.realm)
             tableView.reloadData()
         }

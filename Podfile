@@ -9,5 +9,6 @@ target 'MaybeYesMaybeNo' do
   
   pod 'RealmSwift'
   pod 'SwiftLint'	
+  pod 'SwiftGen'
 
 end

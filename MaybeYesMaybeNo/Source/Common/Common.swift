@@ -15,14 +15,14 @@ enum Error: Swift.Error {
 }
 
 enum Link {
-    static let url = "https://8ball.delegator.com/magic/JSON/"
-    static let question = "question"
+    static let url = L10n.Link.url
+    static let question = L10n.Link.path
 }
 
 enum Screen {
-    static let settingsView = "SettingsView"
+    static let settingsView = L10n.Screen.settingsView
 }
 
 enum Cell {
-    static let identifier = "Cell"
+    static let identifier = L10n.Cell.identifier
 }

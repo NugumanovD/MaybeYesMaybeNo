@@ -4,10 +4,12 @@ PODS:
   - Realm/Headers (3.17.3)
   - RealmSwift (3.17.3):
     - Realm (= 3.17.3)
+  - SwiftGen (6.1.0)
   - SwiftLint (0.35.0)
 
 DEPENDENCIES:
   - RealmSwift
+  - SwiftGen
   - SwiftLint
 
 SPEC REPOS:
@@ -15,13 +17,15 @@ SPEC REPOS:
     - Realm
     - RealmSwift
   trunk:
+    - SwiftGen
     - SwiftLint
 
 SPEC CHECKSUMS:
   Realm: 5a1d9d47bfc101dd597668b1a8af4288a2557f6d
   RealmSwift: b7fdc2d18616621c31df5c7a398a45a2163f8eb0
+  SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   SwiftLint: 5553187048b900c91aa03552807681bb6b027846
 
-PODFILE CHECKSUM: c173cb6a667364bcba03653b41403ee012505920
+PODFILE CHECKSUM: 15d07506218132adf3bbee845384ac775bf11789
 
 COCOAPODS: 1.8.0.beta.2
