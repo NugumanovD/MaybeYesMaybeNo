@@ -60,8 +60,7 @@ extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
 
         let editingRow = items[indexPath.row]
-
-        let deleteAction = UITableViewRowAction(style: .default, title: L10n.deleteRowAction) { _, _ in
+        let deleteAction = UITableViewRowAction(style: .default, title: L10n.RowAction.delete) { _, _ in
             self.dataBase.delete(item: editingRow, in: self.realm)
             tableView.reloadData()
         }

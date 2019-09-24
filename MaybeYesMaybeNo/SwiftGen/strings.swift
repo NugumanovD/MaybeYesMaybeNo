@@ -11,8 +11,11 @@ import Foundation
 // swiftlint:disable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:disable nesting type_body_length type_name
 internal enum L10n {
-  /// Delete
-  internal static let deleteRowAction = L10n.tr("Localizable", "deleteRowAction")
+
+  internal enum RowAction {
+    /// Delete
+    internal static let delete = L10n.tr("Localizable", "RowAction.delete")
+  }
 
   internal enum AlertController {
     /// Please fill in the field

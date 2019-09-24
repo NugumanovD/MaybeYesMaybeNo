@@ -24,7 +24,7 @@
 //BarButtonItem
 "barButtonItem.add" = "Add";
 
-"deleteRowAction" = "Delete";
+"RowAction.delete" = "Delete";
 
 //Model
 "defaultAnswer.type" = "";
@@ -33,7 +33,6 @@
 "application.bundle.name" = "MaybeYesMaybeNo";
 
 //AlertController
-
 "alertController.title" = "New Answer";
 "alertController.message" = "Please fill in the field";
 "alertController.textField.placeholder" = "New Answer";
