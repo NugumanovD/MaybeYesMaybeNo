@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		7B55155C23395AEE00F47437 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B55155B23395AEE00F47437 /* UIColor.swift */; };
 		7B55156523397ACA00F47437 /* assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B55156323397ACA00F47437 /* assets.swift */; };
 		7B55156623397ACA00F47437 /* strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B55156423397ACA00F47437 /* strings.swift */; };
 		7B55156923397B6000F47437 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B55156723397B6000F47437 /* Localizable.strings */; };
@@ -33,7 +32,6 @@
 /* Begin PBXFileReference section */
 		2EF541D99880B8DC1B1B7C9A /* Pods-MaybeYesMaybeNo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaybeYesMaybeNo.debug.xcconfig"; path = "Target Support Files/Pods-MaybeYesMaybeNo/Pods-MaybeYesMaybeNo.debug.xcconfig"; sourceTree = "<group>"; };
 		33AB7FEBCD23D02B9390207A /* Pods-MaybeYesMaybeNo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MaybeYesMaybeNo.release.xcconfig"; path = "Target Support Files/Pods-MaybeYesMaybeNo/Pods-MaybeYesMaybeNo.release.xcconfig"; sourceTree = "<group>"; };
-		7B55155B23395AEE00F47437 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		7B55156323397ACA00F47437 /* assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = assets.swift; sourceTree = "<group>"; };
 		7B55156423397ACA00F47437 /* strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = strings.swift; sourceTree = "<group>"; };
 		7B55156823397B6000F47437 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -192,7 +190,6 @@
 			children = (
 				7BCC61FB23152DC4008BE745 /* UIVIewController+UIAlertController.swift */,
 				7BCC61FE2316562E008BE745 /* UINavigationController.swift */,
-				7B55155B23395AEE00F47437 /* UIColor.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -370,7 +367,6 @@
 				7B55156623397ACA00F47437 /* strings.swift in Sources */,
 				7BC56B7B230DFF1B008F13A7 /* BaseViewController.swift in Sources */,
 				7BC56B74230DE4F8008F13A7 /* Common.swift in Sources */,
-				7B55155C23395AEE00F47437 /* UIColor.swift in Sources */,
 				7BCC61FF2316562E008BE745 /* UINavigationController.swift in Sources */,
 				7BCC61FC23152DC4008BE745 /* UIVIewController+UIAlertController.swift in Sources */,
 				7BC56B5B230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld in Sources */,

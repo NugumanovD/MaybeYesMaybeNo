@@ -13,6 +13,7 @@ class DataBaseManager {
     func all(in realm: Realm) -> Results<DefaultAnswersModel> {
         return realm.objects(DefaultAnswersModel.self)
     }
+    // swiftlint:disable:next force_try
     func add(text: String, in realm: Realm = try! Realm()) {
         let answersList = DefaultAnswersModel()
         answersList.answerDefault = text

@@ -42,40 +42,15 @@ internal enum L10n {
   }
 
   internal enum BarButtonItem {
-    /// Add
-    internal static let add = L10n.tr("Localizable", "barButtonItem.add")
-  }
-
-  internal enum Cell {
-    /// Cell
-    internal static let identifier = L10n.tr("Localizable", "cell.identifier")
+    internal enum Title {
+      /// Add
+      internal static let add = L10n.tr("Localizable", "barButtonItem.title.add")
+    }
   }
 
   internal enum DefaultAnswer {
     /// 
     internal static let type = L10n.tr("Localizable", "defaultAnswer.type")
-  }
-
-  internal enum Image {
-    /// settings
-    internal static let settingsButton = L10n.tr("Localizable", "image.settingsButton")
-  }
-
-  internal enum Link {
-    /// question
-    internal static let path = L10n.tr("Localizable", "link.path")
-    /// https://8ball.delegator.com/magic/JSON/
-    internal static let url = L10n.tr("Localizable", "link.url")
-  }
-
-  internal enum Screen {
-    /// SettingsView
-    internal static let settingsView = L10n.tr("Localizable", "screen.settingsView")
-  }
-
-  internal enum Storyboard {
-    /// Main
-    internal static let main = L10n.tr("Localizable", "storyboard.main")
   }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length

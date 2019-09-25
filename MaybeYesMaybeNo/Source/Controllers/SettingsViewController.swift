@@ -11,7 +11,7 @@ import UIKit
 import RealmSwift
 
 class SettingsViewController: BaseViewController {
-
+    // swiftlint:disable:next force_try
     let realm = try! Realm()
     var items: Results<DefaultAnswersModel>!
     private let dataBase = DataBaseManager()
@@ -26,7 +26,7 @@ class SettingsViewController: BaseViewController {
 
     private func cofigureNavigationBar() {
         tableView.backgroundColor = .black
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: L10n.BarButtonItem.add,
+        navigationItem.rightBarButtonItem = UIBarButtonItem(title: L10n.BarButtonItem.Title.add,
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(addAnswer))

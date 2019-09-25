@@ -12,6 +12,7 @@ import RealmSwift
 class MainViewController: BaseViewController {
 
     private let requestManager = NetworkManager()
+    // swiftlint:disable:next force_try
     private let realm = try! Realm()
     private var items: Results<DefaultAnswersModel>!
     private let dataBase = DataBaseManager()
@@ -60,7 +61,7 @@ class MainViewController: BaseViewController {
     private func configureSettingsButton() {
         settingsButton.clipsToBounds = true
         settingsButton.layer.cornerRadius = settingsButton.bounds.size.width / 2
-        let image = UIImage(named: L10n.Image.settingsButton)
+        let image = UIImage(named: Asset.settings.name)
         let tintedImage = image?.withRenderingMode(.alwaysTemplate)
         settingsButton.setImage(tintedImage, for: .normal)
 

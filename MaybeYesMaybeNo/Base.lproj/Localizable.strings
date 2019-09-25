@@ -6,23 +6,8 @@
   Copyright © 2019 Nugumanov Dmitriy. All rights reserved.
 */
 
-//Cell
-"cell.identifier" = "Cell";
-
-"screen.settingsView" = "SettingsView";
-
-//URL
-"link.url" = "https://8ball.delegator.com/magic/JSON/";
-"link.path" = "question";
-
-//Storyboard
-"storyboard.main" = "Main";
-
-//Assets
-"image.settingsButton" = "settings";
-
 //BarButtonItem
-"barButtonItem.add" = "Add";
+"barButtonItem.title.add" = "Add";
 
 "RowAction.delete" = "Delete";
 
