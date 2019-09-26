@@ -1,0 +1,26 @@
+/* 
+  Localizable.strings
+  MaybeYesMaybeNo
+
+  Created by Nugumanov Dmitriy on 9/24/19.
+  Copyright © 2019 Nugumanov Dmitriy. All rights reserved.
+*/
+
+//BarButtonItem
+"barButtonItem.title.add" = "Add";
+
+"RowAction.delete" = "Delete";
+
+//Model
+"defaultAnswer.type" = "";
+
+//ApllicationBundle
+"application.bundle.name" = "MaybeYesMaybeNo";
+
+//AlertController
+"alertController.title" = "New Answer";
+"alertController.message" = "Please fill in the field";
+"alertController.textField.placeholder" = "New Answer";
+"alertController.action.save" = "Save";
+"alertController.action.cancel" = "Cancel";
+

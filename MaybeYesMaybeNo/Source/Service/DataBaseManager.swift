@@ -10,35 +10,22 @@ import Foundation
 import RealmSwift
 
 class DataBaseManager {
-    
-    let realm = try! Realm()
-    
-    private init() {}
-    
-    static func shared() -> DataBaseManager {
-        return DataBaseManager()
+    func all(in realm: Realm) -> Results<DefaultAnswersModel> {
+        return realm.objects(DefaultAnswersModel.self)
     }
-    
-    static func all(in realm: Realm = try! Realm()) -> Results<DefaultAnswersList> {
-        return realm.objects(DefaultAnswersList.self)
-        
-    }
-    
-    static func add(text: String, in realm: Realm = try! Realm()) {
-        
-        let answersList = DefaultAnswersList()
+    // swiftlint:disable:next force_try
+    func add(text: String, in realm: Realm = try! Realm()) {
+        let answersList = DefaultAnswersModel()
         answersList.answerDefault = text
-        
-        try! realm.write {
+
+        try? realm.write {
             realm.add(answersList)
         }
     }
-    
-    static func delete(item: DefaultAnswersList, in realm: Realm = try! Realm()) {
-        try! realm.write {
+
+    func delete(item: DefaultAnswersModel, in realm: Realm) {
+        try? realm.write {
             realm.delete(item)
         }
     }
-
-
 }

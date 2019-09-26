@@ -7,6 +7,8 @@ target 'MaybeYesMaybeNo' do
 
   # Pods for MaybeYesMaybeNo
   
-  pod 'RealmSwift'	
+  pod 'RealmSwift', '~> 3.17.3'
+  pod 'SwiftLint','~> 0.35.0'
+  pod 'SwiftGen', '~> 6.1'
 
 end

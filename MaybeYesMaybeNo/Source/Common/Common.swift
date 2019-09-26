@@ -23,6 +23,9 @@ enum Screen {
     static let settingsView = "SettingsView"
 }
 
+enum Storyboard {
+    static let main = "Main"
+}
 
 enum Cell {
     static let identifier = "Cell"

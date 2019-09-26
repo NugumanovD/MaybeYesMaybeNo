@@ -1,0 +1,15 @@
+excluded:
+  - Pods/
+  - Source/ExcludedFolder
+  - Source/ExcludedFile.swift
+  - Carthage/
+  - Frameworks/
+  - MaybeYesMaybeNo-bugfix-review-iOS.playground/
+  - MaybeYesMaybeNo-bugfix-review-tvOS.playground/
+  - Library/Strings.swift
+  - bin/strings.swift
+reporter: "xcode"
+
+
+
+

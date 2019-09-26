@@ -9,7 +9,7 @@
 import Foundation
 import RealmSwift
 
-class DefaultAnswersList: Object {
-    
-    @objc dynamic var answerDefault = ""
+class DefaultAnswersModel: Object {
+
+    @objc dynamic var answerDefault = L10n.DefaultAnswer.type
 }
