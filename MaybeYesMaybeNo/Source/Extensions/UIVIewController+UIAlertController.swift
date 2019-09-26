@@ -12,7 +12,9 @@ extension UIViewController {
 
     func addAlertForNewAnswer(with: UITableView? = nil, storage: DataBaseManager) {
 
-        let alertController = UIAlertController(title: L10n.AlertController.title, message:L10n.AlertController.message, preferredStyle: .alert)
+        let alertController = UIAlertController(title: L10n.AlertController.title,
+                                                message: L10n.AlertController.message,
+                                                preferredStyle: .alert)
 
         var alertTextField: UITextField!
         alertController.addTextField { textField in

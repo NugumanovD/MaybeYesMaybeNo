@@ -17,7 +17,8 @@ class BaseViewController: UIViewController {
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.view.backgroundColor = .clear
         self.navigationController?.navigationBar.isTranslucent = true
-        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.systemBlue]
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -29,7 +30,7 @@ class BaseViewController: UIViewController {
     }
 
     func transitionToController(with identifier: String) -> UIViewController {
-        let storyboard: UIStoryboard = UIStoryboard.init(name: Storyboard.main, bundle: nil)
+        let storyboard = UIStoryboard(name: Storyboard.main, bundle: nil)
         let secondViewController = storyboard.instantiateViewController(withIdentifier: identifier)
         return secondViewController
     }
