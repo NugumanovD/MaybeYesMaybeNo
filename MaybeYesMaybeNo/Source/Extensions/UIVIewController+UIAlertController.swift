@@ -8,9 +8,9 @@
 
 import UIKit
 
-extension UIViewController {
+extension SettingsViewController {
 
-    func addAlertForNewAnswer(with: UITableView? = nil, storage: DataBaseManager) {
+    func addAlertForNewAnswer(with: UITableView? = nil) {
 
         let alertController = UIAlertController(title: L10n.AlertController.title,
                                                 message: L10n.AlertController.message,
@@ -23,10 +23,9 @@ extension UIViewController {
             textField.autocorrectionType = .yes
         }
 
-        let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { _ in
+        let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { [weak self] _ in
             guard let text = alertTextField.text, !text.isEmpty else { return }
-
-            storage.add(text: text)
+            self?.viewModel.addItem(with: text)
             with?.reloadData()
         }
 

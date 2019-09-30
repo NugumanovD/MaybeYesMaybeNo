@@ -18,24 +18,35 @@ class MainViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureSettingsButton()
     }
 
     func attach(viewModel: MainViewModel) {
         self.mainViewModel = viewModel
     }
 
-    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if motion == .motionShake {
-            mainViewModel?.getAnswer(completion: { (answer) in
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        switch motion {
+        case .motionShake:
+            mainViewModel?.getAnswer(completion: { [weak self] (answer) in
                 DispatchQueue.main.async {
-                    self.answerLabel.text = answer
+                    self?.answerLabel.text = answer
                 }
             })
+        default:
+            break
         }
     }
 
     @IBAction private func presentSettingsScreen(_ sender: UIButton) {
-        navigationController?.pushViewController(transitionToController(with: Screen.settingsView), animated: true)
+        let storyboard = UIStoryboard(name: Storyboard.main, bundle: nil)
+        let secondViewController = storyboard.instantiateViewController(withIdentifier: Screen.settingsView)
+            as? SettingsViewController
+        let model = SettingsModel(DataBaseManager())
+        let settingsVewModel = SettingsViewModel(model)
+        secondViewController?.attach(viewModel: settingsVewModel)
+        guard let settingsViewController = secondViewController else { return }
+        navigationController?.pushViewController(settingsViewController, animated: true)
     }
 
     private func configureSettingsButton() {
@@ -44,7 +55,5 @@ class MainViewController: BaseViewController {
         let image = UIImage(named: Asset.settings.name)
         let tintedImage = image?.withRenderingMode(.alwaysTemplate)
         settingsButton.setImage(tintedImage, for: .normal)
-
     }
-
 }

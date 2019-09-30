@@ -11,17 +11,17 @@ import UIKit
 import RealmSwift
 
 class SettingsViewController: BaseViewController {
-    // swiftlint:disable:next force_try
-    let realm = try! Realm()
-    var items: Results<DefaultAnswersModel>!
-    private let dataBase = DataBaseManager()
 
+    var viewModel: SettingsViewModel!
     @IBOutlet weak private var tableView: UITableView!
+
+    func attach(viewModel: SettingsViewModel) {
+        self.viewModel = viewModel
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         cofigureNavigationBar()
-        items = realm.objects(DefaultAnswersModel.self)
     }
 
     private func cofigureNavigationBar() {
@@ -33,20 +33,20 @@ class SettingsViewController: BaseViewController {
     }
 
     @objc func addAnswer() {
-        addAlertForNewAnswer(with: tableView, storage: dataBase)
+        addAlertForNewAnswer(with: tableView)
     }
 }
 
 extension SettingsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        return items.count
+        return viewModel.numberOfRows()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath)
         cell.backgroundColor = .clear
+        let items = viewModel.dataBaseStorage()
         let item = items[indexPath.row]
         cell.textLabel?.text = item.answerDefault
         cell.textLabel?.textColor = UIColor.white
@@ -58,10 +58,10 @@ extension SettingsViewController: UITableViewDataSource {
 extension SettingsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-
-        let editingRow = items[indexPath.row]
-        let deleteAction = UITableViewRowAction(style: .default, title: L10n.RowAction.delete) { _, _ in
-            self.dataBase.delete(item: editingRow, in: self.realm)
+        let editingRows = viewModel.dataBaseStorage()
+        let editingRow = editingRows[indexPath.row]
+        let deleteAction = UITableViewRowAction(style: .default, title: L10n.RowAction.delete) { [weak self] _, _ in
+            self?.viewModel.removeItem(from: editingRow)
             tableView.reloadData()
         }
         return [deleteAction]

@@ -7,6 +7,8 @@
 //
 
 import Foundation
+import RealmSwift
+import Realm
 
 class MainViewModel {
     private let answerModel: MainModel
@@ -17,7 +19,7 @@ class MainViewModel {
 
     func getAnswer(completion: @escaping (String?) -> Void) {
         answerModel.getAnswer { (answer) in
-            completion(answer)
+            completion(answer?.uppercased())
         }
     }
 }
