@@ -18,6 +18,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
+        
+        if let rootViewController = window?.rootViewController as? MainViewController {
+            let model = MainModel(NetworkManager())
+            let viewModel = MainViewModel(model)
+            rootViewController.attach(viewModel: viewModel)
+        }
         return true
     }
 

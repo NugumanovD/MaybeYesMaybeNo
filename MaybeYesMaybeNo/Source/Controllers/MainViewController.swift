@@ -11,51 +11,33 @@ import RealmSwift
 
 class MainViewController: BaseViewController {
 
-    private let requestManager = NetworkManager()
-    // swiftlint:disable:next force_try
-    private let realm = try! Realm()
-    private var items: Results<DefaultAnswersModel>!
-    private let dataBase = DataBaseManager()
-
     @IBOutlet private var answerLabel: UILabel!
     @IBOutlet private var settingsButton: UIButton!
 
+    var mainViewModel: MainViewModel?
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureSettingsButton()
-        items = dataBase.all(in: realm)
+    }
+
+    func attach(viewModel: MainViewModel) {
+        self.mainViewModel = viewModel
+        
     }
 
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            getAnswer()
+            mainViewModel?.getAnswer(completion: { (answer, error) in
+                DispatchQueue.main.async {
+                    self.answerLabel.text = answer?.magic.answer
+                }
+                
+            })
         }
     }
 
     @IBAction private func presentSettingsScreen(_ sender: UIButton) {
         navigationController?.pushViewController(transitionToController(with: Screen.settingsView), animated: true)
-    }
-
-    private func getAnswer() {
-        requestManager.fetchAnswer { [weak self] (result, error) in
-
-            if let error = error {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    self?.answerLabel.text = self?.items.randomElement()?.answerDefault
-                }
-                return
-            }
-
-            guard let answer = result?.magic.answer else {
-                self?.answerLabel.text = self?.items.randomElement()?.answerDefault
-                return
-            }
-
-            DispatchQueue.main.async {
-                self?.answerLabel.text = answer
-            }
-        }
     }
 
     private func configureSettingsButton() {
