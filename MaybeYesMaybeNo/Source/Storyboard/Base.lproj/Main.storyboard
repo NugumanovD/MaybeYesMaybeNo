@@ -23,11 +23,8 @@
                                     <constraint firstAttribute="height" constant="300" id="azN-D5-C4n"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHAKE ME" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJk-QV-kWY">
-                                <rect key="frame" x="144.5" y="320" width="125" height="136"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="125" id="QBP-Wz-zXa"/>
-                                </constraints>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SHAKE ME" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tJk-QV-kWY">
+                                <rect key="frame" x="147" y="320" width="120" height="152"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="25"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
@@ -50,9 +47,10 @@
                             <constraint firstItem="z1T-0G-Tqk" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="8Vg-4B-G98"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="8M5-eF-IXy" secondAttribute="trailing" priority="999" constant="324" id="DwU-Bw-hRW"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="8M5-eF-IXy" secondAttribute="bottom" constant="25" id="HwO-Pu-SSh"/>
+                            <constraint firstItem="tJk-QV-kWY" firstAttribute="width" secondItem="z1T-0G-Tqk" secondAttribute="height" multiplier="2:5" id="Lmm-cn-AeL"/>
                             <constraint firstItem="8M5-eF-IXy" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="25" id="MRQ-Jq-dgA"/>
                             <constraint firstItem="tJk-QV-kWY" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="Pxo-t8-xXk"/>
-                            <constraint firstItem="tJk-QV-kWY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-60" id="bRr-Ee-Ozh"/>
+                            <constraint firstItem="tJk-QV-kWY" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" constant="-52" id="bRr-Ee-Ozh"/>
                             <constraint firstItem="z1T-0G-Tqk" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="fHR-W9-Tjn"/>
                             <constraint firstItem="tJk-QV-kWY" firstAttribute="top" secondItem="z1T-0G-Tqk" secondAttribute="top" constant="22" id="gWS-Dy-WUO"/>
                         </constraints>
@@ -66,7 +64,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1888.8" y="18.440779610194905"/>
+            <point key="canvasLocation" x="1888.4057971014495" y="18.080357142857142"/>
         </scene>
         <!--Settings-->
         <scene sceneID="h1V-pf-UcO">
