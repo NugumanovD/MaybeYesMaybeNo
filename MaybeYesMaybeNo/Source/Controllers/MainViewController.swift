@@ -26,9 +26,9 @@ class MainViewController: BaseViewController {
 
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         if motion == .motionShake {
-            mainViewModel?.getAnswer(completion: { (answer, error) in
+            mainViewModel?.getAnswer(completion: { (answer) in
                 DispatchQueue.main.async {
-                    self.answerLabel.text = answer?.magic.answer
+                    self.answerLabel.text = answer
                 }
             })
         }

@@ -15,7 +15,7 @@ class MainModel {
     // MARK: - Private Properties
     private let networker: DataManagerProtocol
     private let localStorage: LocalStorable
-    
+
     // MARK: - Init
     init(_ networker: DataManagerProtocol, localStorage: LocalStorable) {
         self.networker = networker
@@ -23,18 +23,17 @@ class MainModel {
     }
 
     // MARK: - Public Function
-    func getAnswer(completion: @escaping CompletionHandler) {
+    func getAnswer(completion: @escaping (String?) -> Void) {
         networker.request { (result, error) in
             if let error = error {
                 DispatchQueue.main.async {
                     let localDatabaseAnswer = self.localStorage.all(in: self.localStorage.realm).randomElement()
-//                    completion(localDatabaseAnswer, nil)
+                    completion(localDatabaseAnswer?.answerDefault)
                 }
                 print(error.localizedDescription)
             }
-            guard let answer = result else { return }
-            completion(answer, nil)
-//            self.answerEntity = answer.magic
+            guard let fetchResult = result else { return }
+            completion(fetchResult.magic.answer)
         }
     }
 }

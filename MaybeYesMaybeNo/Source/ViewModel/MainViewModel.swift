@@ -9,18 +9,15 @@
 import Foundation
 
 class MainViewModel {
-    
     private let answerModel: MainModel
-    
+
     init(_ model: MainModel) {
         self.answerModel = model
     }
-    
-    func getAnswer(completion: @escaping CompletionHandler) {
-        answerModel.getAnswer { (answer, error) in
-            print(answer)
-            completion(answer, nil)
+
+    func getAnswer(completion: @escaping (String?) -> Void) {
+        answerModel.getAnswer { (answer) in
+            completion(answer)
         }
-        
     }
 }

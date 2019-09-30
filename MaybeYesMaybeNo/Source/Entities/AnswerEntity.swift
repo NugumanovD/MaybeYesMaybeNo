@@ -11,5 +11,3 @@ import Foundation
 struct Answer: Codable {
     var magic: Magic
 }
-
-

@@ -8,16 +8,15 @@
 
 import Foundation
 
-typealias CompletionHandler = (Answer?, Error?) -> Void
 protocol DataManagerProtocol {
-    
+    typealias CompletionHandler = (Answer?, Error?) -> Void
     func request(completion: @escaping CompletionHandler)
 }
 
 class NetworkManager: DataManagerProtocol {
     func request(completion: @escaping CompletionHandler) {
         let session = URLSession(configuration: .default)
-    
+
         guard let url = URL(string: Link.url + Link.question) else {
             completion(nil, .badURL)
             return
@@ -27,7 +26,7 @@ class NetworkManager: DataManagerProtocol {
             if let error = error {
                 completion(nil, .api(error: error))
             }
-    
+
             guard let data = data,
                 let json = try? JSONDecoder().decode(Answer.self, from: data) else {
                     completion(nil, .incorrectModel)

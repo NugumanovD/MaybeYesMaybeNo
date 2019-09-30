@@ -17,7 +17,7 @@ protocol LocalStorable: class {
 }
 
 class DataBaseManager: LocalStorable {
-    
+
     let realm: Realm!
     init() {
         do {
@@ -26,8 +26,7 @@ class DataBaseManager: LocalStorable {
             realm = nil
         }
     }
-    
-    
+
     func all(in realm: Realm) -> Results<DefaultAnswersModel> {
         return realm.objects(DefaultAnswersModel.self)
     }
