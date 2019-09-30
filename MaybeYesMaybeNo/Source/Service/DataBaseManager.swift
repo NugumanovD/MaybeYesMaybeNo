@@ -9,7 +9,25 @@
 import Foundation
 import RealmSwift
 
-class DataBaseManager {
+protocol LocalStorable: class {
+    var realm: Realm! { get }
+    func all(in realm: Realm) -> Results<DefaultAnswersModel>
+    func add(text: String, in realm: Realm)
+    func delete(item: DefaultAnswersModel, in realm: Realm)
+}
+
+class DataBaseManager: LocalStorable {
+    
+    let realm: Realm!
+    init() {
+        do {
+            try realm = Realm()
+        } catch {
+            realm = nil
+        }
+    }
+    
+    
     func all(in realm: Realm) -> Results<DefaultAnswersModel> {
         return realm.objects(DefaultAnswersModel.self)
     }

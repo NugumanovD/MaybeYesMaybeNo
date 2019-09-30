@@ -7,38 +7,34 @@
 //
 
 import Foundation
+import Realm
+import RealmSwift
 
 class MainModel {
 
-    // MARK: - Public Properties
-    var answerEntity: Magic? {
-        didSet {
-            guard let answer = answerEntity else {
-                print("Oops")
-                return
-            }
-            print(answer)
-        }
-    }
-
     // MARK: - Private Properties
     private let networker: DataManagerProtocol
-
+    private let localStorage: LocalStorable
+    
     // MARK: - Init
-    init(_ networker: DataManagerProtocol) {
+    init(_ networker: DataManagerProtocol, localStorage: LocalStorable) {
         self.networker = networker
+        self.localStorage = localStorage
     }
 
     // MARK: - Public Function
     func getAnswer(completion: @escaping CompletionHandler) {
         networker.request { (result, error) in
             if let error = error {
+                DispatchQueue.main.async {
+                    let localDatabaseAnswer = self.localStorage.all(in: self.localStorage.realm).randomElement()
+//                    completion(localDatabaseAnswer, nil)
+                }
                 print(error.localizedDescription)
             }
             guard let answer = result else { return }
             completion(answer, nil)
-            self.answerEntity = answer.magic
+//            self.answerEntity = answer.magic
         }
     }
-    
 }

@@ -18,11 +18,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        
-        if let rootViewController = window?.rootViewController as? MainViewController {
-            let model = MainModel(NetworkManager())
+        if let navigationController = window?.rootViewController as? UINavigationController,
+            let mainViewController = navigationController.topViewController as? MainViewController {
+            let model = MainModel(NetworkManager(), localStorage: DataBaseManager())
             let viewModel = MainViewModel(model)
-            rootViewController.attach(viewModel: viewModel)
+            mainViewController.attach(viewModel: viewModel)
         }
         return true
     }

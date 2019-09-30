@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 typealias CompletionHandler = (Answer?, Error?) -> Void
 protocol DataManagerProtocol {
     

@@ -23,10 +23,4 @@ class MainViewModel {
         }
         
     }
-    
-//    func answer(completion: @escaping (Magic?) -> Void) {
-//        let fetchAnswer = answerModel.answerEntity
-//        completion(fetchAnswer)
-//    }
-//
 }

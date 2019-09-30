@@ -22,7 +22,6 @@ class MainViewController: BaseViewController {
 
     func attach(viewModel: MainViewModel) {
         self.mainViewModel = viewModel
-        
     }
 
     override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -31,7 +30,6 @@ class MainViewController: BaseViewController {
                 DispatchQueue.main.async {
                     self.answerLabel.text = answer?.magic.answer
                 }
-                
             })
         }
     }
