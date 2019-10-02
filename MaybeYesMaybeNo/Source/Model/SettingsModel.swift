@@ -7,38 +7,31 @@
 //
 
 import Foundation
-import Realm
-import RealmSwift
 
 class SettingsModel {
     private let localStorage: LocalStorable
 
-    init(_ localStorage: LocalStorable) {
+    init(localStorage: LocalStorable) {
         self.localStorage = localStorage
     }
 
     func addCustomAnswer(with text: String) {
-        localStorage.add(text: text, in: localStorage.realm)
+        localStorage.addItem(text: text)
     }
 
     func numberOfRows() -> Int {
-        let itemsResults = localStorage.all(in: localStorage.realm)
-        return itemsResults.count
+        return localStorage.allItems().count
     }
 
-    func localStorageItems() -> Results<DefaultAnswersModel> {
-        return localStorage.realm.objects(DefaultAnswersModel.self)
+    func localStorageItems() -> [String] {
+        return localStorage.allItems().compactMap({ $0.answerDefault })
     }
 
-    func realm() -> Realm {
-        return localStorage.realm
+    func deleteItemInRealm(with item: String) {
+        localStorage.deleteItem(item: item)
     }
 
-    func deleteItemInRealm(with item: DefaultAnswersModel) {
-        localStorage.delete(item: item, in: localStorage.realm)
-    }
-
-    func addItemInRealm(with text: String, realm: Realm) {
-        localStorage.add(text: text, in: realm)
+    func addItemInRealm(with text: String) {
+        localStorage.addItem(text: text)
     }
 }

@@ -17,7 +17,7 @@ class MainModel {
     private let localStorage: LocalStorable
 
     // MARK: - Init
-    init(_ networker: DataManagerProtocol, localStorage: LocalStorable) {
+    init(networker: DataManagerProtocol, localStorage: LocalStorable) {
         self.networker = networker
         self.localStorage = localStorage
     }
@@ -25,14 +25,15 @@ class MainModel {
     // MARK: - Public Function
     func getAnswer(completion: @escaping (String?) -> Void) {
         networker.request { (result, error) in
+            let localDatabaseAnswer = self.localStorage.allItems().randomElement()
             if let error = error {
-                DispatchQueue.main.async {
-                    let localDatabaseAnswer = self.localStorage.all(in: self.localStorage.realm).randomElement()
-                    completion(localDatabaseAnswer?.answerDefault)
-                }
+//                completion(localDatabaseAnswer?.answerDefault)
                 print(error.localizedDescription)
             }
-            guard let fetchResult = result else { return }
+            guard let fetchResult = result else {
+//                completion(localDatabaseAnswer?.answerDefault)
+                return
+            }
             completion(fetchResult.magic.answer)
         }
     }

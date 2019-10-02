@@ -8,11 +8,10 @@
 
 import Foundation
 import UIKit
-import RealmSwift
 
 class SettingsViewController: BaseViewController {
 
-    var viewModel: SettingsViewModel!
+    private var viewModel: SettingsViewModel!
     @IBOutlet weak private var tableView: UITableView!
 
     func attach(viewModel: SettingsViewModel) {
@@ -33,7 +32,34 @@ class SettingsViewController: BaseViewController {
     }
 
     @objc func addAnswer() {
-        addAlertForNewAnswer(with: tableView)
+        presentAlertForNewAnswer()
+    }
+
+    func presentAlertForNewAnswer() {
+
+        let alertController = UIAlertController(title: L10n.AlertController.title,
+                                                message: L10n.AlertController.message,
+                                                preferredStyle: .alert)
+
+        var alertTextField: UITextField!
+        alertController.addTextField { textField in
+            alertTextField = textField
+            textField.placeholder = L10n.AlertController.TextField.placeholder
+            textField.autocorrectionType = .yes
+        }
+
+        let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { [weak self] _ in
+            guard let text = alertTextField.text, !text.isEmpty else { return }
+            self?.viewModel.addItem(with: text)
+            self?.tableView.reloadData()
+        }
+
+        let cancelAction = UIAlertAction(title: L10n.AlertController.Action.cancel, style: .destructive, handler: nil)
+
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
     }
 }
 
@@ -48,7 +74,7 @@ extension SettingsViewController: UITableViewDataSource {
         cell.backgroundColor = .clear
         let items = viewModel.dataBaseStorage()
         let item = items[indexPath.row]
-        cell.textLabel?.text = item.answerDefault
+        cell.textLabel?.text = item
         cell.textLabel?.textColor = UIColor.white
 
         return cell

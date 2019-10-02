@@ -14,7 +14,7 @@ class MainViewController: BaseViewController {
     @IBOutlet private var answerLabel: UILabel!
     @IBOutlet private var settingsButton: UIButton!
 
-    var mainViewModel: MainViewModel?
+    private var mainViewModel: MainViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,7 +28,7 @@ class MainViewController: BaseViewController {
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         switch motion {
         case .motionShake:
-            mainViewModel?.getAnswer(completion: { [weak self] (answer) in
+            mainViewModel?.getAnswer(completion: { [weak self] answer in
                 DispatchQueue.main.async {
                     self?.answerLabel.text = answer
                 }
@@ -42,8 +42,8 @@ class MainViewController: BaseViewController {
         let storyboard = UIStoryboard(name: Storyboard.main, bundle: nil)
         let secondViewController = storyboard.instantiateViewController(withIdentifier: Screen.settingsView)
             as? SettingsViewController
-        let model = SettingsModel(DataBaseManager())
-        let settingsVewModel = SettingsViewModel(model)
+        let model = SettingsModel(localStorage: DataBaseManager())
+        let settingsVewModel = SettingsViewModel(model: model)
         secondViewController?.attach(viewModel: settingsVewModel)
         guard let settingsViewController = secondViewController else { return }
         navigationController?.pushViewController(settingsViewController, animated: true)

@@ -10,39 +10,42 @@ import Foundation
 import RealmSwift
 
 protocol LocalStorable: class {
-    var realm: Realm! { get }
-    func all(in realm: Realm) -> Results<DefaultAnswersModel>
-    func add(text: String, in realm: Realm)
-    func delete(item: DefaultAnswersModel, in realm: Realm)
+    func allItems() -> Results<DefaultAnswersModel>
+    func addItem(text: String)
+    func deleteItem(item: String)
 }
 
 class DataBaseManager: LocalStorable {
 
-    let realm: Realm!
+    var realm: Realm!
     init() {
         do {
-            try realm = Realm()
+            try self.realm = Realm()
         } catch {
-            realm = nil
+            self.realm = nil
         }
     }
 
-    func all(in realm: Realm) -> Results<DefaultAnswersModel> {
+    func allItems() -> Results<DefaultAnswersModel> {
         return realm.objects(DefaultAnswersModel.self)
     }
 
-    func add(text: String, in realm: Realm) {
+    func addItem(text: String) {
         let answersList = DefaultAnswersModel()
         answersList.answerDefault = text
-
-        try? realm.write {
-            realm.add(answersList)
+        try? self.realm.write {
+            self.realm.add(answersList)
         }
     }
 
-    func delete(item: DefaultAnswersModel, in realm: Realm) {
-        try? realm.write {
-            realm.delete(item)
+    func deleteItem(item: String) {
+        let elementsLocalStorage = realm.objects(DefaultAnswersModel.self)
+        for currentItem in elementsLocalStorage {
+            if currentItem.answerDefault == item {
+                try? self.realm.write {
+                    self.realm.delete(currentItem)
+                }
+            }
         }
     }
 }

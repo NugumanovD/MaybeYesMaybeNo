@@ -7,12 +7,11 @@
 //
 
 import Foundation
-import RealmSwift
 
 class SettingsViewModel {
     private let settingsModel: SettingsModel
 
-    init(_ model: SettingsModel) {
+    init(model: SettingsModel) {
         self.settingsModel = model
     }
 
@@ -20,15 +19,11 @@ class SettingsViewModel {
         return settingsModel.numberOfRows()
     }
 
-    func dataBaseStorage() -> Results<DefaultAnswersModel> {
+    func dataBaseStorage() -> [String] {
         return settingsModel.localStorageItems()
     }
 
-    func realm() -> Realm {
-        return settingsModel.realm()
-    }
-
-    func removeItem(from dataBase: DefaultAnswersModel) {
+    func removeItem(from dataBase: String) {
         return settingsModel.deleteItemInRealm(with: dataBase)
     }
 

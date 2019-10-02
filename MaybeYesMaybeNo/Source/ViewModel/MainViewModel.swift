@@ -7,13 +7,11 @@
 //
 
 import Foundation
-import RealmSwift
-import Realm
 
 class MainViewModel {
     private let answerModel: MainModel
 
-    init(_ model: MainModel) {
+    init(model: MainModel) {
         self.answerModel = model
     }
 
