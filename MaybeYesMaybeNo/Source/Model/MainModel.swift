@@ -7,8 +7,6 @@
 //
 
 import Foundation
-import Realm
-import RealmSwift
 
 class MainModel {
 
@@ -22,16 +20,21 @@ class MainModel {
         self.localStorage = localStorage
     }
 
+    func defaultAnswer() -> String {
+        let localDatabaseAnswer = self.localStorage.allItems().randomElement()
+        guard let defaultAnswer = localDatabaseAnswer?.answerDefault else { return "" }
+        return defaultAnswer
+    }
+
     // MARK: - Public Function
     func getAnswer(completion: @escaping (String?) -> Void) {
         networker.request { (result, error) in
-            let localDatabaseAnswer = self.localStorage.allItems().randomElement()
             if let error = error {
-//                completion(localDatabaseAnswer?.answerDefault)
+                completion(self.defaultAnswer())
                 print(error.localizedDescription)
             }
             guard let fetchResult = result else {
-//                completion(localDatabaseAnswer?.answerDefault)
+                completion(self.defaultAnswer())
                 return
             }
             completion(fetchResult.magic.answer)
