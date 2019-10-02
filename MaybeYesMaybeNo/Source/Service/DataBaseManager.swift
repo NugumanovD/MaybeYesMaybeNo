@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 protocol LocalStorable: class {
-    func allItems() -> Results<DefaultAnswersModel>
+    func allItems() -> [DefaultAnswersModel]
     func addItem(text: String)
     func deleteItem(item: String)
 }
@@ -26,8 +26,8 @@ class DataBaseManager: LocalStorable {
         }
     }
 
-    func allItems() -> Results<DefaultAnswersModel> {
-        return realm.objects(DefaultAnswersModel.self)
+    func allItems() -> [DefaultAnswersModel] {
+        return realm.objects(DefaultAnswersModel.self).map({ $0 })
     }
 
     func addItem(text: String) {
@@ -40,11 +40,9 @@ class DataBaseManager: LocalStorable {
 
     func deleteItem(item: String) {
         let elementsLocalStorage = realm.objects(DefaultAnswersModel.self)
-        for currentItem in elementsLocalStorage {
-            if currentItem.answerDefault == item {
-                try? self.realm.write {
-                    self.realm.delete(currentItem)
-                }
+        for currentItem in elementsLocalStorage where currentItem.answerDefault == item {
+            try? self.realm.write {
+                self.realm.delete(currentItem)
             }
         }
     }

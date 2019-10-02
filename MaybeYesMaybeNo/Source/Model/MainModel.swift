@@ -29,15 +29,17 @@ class MainModel {
     // MARK: - Public Function
     func getAnswer(completion: @escaping (String?) -> Void) {
         networker.request { (result, error) in
-            if let error = error {
-                completion(self.defaultAnswer())
-                print(error.localizedDescription)
+            DispatchQueue.main.async {
+                if let error = error {
+                    completion(self.defaultAnswer())
+                    print(error.localizedDescription)
+                }
+                guard let fetchResult = result else {
+                    completion(self.defaultAnswer())
+                    return
+                }
+                completion(fetchResult.magic.answer)
             }
-            guard let fetchResult = result else {
-                completion(self.defaultAnswer())
-                return
-            }
-            completion(fetchResult.magic.answer)
         }
     }
 }
