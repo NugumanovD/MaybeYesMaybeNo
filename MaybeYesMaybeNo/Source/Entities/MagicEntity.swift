@@ -10,5 +10,10 @@ import Foundation
 
 struct Magic: Codable {
     var answer: String
-    var type: String
+}
+
+extension Magic {
+    func convertToPresentable() -> PresentableAnswer {
+        return PresentableAnswer(text: answer)
+    }
 }

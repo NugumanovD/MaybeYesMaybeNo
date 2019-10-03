@@ -23,15 +23,12 @@ class SettingsModel {
         return localStorage.allItems().count
     }
 
-    func localStorageItems() -> [String] {
-        return localStorage.allItems().compactMap({ $0.answerDefault })
+    func localStorageItems() -> [PresentableAnswer] {
+        return localStorage.allItems().compactMap({ $0 })
     }
 
-    func deleteItemInRealm(with item: String) {
+    func deleteItem(item: String) {
         localStorage.deleteItem(item: item)
     }
 
-    func addItemInRealm(with text: String) {
-        localStorage.addItem(text: text)
-    }
 }

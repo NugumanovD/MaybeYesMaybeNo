@@ -13,3 +13,9 @@ class DefaultAnswersModel: Object {
 
     @objc dynamic var answerDefault = L10n.DefaultAnswer.type
 }
+
+extension DefaultAnswersModel {
+    func convertTo() -> PresentableAnswer {
+        return PresentableAnswer(text: answerDefault)
+    }
+}

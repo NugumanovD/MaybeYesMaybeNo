@@ -20,25 +20,19 @@ class MainModel {
         self.localStorage = localStorage
     }
 
-    func defaultAnswer() -> String {
-        let localDatabaseAnswer = self.localStorage.allItems().randomElement()
-        guard let defaultAnswer = localDatabaseAnswer?.answerDefault else { return "" }
-        return defaultAnswer
-    }
-
     // MARK: - Public Function
-    func getAnswer(completion: @escaping (String?) -> Void) {
+     func getAnswer(completion: @escaping (PresentableAnswer?) -> Void) {
         networker.request { (result, error) in
             DispatchQueue.main.async {
                 if let error = error {
-                    completion(self.defaultAnswer())
+                    completion(self.localStorage.allItems().randomElement())
                     print(error.localizedDescription)
                 }
                 guard let fetchResult = result else {
-                    completion(self.defaultAnswer())
+                    completion(self.localStorage.allItems().randomElement())
                     return
                 }
-                completion(fetchResult.magic.answer)
+                completion(fetchResult.magic.convertToPresentable())
             }
         }
     }

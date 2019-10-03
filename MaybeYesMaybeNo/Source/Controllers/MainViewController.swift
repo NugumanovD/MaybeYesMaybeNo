@@ -29,7 +29,7 @@ class MainViewController: BaseViewController {
         case .motionShake:
             mainViewModel?.getAnswer(completion: { [weak self] answer in
                 DispatchQueue.main.async {
-                    self?.answerLabel.text = answer
+                    self?.answerLabel.text = answer?.text.uppercased()
                 }
             })
         default:

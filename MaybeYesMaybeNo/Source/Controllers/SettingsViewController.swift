@@ -31,11 +31,11 @@ class SettingsViewController: BaseViewController {
                                                             action: #selector(addAnswer))
     }
 
-    @objc func addAnswer() {
+    @objc private func addAnswer() {
         presentAlertForNewAnswer()
     }
 
-    func presentAlertForNewAnswer() {
+    private func presentAlertForNewAnswer() {
 
         let alertController = UIAlertController(title: L10n.AlertController.title,
                                                 message: L10n.AlertController.message,
@@ -74,7 +74,7 @@ extension SettingsViewController: UITableViewDataSource {
         cell.backgroundColor = .clear
         let items = viewModel.dataBaseStorage()
         let item = items[indexPath.row]
-        cell.textLabel?.text = item
+        cell.textLabel?.text = item.text
         cell.textLabel?.textColor = UIColor.white
 
         return cell

@@ -19,15 +19,15 @@ class SettingsViewModel {
         return settingsModel.numberOfRows()
     }
 
-    func dataBaseStorage() -> [String] {
+    func dataBaseStorage() -> [PresentableAnswer] {
         return settingsModel.localStorageItems()
     }
 
-    func removeItem(from dataBase: String) {
-        return settingsModel.deleteItemInRealm(with: dataBase)
+    func removeItem(from dataBase: PresentableAnswer) {
+        return settingsModel.deleteItem(item: dataBase.text)
     }
 
-    func addItem(with text: String) {
-        settingsModel.addCustomAnswer(with: text)
+    func addItem(with property: String) {
+        settingsModel.addCustomAnswer(with: property)
     }
 }

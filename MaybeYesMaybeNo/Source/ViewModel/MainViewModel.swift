@@ -15,9 +15,10 @@ class MainViewModel {
         self.answerModel = model
     }
 
-    func getAnswer(completion: @escaping (String?) -> Void) {
-        answerModel.getAnswer { (answer) in
-            completion(answer?.uppercased())
+    func getAnswer(completion: @escaping (PresentableAnswer?) -> Void) {
+        answerModel.getAnswer { answer in
+            guard let answerResult = answer else { return }
+            completion(answerResult)
         }
     }
 }

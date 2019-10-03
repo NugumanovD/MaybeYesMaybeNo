@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 
 protocol LocalStorable: class {
-    func allItems() -> [DefaultAnswersModel]
+    func allItems() -> [PresentableAnswer]
     func addItem(text: String)
     func deleteItem(item: String)
 }
@@ -26,8 +26,8 @@ class DataBaseManager: LocalStorable {
         }
     }
 
-    func allItems() -> [DefaultAnswersModel] {
-        return realm.objects(DefaultAnswersModel.self).map({ $0 })
+    func allItems() -> [PresentableAnswer] {
+        return realm.objects(DefaultAnswersModel.self).map({ $0.convertTo() })
     }
 
     func addItem(text: String) {
