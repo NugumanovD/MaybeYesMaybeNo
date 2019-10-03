@@ -8,32 +8,33 @@
 
 import Foundation
 
-class NetworkManager {
+protocol DataManagerProtocol {
+    typealias CompletionHandler = (Answer?, Error?) -> Void
+    func request(completion: @escaping CompletionHandler)
+}
 
-    func fetchAnswer(complation: @escaping (Answer?, Error?) -> Void) {
-
+class NetworkManager: DataManagerProtocol {
+    func request(completion: @escaping CompletionHandler) {
         let session = URLSession(configuration: .default)
 
         guard let url = URL(string: Link.url + Link.question) else {
-            complation(nil, .badURL)
+            completion(nil, .badURL)
             return
         }
 
         let task = session.dataTask(with: url) { (data, _, error) in
             if let error = error {
-                complation(nil, .api(error: error))
-                print(error.localizedDescription)
-                return
+                completion(nil, .api(error: error))
             }
 
             guard let data = data,
                 let json = try? JSONDecoder().decode(Answer.self, from: data) else {
-                    complation(nil, .incorrectModel)
+                    completion(nil, .incorrectModel)
                     return
             }
-            complation(json, nil)
+
+            completion(json, nil)
         }
         task.resume()
     }
-
 }

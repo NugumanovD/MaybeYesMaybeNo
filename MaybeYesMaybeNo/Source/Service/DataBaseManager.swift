@@ -9,23 +9,41 @@
 import Foundation
 import RealmSwift
 
-class DataBaseManager {
-    func all(in realm: Realm) -> Results<DefaultAnswersModel> {
-        return realm.objects(DefaultAnswersModel.self)
-    }
-    // swiftlint:disable:next force_try
-    func add(text: String, in realm: Realm = try! Realm()) {
-        let answersList = DefaultAnswersModel()
-        answersList.answerDefault = text
+protocol LocalStorable: class {
+    func allItems() -> [PresentableAnswer]
+    func addItem(text: String)
+    func deleteItem(item: String)
+}
 
-        try? realm.write {
-            realm.add(answersList)
+class DataBaseManager: LocalStorable {
+
+    var realm: Realm!
+    init() {
+        do {
+            try self.realm = Realm()
+        } catch {
+            self.realm = nil
         }
     }
 
-    func delete(item: DefaultAnswersModel, in realm: Realm) {
-        try? realm.write {
-            realm.delete(item)
+    func allItems() -> [PresentableAnswer] {
+        return realm.objects(DefaultAnswersModel.self).map({ $0.convertTo() })
+    }
+
+    func addItem(text: String) {
+        let answersList = DefaultAnswersModel()
+        answersList.answerDefault = text
+        try? self.realm.write {
+            self.realm.add(answersList)
+        }
+    }
+
+    func deleteItem(item: String) {
+        let elementsLocalStorage = realm.objects(DefaultAnswersModel.self)
+        for currentItem in elementsLocalStorage where currentItem.answerDefault == item {
+            try? self.realm.write {
+                self.realm.delete(currentItem)
+            }
         }
     }
 }

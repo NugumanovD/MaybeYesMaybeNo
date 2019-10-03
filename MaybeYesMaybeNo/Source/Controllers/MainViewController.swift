@@ -7,55 +7,45 @@
 //
 
 import UIKit
-import RealmSwift
 
 class MainViewController: BaseViewController {
-
-    private let requestManager = NetworkManager()
-    // swiftlint:disable:next force_try
-    private let realm = try! Realm()
-    private var items: Results<DefaultAnswersModel>!
-    private let dataBase = DataBaseManager()
 
     @IBOutlet private var answerLabel: UILabel!
     @IBOutlet private var settingsButton: UIButton!
 
+    private var mainViewModel: MainViewModel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         configureSettingsButton()
-        items = dataBase.all(in: realm)
     }
 
-    override func motionBegan(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-        if motion == .motionShake {
-            getAnswer()
+    func attach(viewModel: MainViewModel) {
+        self.mainViewModel = viewModel
+    }
+
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        switch motion {
+        case .motionShake:
+            mainViewModel?.getAnswer(completion: { [weak self] answer in
+                DispatchQueue.main.async {
+                    self?.answerLabel.text = answer?.text.uppercased()
+                }
+            })
+        default:
+            break
         }
     }
 
     @IBAction private func presentSettingsScreen(_ sender: UIButton) {
-        navigationController?.pushViewController(transitionToController(with: Screen.settingsView), animated: true)
-    }
-
-    private func getAnswer() {
-        requestManager.fetchAnswer { [weak self] (result, error) in
-
-            if let error = error {
-                print(error.localizedDescription)
-                DispatchQueue.main.async {
-                    self?.answerLabel.text = self?.items.randomElement()?.answerDefault
-                }
-                return
-            }
-
-            guard let answer = result?.magic.answer else {
-                self?.answerLabel.text = self?.items.randomElement()?.answerDefault
-                return
-            }
-
-            DispatchQueue.main.async {
-                self?.answerLabel.text = answer
-            }
-        }
+        let storyboard = UIStoryboard(name: Storyboard.main, bundle: nil)
+        let secondViewController = storyboard.instantiateViewController(withIdentifier: Screen.settingsView)
+            as? SettingsViewController
+        let model = SettingsModel(localStorage: DataBaseManager())
+        let settingsVewModel = SettingsViewModel(model: model)
+        secondViewController?.attach(viewModel: settingsVewModel)
+        guard let settingsViewController = secondViewController else { return }
+        navigationController?.pushViewController(settingsViewController, animated: true)
     }
 
     private func configureSettingsButton() {
@@ -64,7 +54,5 @@ class MainViewController: BaseViewController {
         let image = UIImage(named: Asset.settings.name)
         let tintedImage = image?.withRenderingMode(.alwaysTemplate)
         settingsButton.setImage(tintedImage, for: .normal)
-
     }
-
 }

@@ -8,20 +8,19 @@
 
 import Foundation
 import UIKit
-import RealmSwift
 
 class SettingsViewController: BaseViewController {
-    // swiftlint:disable:next force_try
-    let realm = try! Realm()
-    var items: Results<DefaultAnswersModel>!
-    private let dataBase = DataBaseManager()
 
+    private var viewModel: SettingsViewModel!
     @IBOutlet weak private var tableView: UITableView!
+
+    func attach(viewModel: SettingsViewModel) {
+        self.viewModel = viewModel
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         cofigureNavigationBar()
-        items = realm.objects(DefaultAnswersModel.self)
     }
 
     private func cofigureNavigationBar() {
@@ -32,23 +31,50 @@ class SettingsViewController: BaseViewController {
                                                             action: #selector(addAnswer))
     }
 
-    @objc func addAnswer() {
-        addAlertForNewAnswer(with: tableView, storage: dataBase)
+    @objc private func addAnswer() {
+        presentAlertForNewAnswer()
+    }
+
+    private func presentAlertForNewAnswer() {
+
+        let alertController = UIAlertController(title: L10n.AlertController.title,
+                                                message: L10n.AlertController.message,
+                                                preferredStyle: .alert)
+
+        var alertTextField: UITextField!
+        alertController.addTextField { textField in
+            alertTextField = textField
+            textField.placeholder = L10n.AlertController.TextField.placeholder
+            textField.autocorrectionType = .yes
+        }
+
+        let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { [weak self] _ in
+            guard let text = alertTextField.text, !text.isEmpty else { return }
+            self?.viewModel.addItem(with: text)
+            self?.tableView.reloadData()
+        }
+
+        let cancelAction = UIAlertAction(title: L10n.AlertController.Action.cancel, style: .destructive, handler: nil)
+
+        alertController.addAction(saveAction)
+        alertController.addAction(cancelAction)
+
+        present(alertController, animated: true, completion: nil)
     }
 }
 
 extension SettingsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
-        return items.count
+        return viewModel.numberOfRows()
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath)
         cell.backgroundColor = .clear
+        let items = viewModel.dataBaseStorage()
         let item = items[indexPath.row]
-        cell.textLabel?.text = item.answerDefault
+        cell.textLabel?.text = item.text
         cell.textLabel?.textColor = UIColor.white
 
         return cell
@@ -58,10 +84,10 @@ extension SettingsViewController: UITableViewDataSource {
 extension SettingsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-
-        let editingRow = items[indexPath.row]
-        let deleteAction = UITableViewRowAction(style: .default, title: L10n.RowAction.delete) { _, _ in
-            self.dataBase.delete(item: editingRow, in: self.realm)
+        let editingRows = viewModel.dataBaseStorage()
+        let editingRow = editingRows[indexPath.row]
+        let deleteAction = UITableViewRowAction(style: .default, title: L10n.RowAction.delete) { [weak self] _, _ in
+            self?.viewModel.removeItem(from: editingRow)
             tableView.reloadData()
         }
         return [deleteAction]
