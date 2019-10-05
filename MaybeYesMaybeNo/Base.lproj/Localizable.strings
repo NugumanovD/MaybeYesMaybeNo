@@ -11,6 +11,9 @@
 
 "RowAction.delete" = "Delete";
 
+//AnwerLabel Placeholder
+"answerLabel.placeholder.text" = "Shake Me";
+
 //Model
 "defaultAnswer.type" = "";
 

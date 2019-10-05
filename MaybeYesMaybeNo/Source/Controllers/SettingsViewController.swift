@@ -24,7 +24,7 @@ class SettingsViewController: BaseViewController {
     }
 
     private func cofigureNavigationBar() {
-        tableView.backgroundColor = .black
+        tableView.backgroundColor = Asset.background.color
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: L10n.BarButtonItem.Title.add,
                                                             style: .plain,
                                                             target: self,
@@ -75,7 +75,7 @@ extension SettingsViewController: UITableViewDataSource {
         let items = viewModel.dataBaseStorage()
         let item = items[indexPath.row]
         cell.textLabel?.text = item.text
-        cell.textLabel?.textColor = UIColor.white
+        cell.textLabel?.textColor = Asset.text.color 
 
         return cell
     }

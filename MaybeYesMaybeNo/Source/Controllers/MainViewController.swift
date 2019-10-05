@@ -7,16 +7,20 @@
 //
 
 import UIKit
+import SnapKit
 
 class MainViewController: BaseViewController {
 
-    @IBOutlet private var answerLabel: UILabel!
-    @IBOutlet private var settingsButton: UIButton!
+    let answerLabel = UILabel()
+    let triangleImageView = UIImageView()
+    let settingsButton = UIButton()
 
     private var mainViewModel: MainViewModel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureTriangleImageView()
+        configureAnswerLabel()
         configureSettingsButton()
     }
 
@@ -37,7 +41,59 @@ class MainViewController: BaseViewController {
         }
     }
 
-    @IBAction private func presentSettingsScreen(_ sender: UIButton) {
+    private func configureSettingsButton() {
+        self.view.addSubview(settingsButton)
+        let image = UIImage(named: Asset.settings.name)
+        let tintedImage = image?.withRenderingMode(.alwaysTemplate)
+        settingsButton.setImage(tintedImage, for: .normal)
+        settingsButton.addTarget(self, action: #selector(presentSettingsScreen(_:)), for: .touchUpInside)
+        configureSettingsButtonConstaraints()
+    }
+
+    func configureSettingsButtonConstaraints() {
+        let safeAreaView = self.view.safeAreaLayoutGuide
+        settingsButton.snp.makeConstraints { make in
+            make.width.equalTo(65)
+            make.height.equalTo(65)
+            make.bottom.equalTo(safeAreaView.snp.bottom).offset(-20)
+            make.left.equalTo(safeAreaView.snp.left).offset(20)
+        }
+    }
+
+    func configureTriangleImageView() {
+        self.view.addSubview(triangleImageView)
+        triangleImageView.image = UIImage(named: Asset.triangle.name)
+        configureTriangleImageConstaints()
+    }
+
+    func configureTriangleImageConstaints() {
+        triangleImageView.snp.makeConstraints { make in
+            make.width.equalTo(300)
+            make.height.equalTo(300)
+            make.centerX.equalToSuperview()
+            make.centerY.equalToSuperview()
+        }
+    }
+
+    func configureAnswerLabel() {
+        answerLabel.text = L10n.AnswerLabel.Placeholder.text
+        answerLabel.textAlignment = .center
+        answerLabel.numberOfLines = 4
+        answerLabel.font = UIFont(name: "Helvetica Neue", size: 25)
+        self.triangleImageView.addSubview(answerLabel)
+        configureAnswerLabelConstraints()
+    }
+
+    func configureAnswerLabelConstraints() {
+        answerLabel.snp.makeConstraints { make in
+            make.width.equalTo(120)
+            make.height.equalTo(152)
+            make.centerX.equalTo(triangleImageView.snp.centerX)
+            make.top.equalTo(triangleImageView.snp.top).offset(22)
+        }
+    }
+
+    @objc private func presentSettingsScreen(_ sender: UIButton) {
         let storyboard = UIStoryboard(name: Storyboard.main, bundle: nil)
         let secondViewController = storyboard.instantiateViewController(withIdentifier: Screen.settingsView)
             as? SettingsViewController
@@ -46,13 +102,5 @@ class MainViewController: BaseViewController {
         secondViewController?.attach(viewModel: settingsVewModel)
         guard let settingsViewController = secondViewController else { return }
         navigationController?.pushViewController(settingsViewController, animated: true)
-    }
-
-    private func configureSettingsButton() {
-        settingsButton.clipsToBounds = true
-        settingsButton.layer.cornerRadius = settingsButton.bounds.size.width / 2
-        let image = UIImage(named: Asset.settings.name)
-        let tintedImage = image?.withRenderingMode(.alwaysTemplate)
-        settingsButton.setImage(tintedImage, for: .normal)
     }
 }
