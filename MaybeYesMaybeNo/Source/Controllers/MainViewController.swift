@@ -94,13 +94,14 @@ class MainViewController: BaseViewController {
     }
 
     @objc private func presentSettingsScreen(_ sender: UIButton) {
-        let storyboard = UIStoryboard(name: Storyboard.main, bundle: nil)
-        let secondViewController = storyboard.instantiateViewController(withIdentifier: Screen.settingsView)
-            as? SettingsViewController
+//        let storyboard = UIStoryboard(name: Storyboard.main, bundle: nil)
+//        let secondViewController = storyboard.instantiateViewController(withIdentifier: Screen.settingsView)
+//            as? SettingsViewController
+        let secondViewController = SettingsViewController()
         let model = SettingsModel(localStorage: DataBaseManager())
         let settingsVewModel = SettingsViewModel(model: model)
-        secondViewController?.attach(viewModel: settingsVewModel)
-        guard let settingsViewController = secondViewController else { return }
-        navigationController?.pushViewController(settingsViewController, animated: true)
+        secondViewController.attach(viewModel: settingsVewModel)
+//        guard let settingsViewController = secondViewController else { return }
+        navigationController?.pushViewController(secondViewController, animated: true)
     }
 }

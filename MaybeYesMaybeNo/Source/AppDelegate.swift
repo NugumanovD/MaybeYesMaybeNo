@@ -13,16 +13,22 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var navigationController: UINavigationController?
 
     func application(
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        if let navigationController = window?.rootViewController as? UINavigationController,
-            let mainViewController = navigationController.topViewController as? MainViewController {
+
+        window = UIWindow(frame: UIScreen.main.bounds)
+        if window != nil {
             let model = MainModel(networker: NetworkManager(), localStorage: DataBaseManager())
             let viewModel = MainViewModel(model: model)
+            let mainViewController = MainViewController()
             mainViewController.attach(viewModel: viewModel)
+            navigationController = UINavigationController(rootViewController: mainViewController)
+            window?.rootViewController = navigationController
+            window?.makeKeyAndVisible()
         }
         return true
     }

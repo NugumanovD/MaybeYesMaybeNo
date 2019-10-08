@@ -8,11 +8,12 @@
 
 import Foundation
 import UIKit
+import SnapKit
 
 class SettingsViewController: BaseViewController {
 
     private var viewModel: SettingsViewModel!
-    @IBOutlet weak private var tableView: UITableView!
+    private let tableView = UITableView()
 
     func attach(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
@@ -20,7 +21,15 @@ class SettingsViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        tableView.delegate = self
+        tableView.dataSource = self
+        registerTableViewCell()
         cofigureNavigationBar()
+        configureTableViewConstraints()
+    }
+
+    private func registerTableViewCell() {
+        self.tableView.register(UITableViewCell.self, forCellReuseIdentifier: Cell.identifier)
     }
 
     private func cofigureNavigationBar() {
@@ -29,6 +38,13 @@ class SettingsViewController: BaseViewController {
                                                             style: .plain,
                                                             target: self,
                                                             action: #selector(addAnswer))
+    }
+
+    func configureTableViewConstraints() {
+        self.view.addSubview(tableView)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(view.safeAreaLayoutGuide)
+        }
     }
 
     @objc private func addAnswer() {
@@ -75,8 +91,7 @@ extension SettingsViewController: UITableViewDataSource {
         let items = viewModel.dataBaseStorage()
         let item = items[indexPath.row]
         cell.textLabel?.text = item.text
-        cell.textLabel?.textColor = Asset.text.color 
-
+        cell.textLabel?.textColor = Asset.text.color
         return cell
     }
 }
