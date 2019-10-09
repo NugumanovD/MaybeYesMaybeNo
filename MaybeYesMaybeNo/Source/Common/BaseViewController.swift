@@ -29,9 +29,4 @@ class BaseViewController: UIViewController {
         return .lightContent
     }
 
-    func transitionToController(with identifier: String) -> UIViewController {
-        let storyboard = UIStoryboard(name: Storyboard.main, bundle: nil)
-        let secondViewController = storyboard.instantiateViewController(withIdentifier: identifier)
-        return secondViewController
-    }
 }

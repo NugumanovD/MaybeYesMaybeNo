@@ -13,7 +13,6 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var navigationController: UINavigationController?
 
     func application(
         _ application: UIApplication,
@@ -21,15 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        if window != nil {
-            let model = MainModel(networker: NetworkManager(), localStorage: DataBaseManager())
-            let viewModel = MainViewModel(model: model)
-            let mainViewController = MainViewController()
-            mainViewController.attach(viewModel: viewModel)
-            navigationController = UINavigationController(rootViewController: mainViewController)
-            window?.rootViewController = navigationController
-            window?.makeKeyAndVisible()
-        }
+        let model = MainModel(networker: NetworkManager(), localStorage: DataBaseManager())
+        let viewModel = MainViewModel(model: model)
+        let mainViewController = MainViewController()
+        mainViewController.attach(viewModel: viewModel)
+        window?.rootViewController = mainViewController
+        window?.makeKeyAndVisible()
         return true
     }
 }

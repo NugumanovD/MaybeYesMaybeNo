@@ -11,6 +11,7 @@
 		7B55156623397ACA00F47437 /* strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B55156423397ACA00F47437 /* strings.swift */; };
 		7B55156923397B6000F47437 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B55156723397B6000F47437 /* Localizable.strings */; };
 		7B55156B233A57B600F47437 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7B55156A233A57B600F47437 /* swiftgen.yml */; };
+		7B6C5704234E52BB00B67366 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B6C5703234E52BB00B67366 /* LaunchScreen.storyboard */; };
 		7B9E265523416CA10070F3D7 /* MagicEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9E265423416CA10070F3D7 /* MagicEntity.swift */; };
 		7B9E265823416D0C0070F3D7 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9E265723416D0C0070F3D7 /* MainModel.swift */; };
 		7BC56B53230DD664008F13A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B52230DD664008F13A7 /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 		7B55156423397ACA00F47437 /* strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = strings.swift; sourceTree = "<group>"; };
 		7B55156823397B6000F47437 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B55156A233A57B600F47437 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = SOURCE_ROOT; };
+		7B6C5703234E52BB00B67366 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B9E265423416CA10070F3D7 /* MagicEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicEntity.swift; sourceTree = "<group>"; };
 		7B9E265723416D0C0070F3D7 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		7BC56B4F230DD664008F13A7 /* MaybeYesMaybeNo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaybeYesMaybeNo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -178,6 +180,7 @@
 		7BC56B6A230DD7D2008F13A7 /* Storyboard */ = {
 			isa = PBXGroup;
 			children = (
+				7B6C5703234E52BB00B67366 /* LaunchScreen.storyboard */,
 			);
 			path = Storyboard;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7B55156923397B6000F47437 /* Localizable.strings in Resources */,
+				7B6C5704234E52BB00B67366 /* LaunchScreen.storyboard in Resources */,
 				7B55156B233A57B600F47437 /* swiftgen.yml in Resources */,
 				7BC56B5D230DD665008F13A7 /* Assets.xcassets in Resources */,
 			);

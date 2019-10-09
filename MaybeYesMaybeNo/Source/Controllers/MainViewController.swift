@@ -11,9 +11,9 @@ import SnapKit
 
 class MainViewController: BaseViewController {
 
-    let answerLabel = UILabel()
-    let triangleImageView = UIImageView()
-    let settingsButton = UIButton()
+    private let answerLabel = UILabel()
+    private let triangleImageView = UIImageView()
+    private let settingsButton = UIButton()
 
     private var mainViewModel: MainViewModel!
 
@@ -60,13 +60,13 @@ class MainViewController: BaseViewController {
         }
     }
 
-    func configureTriangleImageView() {
+    private func configureTriangleImageView() {
         self.view.addSubview(triangleImageView)
         triangleImageView.image = UIImage(named: Asset.triangle.name)
         configureTriangleImageConstaints()
     }
 
-    func configureTriangleImageConstaints() {
+    private func configureTriangleImageConstaints() {
         triangleImageView.snp.makeConstraints { make in
             make.width.equalTo(300)
             make.height.equalTo(300)
@@ -75,7 +75,7 @@ class MainViewController: BaseViewController {
         }
     }
 
-    func configureAnswerLabel() {
+    private func configureAnswerLabel() {
         answerLabel.text = L10n.AnswerLabel.Placeholder.text
         answerLabel.textAlignment = .center
         answerLabel.numberOfLines = 4
@@ -84,7 +84,7 @@ class MainViewController: BaseViewController {
         configureAnswerLabelConstraints()
     }
 
-    func configureAnswerLabelConstraints() {
+    private func configureAnswerLabelConstraints() {
         answerLabel.snp.makeConstraints { make in
             make.width.equalTo(120)
             make.height.equalTo(152)
@@ -94,14 +94,10 @@ class MainViewController: BaseViewController {
     }
 
     @objc private func presentSettingsScreen(_ sender: UIButton) {
-//        let storyboard = UIStoryboard(name: Storyboard.main, bundle: nil)
-//        let secondViewController = storyboard.instantiateViewController(withIdentifier: Screen.settingsView)
-//            as? SettingsViewController
         let secondViewController = SettingsViewController()
         let model = SettingsModel(localStorage: DataBaseManager())
         let settingsVewModel = SettingsViewModel(model: model)
         secondViewController.attach(viewModel: settingsVewModel)
-//        guard let settingsViewController = secondViewController else { return }
         navigationController?.pushViewController(secondViewController, animated: true)
     }
 }
