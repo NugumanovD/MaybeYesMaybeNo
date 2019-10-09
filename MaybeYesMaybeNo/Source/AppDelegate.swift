@@ -24,7 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let viewModel = MainViewModel(model: model)
         let mainViewController = MainViewController()
         mainViewController.attach(viewModel: viewModel)
-        window?.rootViewController = mainViewController
+        let navigationController = UINavigationController(rootViewController: mainViewController)
+        window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         return true
     }
