@@ -9,13 +9,13 @@
 import Foundation
 import RealmSwift
 
-protocol LocalStorable: class {
+protocol LocalDataStorable: class {
     func allItems() -> [PresentableAnswer]
     func addItem(text: String)
     func deleteItem(item: String)
 }
 
-class DataBaseManager: LocalStorable {
+class DataBaseManager: LocalDataStorable {
 
     var realm: Realm!
     init() {

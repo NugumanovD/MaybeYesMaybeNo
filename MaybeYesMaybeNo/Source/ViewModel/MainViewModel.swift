@@ -21,4 +21,15 @@ class MainViewModel {
             completion(answerResult)
         }
     }
+
+    func getShakeCount(completion: @escaping (PresentableShakeCount?) -> Void) {
+        answerModel.getCount { (shake) in
+            guard let shake = shake else { return }
+            completion(shake)
+        }
+    }
+
+    func didShaken() {
+        answerModel.didShaken()
+    }
 }

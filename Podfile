@@ -10,5 +10,7 @@ target 'MaybeYesMaybeNo' do
   pod 'RealmSwift', '~> 3.17.3'
   pod 'SwiftLint','~> 0.35.0'
   pod 'SwiftGen', '~> 6.1'
-  pod 'SnapKit', '~> 5.0.0'  
+  pod 'SnapKit', '~> 5.0.0'
+  pod 'KeychainSwift', '~> 17.0'
+  
 end

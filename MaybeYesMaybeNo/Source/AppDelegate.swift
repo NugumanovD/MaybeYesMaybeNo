@@ -20,7 +20,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ) -> Bool {
 
         window = UIWindow(frame: UIScreen.main.bounds)
-        let model = MainModel(networker: NetworkManager(), localStorage: DataBaseManager())
+        let model = MainModel(networker: NetworkManager(), localStorage: DataBaseManager(), keychain: KeychainManager())
         let viewModel = MainViewModel(model: model)
         let mainViewController = MainViewController()
         mainViewController.attach(viewModel: viewModel)

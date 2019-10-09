@@ -12,6 +12,8 @@
 		7B55156923397B6000F47437 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B55156723397B6000F47437 /* Localizable.strings */; };
 		7B55156B233A57B600F47437 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7B55156A233A57B600F47437 /* swiftgen.yml */; };
 		7B6C5704234E52BB00B67366 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B6C5703234E52BB00B67366 /* LaunchScreen.storyboard */; };
+		7B6C5708234E63FE00B67366 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C5707234E63FE00B67366 /* KeychainManager.swift */; };
+		7B6C570B234E877100B67366 /* PresentableShakeCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C570A234E877100B67366 /* PresentableShakeCount.swift */; };
 		7B9E265523416CA10070F3D7 /* MagicEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9E265423416CA10070F3D7 /* MagicEntity.swift */; };
 		7B9E265823416D0C0070F3D7 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9E265723416D0C0070F3D7 /* MainModel.swift */; };
 		7BC56B53230DD664008F13A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B52230DD664008F13A7 /* AppDelegate.swift */; };
@@ -41,6 +43,9 @@
 		7B55156823397B6000F47437 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B55156A233A57B600F47437 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = SOURCE_ROOT; };
 		7B6C5703234E52BB00B67366 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7B6C5707234E63FE00B67366 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		7B6C5709234E7CB200B67366 /* MaybeYesMaybeNo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaybeYesMaybeNo.entitlements; sourceTree = "<group>"; };
+		7B6C570A234E877100B67366 /* PresentableShakeCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableShakeCount.swift; sourceTree = "<group>"; };
 		7B9E265423416CA10070F3D7 /* MagicEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicEntity.swift; sourceTree = "<group>"; };
 		7B9E265723416D0C0070F3D7 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
 		7BC56B4F230DD664008F13A7 /* MaybeYesMaybeNo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaybeYesMaybeNo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -133,6 +138,7 @@
 		7BC56B51230DD664008F13A7 /* MaybeYesMaybeNo */ = {
 			isa = PBXGroup;
 			children = (
+				7B6C5709234E7CB200B67366 /* MaybeYesMaybeNo.entitlements */,
 				7B5515622339756A00F47437 /* SwiftGen */,
 				7BC56B68230DD7B4008F13A7 /* Source */,
 				7BC56B67230DD79F008F13A7 /* Resource */,
@@ -190,6 +196,7 @@
 			children = (
 				7BC56B6B230DD7E7008F13A7 /* NetworkManager.swift */,
 				7BCC61F923151B49008BE745 /* DataBaseManager.swift */,
+				7B6C5707234E63FE00B67366 /* KeychainManager.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -201,6 +208,7 @@
 				7B9E265723416D0C0070F3D7 /* MainModel.swift */,
 				7BD24E602342BF0D009944B2 /* SettingsModel.swift */,
 				7BD24E6A23463B1D009944B2 /* PresentableModel.swift */,
+				7B6C570A234E877100B67366 /* PresentableShakeCount.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -399,9 +407,11 @@
 				7B9E265523416CA10070F3D7 /* MagicEntity.swift in Sources */,
 				7B9E265823416D0C0070F3D7 /* MainModel.swift in Sources */,
 				7BC56B7B230DFF1B008F13A7 /* BaseViewController.swift in Sources */,
+				7B6C570B234E877100B67366 /* PresentableShakeCount.swift in Sources */,
 				7BC56B74230DE4F8008F13A7 /* Common.swift in Sources */,
 				7BCC61FF2316562E008BE745 /* UINavigationController.swift in Sources */,
 				7BC56B5B230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld in Sources */,
+				7B6C5708234E63FE00B67366 /* KeychainManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -540,6 +550,8 @@
 			baseConfigurationReference = 2EF541D99880B8DC1B1B7C9A /* Pods-MaybeYesMaybeNo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MaybeYesMaybeNo/MaybeYesMaybeNo.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5P369B9Z7K;
 				INFOPLIST_FILE = "$(SRCROOT)/MaybeYesMaybeNo/Resource/Info.plist";
@@ -548,8 +560,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nugumanov.MaybeYesMaybeNo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -560,6 +574,8 @@
 			baseConfigurationReference = 33AB7FEBCD23D02B9390207A /* Pods-MaybeYesMaybeNo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = MaybeYesMaybeNo/MaybeYesMaybeNo.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5P369B9Z7K;
 				INFOPLIST_FILE = "$(SRCROOT)/MaybeYesMaybeNo/Resource/Info.plist";
@@ -568,8 +584,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 1.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.nugumanov.MaybeYesMaybeNo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

@@ -55,6 +55,13 @@ internal enum L10n {
     }
   }
 
+  internal enum CountLabel {
+    internal enum Placeholer {
+      /// Total shaking: 
+      internal static let text = L10n.tr("Localizable", "countLabel.placeholer.text")
+    }
+  }
+
   internal enum DefaultAnswer {
     /// 
     internal static let type = L10n.tr("Localizable", "defaultAnswer.type")
