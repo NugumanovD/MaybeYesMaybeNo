@@ -34,6 +34,13 @@ internal enum L10n {
     }
   }
 
+  internal enum AnswerLabel {
+    internal enum Placeholder {
+      /// Shake Me
+      internal static let text = L10n.tr("Localizable", "answerLabel.placeholder.text")
+    }
+  }
+
   internal enum Application {
     internal enum Bundle {
       /// MaybeYesMaybeNo
@@ -45,6 +52,13 @@ internal enum L10n {
     internal enum Title {
       /// Add
       internal static let add = L10n.tr("Localizable", "barButtonItem.title.add")
+    }
+  }
+
+  internal enum CountLabel {
+    internal enum Placeholer {
+      /// Total shaking: 
+      internal static let text = L10n.tr("Localizable", "countLabel.placeholer.text")
     }
   }
 

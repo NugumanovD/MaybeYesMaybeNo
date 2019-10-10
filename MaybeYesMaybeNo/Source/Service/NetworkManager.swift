@@ -8,12 +8,12 @@
 
 import Foundation
 
-protocol DataManagerProtocol {
+protocol DataFetching {
     typealias CompletionHandler = (Answer?, Error?) -> Void
     func request(completion: @escaping CompletionHandler)
 }
 
-class NetworkManager: DataManagerProtocol {
+class NetworkManager: DataFetching {
     func request(completion: @escaping CompletionHandler) {
         let session = URLSession(configuration: .default)
 

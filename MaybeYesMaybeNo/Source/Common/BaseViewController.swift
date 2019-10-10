@@ -13,7 +13,7 @@ class BaseViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .black
+        view.backgroundColor = Asset.background.color
         self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController?.view.backgroundColor = .clear
         self.navigationController?.navigationBar.isTranslucent = true
@@ -29,9 +29,4 @@ class BaseViewController: UIViewController {
         return .lightContent
     }
 
-    func transitionToController(with identifier: String) -> UIViewController {
-        let storyboard = UIStoryboard(name: Storyboard.main, bundle: nil)
-        let secondViewController = storyboard.instantiateViewController(withIdentifier: identifier)
-        return secondViewController
-    }
 }

@@ -18,12 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        if let navigationController = window?.rootViewController as? UINavigationController,
-            let mainViewController = navigationController.topViewController as? MainViewController {
-            let model = MainModel(networker: NetworkManager(), localStorage: DataBaseManager())
-            let viewModel = MainViewModel(model: model)
-            mainViewController.attach(viewModel: viewModel)
-        }
+
+        window = UIWindow(frame: UIScreen.main.bounds)
+        let model = MainModel(networker: NetworkManager(), localStorage: DataBaseManager(), keychain: KeychainManager())
+        let viewModel = MainViewModel(model: model)
+        let mainViewController = MainViewController()
+        mainViewController.attach(viewModel: viewModel)
+        let navigationController = UINavigationController(rootViewController: mainViewController)
+        window?.rootViewController = navigationController
+        window?.makeKeyAndVisible()
         return true
     }
 }

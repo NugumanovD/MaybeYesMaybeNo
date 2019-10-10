@@ -9,9 +9,9 @@
 import Foundation
 
 class SettingsModel {
-    private let localStorage: LocalStorable
+    private let localStorage: LocalDataStorable
 
-    init(localStorage: LocalStorable) {
+    init(localStorage: LocalDataStorable) {
         self.localStorage = localStorage
     }
 

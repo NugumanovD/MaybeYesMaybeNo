@@ -11,13 +11,15 @@ import Foundation
 class MainModel {
 
     // MARK: - Private Properties
-    private let networker: DataManagerProtocol
-    private let localStorage: LocalStorable
+    private let networker: DataFetching
+    private let localStorage: LocalDataStorable
+    private let keychainStorage: ShakesCounting
 
     // MARK: - Init
-    init(networker: DataManagerProtocol, localStorage: LocalStorable) {
+    init(networker: DataFetching, localStorage: LocalDataStorable, keychain: ShakesCounting) {
         self.networker = networker
         self.localStorage = localStorage
+        self.keychainStorage = keychain
     }
 
     // MARK: - Public Function
@@ -35,5 +37,16 @@ class MainModel {
                 completion(fetchResult.magic.convertToPresentable())
             }
         }
+    }
+
+    func getCount(completion: @escaping (PresentableShakeCount?) -> Void) {
+        keychainStorage.getShakesCount { (shakeCount)  in
+            guard let shake = shakeCount else { return }
+            completion(shake)
+        }
+    }
+
+    func didShaken() {
+        keychainStorage.didShaken()
     }
 }

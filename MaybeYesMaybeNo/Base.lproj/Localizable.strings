@@ -11,6 +11,11 @@
 
 "RowAction.delete" = "Delete";
 
+//AnwerLabel Placeholder
+"answerLabel.placeholder.text" = "Shake Me";
+
+//Counter Label
+"countLabel.placeholer.text" = "Total shaking: ";
 //Model
 "defaultAnswer.type" = "";
 
@@ -23,4 +28,5 @@
 "alertController.textField.placeholder" = "New Answer";
 "alertController.action.save" = "Save";
 "alertController.action.cancel" = "Cancel";
+
 

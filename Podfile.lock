@@ -1,30 +1,38 @@
 PODS:
+  - KeychainSwift (17.0.0)
   - Realm (3.17.3):
     - Realm/Headers (= 3.17.3)
   - Realm/Headers (3.17.3)
   - RealmSwift (3.17.3):
     - Realm (= 3.17.3)
+  - SnapKit (5.0.1)
   - SwiftGen (6.1.0)
   - SwiftLint (0.35.0)
 
 DEPENDENCIES:
+  - KeychainSwift (~> 17.0)
   - RealmSwift (~> 3.17.3)
+  - SnapKit (~> 5.0.0)
   - SwiftGen (~> 6.1)
   - SwiftLint (~> 0.35.0)
 
 SPEC REPOS:
   trunk:
+    - KeychainSwift
     - Realm
     - RealmSwift
+    - SnapKit
     - SwiftGen
     - SwiftLint
 
 SPEC CHECKSUMS:
+  KeychainSwift: 9f43f562dffc88af6efadb57d74b14c598eb337f
   Realm: 5a1d9d47bfc101dd597668b1a8af4288a2557f6d
   RealmSwift: b7fdc2d18616621c31df5c7a398a45a2163f8eb0
+  SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   SwiftLint: 5553187048b900c91aa03552807681bb6b027846
 
-PODFILE CHECKSUM: 50cfffb48e64b71fa8c63f3d23f124581d9d6c20
+PODFILE CHECKSUM: 75533cbae257b8588a49bbff7e11f336501784d7
 
 COCOAPODS: 1.8.0.beta.2

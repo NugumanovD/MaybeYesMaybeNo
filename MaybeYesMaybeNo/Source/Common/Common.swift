@@ -30,3 +30,11 @@ enum Storyboard {
 enum Cell {
     static let identifier = "Cell"
 }
+
+enum Key {
+    static let countShake = "count"
+}
+
+enum Fonts {
+    static let helveticaNeue = "Helvetica Neue"
+}
