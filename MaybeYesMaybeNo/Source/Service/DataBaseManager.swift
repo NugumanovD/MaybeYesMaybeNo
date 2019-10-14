@@ -12,7 +12,7 @@ import RealmSwift
 protocol LocalDataStorable: class {
     func allItems() -> [PresentableAnswer]
     func addItem(text: String)
-    func deleteItem(item: String)
+    func deleteItem(item: PresentableAnswer)
 }
 
 class DataBaseManager: LocalDataStorable {
@@ -40,11 +40,13 @@ class DataBaseManager: LocalDataStorable {
         }
     }
 
-    func deleteItem(item: String) {
-        let elementsLocalStorage = realm.objects(DefaultAnswersModel.self)
-        for currentItem in elementsLocalStorage where currentItem.answerDefault == item {
-            try? self.realm.write {
-                self.realm.delete(currentItem)
+    func deleteItem(item: PresentableAnswer) {
+        let dataBaseItems = realm.objects(DefaultAnswersModel.self).map({ $0 })
+        for dataBaseItem in dataBaseItems {
+            if dataBaseItem.convertTo().timeStamp == item.timeStamp {
+                try? self.realm.write {
+                    self.realm.delete(dataBaseItem)
+                }
             }
         }
     }

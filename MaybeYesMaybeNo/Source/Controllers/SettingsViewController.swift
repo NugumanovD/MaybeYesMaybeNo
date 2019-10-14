@@ -87,9 +87,9 @@ extension SettingsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath)
-        cell.backgroundColor = .clear
         let items = viewModel.dataBaseStorage()
         let item = items[indexPath.row]
+        cell.backgroundColor = .clear
         cell.textLabel?.text = item.text
         cell.textLabel?.textColor = Asset.text.color
         return cell

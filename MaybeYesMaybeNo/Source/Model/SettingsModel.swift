@@ -27,7 +27,7 @@ class SettingsModel {
         return localStorage.allItems().compactMap({ $0 })
     }
 
-    func deleteItem(item: String) {
+    func deleteItem(item: PresentableAnswer) {
         localStorage.deleteItem(item: item)
     }
 
