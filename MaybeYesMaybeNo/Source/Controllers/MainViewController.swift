@@ -54,7 +54,6 @@ class MainViewController: BaseViewController {
     }
 
     private func configureShakesCounterLabel() {
-        //        shakesCounterLabel.textAlignment = .center
         shakesCounterLabel.font = UIFont(name: Fonts.helveticaNeue, size: 20)
         shakesCounterLabel.textColor = .systemBlue
         self.view.addSubview(shakesCounterLabel)

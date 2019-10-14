@@ -14,6 +14,6 @@ struct Magic: Codable {
 
 extension Magic {
     func convertToPresentable() -> PresentableAnswer {
-        return PresentableAnswer(text: answer)
+        return PresentableAnswer(text: answer, timeStamp: "")
     }
 }

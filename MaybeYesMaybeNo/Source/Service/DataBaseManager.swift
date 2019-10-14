@@ -17,7 +17,7 @@ protocol LocalDataStorable: class {
 
 class DataBaseManager: LocalDataStorable {
 
-    var realm: Realm!
+    private var realm: Realm!
     init() {
         do {
             try self.realm = Realm()
@@ -32,9 +32,11 @@ class DataBaseManager: LocalDataStorable {
 
     func addItem(text: String) {
         let answersList = DefaultAnswersModel()
+        let currentData = Date()
         answersList.answerDefault = text
-        try? self.realm.write {
-            self.realm.add(answersList)
+        answersList.timeStamp = currentData
+            try? realm.write {
+                realm.add(answersList)
         }
     }
 

@@ -12,10 +12,15 @@ import RealmSwift
 class DefaultAnswersModel: Object {
 
     @objc dynamic var answerDefault = L10n.DefaultAnswer.type
+    @objc dynamic var timeStamp = Date()
 }
 
 extension DefaultAnswersModel {
     func convertTo() -> PresentableAnswer {
-        return PresentableAnswer(text: answerDefault)
+        let formatter = DateFormatter()
+               formatter.timeStyle = .medium
+               formatter.dateStyle = .medium
+        let timeStampString = formatter.string(from: timeStamp)
+        return PresentableAnswer(text: answerDefault, timeStamp: timeStampString)
     }
 }

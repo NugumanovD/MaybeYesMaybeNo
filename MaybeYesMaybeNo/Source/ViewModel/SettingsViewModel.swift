@@ -20,7 +20,7 @@ class SettingsViewModel {
     }
 
     func dataBaseStorage() -> [PresentableAnswer] {
-        return settingsModel.localStorageItems()
+        return settingsModel.localStorageItems().sorted { $0.timeStamp > $1.timeStamp }
     }
 
     func removeItem(from dataBase: PresentableAnswer) {
