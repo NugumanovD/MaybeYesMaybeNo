@@ -11,7 +11,7 @@ import RealmSwift
 
 protocol LocalDataStorable: class {
     func allItems() -> [PresentableAnswer]
-    func addItem(text: String)
+    func addItem(with text: PresentableAnswer)
     func deleteItem(item: PresentableAnswer)
 }
 
@@ -30,13 +30,22 @@ class DataBaseManager: LocalDataStorable {
         return realm.objects(DefaultAnswersModel.self).map({ $0.convertTo() })
     }
 
-    func addItem(text: String) {
+    func addItem(with text: PresentableAnswer) {
         let answersList = DefaultAnswersModel()
         let currentData = Date()
-        answersList.answerDefault = text
+        answersList.answerDefault = text.text
         answersList.timeStamp = currentData
-            try? realm.write {
-                realm.add(answersList)
+        DispatchQueue.global().async {
+            autoreleasepool {
+                do {
+                    let backgroundRealm = try Realm()
+                    try backgroundRealm.write {
+                        backgroundRealm.add(answersList)
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
 

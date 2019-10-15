@@ -34,7 +34,7 @@ class MainModel {
                     completion(self.localStorage.allItems().randomElement())
                     return
                 }
-                self.localStorage.addItem(text: fetchResult.magic.answer)
+                self.localStorage.addItem(with: fetchResult.magic.convertToPresentable())
                 completion(fetchResult.magic.convertToPresentable())
             }
         }

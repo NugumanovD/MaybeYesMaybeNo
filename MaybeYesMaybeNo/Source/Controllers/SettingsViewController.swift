@@ -66,7 +66,8 @@ class SettingsViewController: BaseViewController {
 
         let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { [weak self] _ in
             guard let text = alertTextField.text, !text.isEmpty else { return }
-            self?.viewModel.addItem(with: text)
+            let savingItem = PresentableAnswer(text: text, timeStamp: "")
+            self?.viewModel.addItem(with: savingItem)
             self?.tableView.reloadData()
         }
 

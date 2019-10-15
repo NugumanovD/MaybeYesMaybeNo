@@ -24,10 +24,10 @@ class SettingsViewModel {
     }
 
     func removeItem(from dataBase: PresentableAnswer) {
-        return settingsModel.deleteItem(item: dataBase)
+        return settingsModel.deleteItem(dataBase)
     }
 
-    func addItem(with property: String) {
+    func addItem(with property: PresentableAnswer) {
         settingsModel.addCustomAnswer(with: property)
     }
 }

@@ -15,8 +15,8 @@ class SettingsModel {
         self.localStorage = localStorage
     }
 
-    func addCustomAnswer(with text: String) {
-        localStorage.addItem(text: text)
+    func addCustomAnswer(with model: PresentableAnswer) {
+        localStorage.addItem(with: model)
     }
 
     func numberOfRows() -> Int {
@@ -27,7 +27,7 @@ class SettingsModel {
         return localStorage.allItems().compactMap({ $0 })
     }
 
-    func deleteItem(item: PresentableAnswer) {
+    func deleteItem(_ item: PresentableAnswer) {
         localStorage.deleteItem(item: item)
     }
 
