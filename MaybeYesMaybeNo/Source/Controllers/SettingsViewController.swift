@@ -14,6 +14,7 @@ class SettingsViewController: BaseViewController {
 
     private var viewModel: SettingsViewModel!
     private let tableView = UITableView()
+    var answersHistory = [PresentableAnswer]()
 
     func attach(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
@@ -26,6 +27,13 @@ class SettingsViewController: BaseViewController {
         registerTableViewCell()
         cofigureNavigationBar()
         configureTableViewConstraints()
+        navigationItem.title = L10n.TabbarItem.Title.history
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.answersHistory = viewModel.dataBaseStorage()
+        self.tableView.reloadData()
     }
 
     private func registerTableViewCell() {
@@ -66,9 +74,13 @@ class SettingsViewController: BaseViewController {
 
         let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { [weak self] _ in
             guard let text = alertTextField.text, !text.isEmpty else { return }
+            guard let self = self else { return }
             let savingItem = PresentableAnswer(text: text, timeStamp: "")
-            self?.viewModel.addItem(with: savingItem)
-            self?.tableView.reloadData()
+            self.viewModel?.addItem(with: savingItem)
+            DispatchQueue.main.async {
+                self.answersHistory = self.viewModel.dataBaseStorage()
+                self.tableView.reloadData()
+            }
         }
 
         let cancelAction = UIAlertAction(title: L10n.AlertController.Action.cancel, style: .destructive, handler: nil)
@@ -83,13 +95,12 @@ class SettingsViewController: BaseViewController {
 extension SettingsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRows()
+        return answersHistory.count  //viewModel?.numberOfRows() ?? 0
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath)
-        let items = viewModel.dataBaseStorage()
-        let item = items[indexPath.row]
+        let item = answersHistory[indexPath.row]
         cell.backgroundColor = .clear
         cell.textLabel?.text = item.text
         cell.textLabel?.textColor = Asset.text.color
@@ -100,10 +111,12 @@ extension SettingsViewController: UITableViewDataSource {
 extension SettingsViewController: UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let editingRows = viewModel.dataBaseStorage()
+        let editingRows = answersHistory
         let editingRow = editingRows[indexPath.row]
         let deleteAction = UITableViewRowAction(style: .default, title: L10n.RowAction.delete) { [weak self] _, _ in
-            self?.viewModel.removeItem(from: editingRow)
+            guard let self = self else { return }
+            self.viewModel?.removeItem(from: editingRow)
+            self.answersHistory = self.viewModel.dataBaseStorage()
             tableView.reloadData()
         }
         return [deleteAction]

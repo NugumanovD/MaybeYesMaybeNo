@@ -20,13 +20,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
 
+        migrationRealmDataBase()
         window = UIWindow(frame: UIScreen.main.bounds)
-        let model = MainModel(networker: NetworkManager(), localStorage: DataBaseManager(), keychain: KeychainManager())
-        let viewModel = MainViewModel(model: model)
-        let mainViewController = MainViewController()
-        mainViewController.attach(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: mainViewController)
-        window?.rootViewController = navigationController
+        let tabbarController = RootTabBarController()
+        UITabBar.appearance().isTranslucent = false
+        UITabBar.appearance().barTintColor = .black
+        window?.rootViewController = tabbarController
         window?.makeKeyAndVisible()
         return true
     }

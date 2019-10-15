@@ -13,17 +13,16 @@ class MainViewController: BaseViewController {
 
     private let answerLabel = UILabel()
     private let triangleImageView = UIImageView()
-    private let settingsButton = UIButton()
     private let shakesCounterLabel = UILabel()
-    private var mainViewModel: MainViewModel!
+    private var mainViewModel: MainViewModel?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         configureTriangleImageView()
         configureAnswerLabel()
-        configureSettingsButton()
         configureShakesCounterLabel()
         fetchShakesCount()
+        navigationItem.title = L10n.TabbarItem.Title.magic
     }
 
     func attach(viewModel: MainViewModel) {
@@ -33,7 +32,7 @@ class MainViewController: BaseViewController {
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         switch motion {
         case .motionShake:
-            mainViewModel.didShaken()
+            mainViewModel?.didShaken()
             mainViewModel?.getAnswer(completion: { [weak self] answer in
                 DispatchQueue.main.async {
                     self?.answerLabel.text = answer?.text.uppercased()
@@ -46,7 +45,7 @@ class MainViewController: BaseViewController {
     }
 
     func fetchShakesCount() {
-        mainViewModel.getShakeCount { [weak self] shakes in
+        mainViewModel?.getShakeCount { [weak self] shakes in
             guard let shake = shakes else { return }
             self?.shakesCounterLabel.text =
                 L10n.CountLabel.Placeholer.text + shake.shakeCount
@@ -58,25 +57,6 @@ class MainViewController: BaseViewController {
         shakesCounterLabel.textColor = .systemBlue
         self.view.addSubview(shakesCounterLabel)
         configureCounterLabelConstraints()
-    }
-
-    private func configureSettingsButton() {
-        self.view.addSubview(settingsButton)
-        let image = UIImage(named: Asset.settings.name)
-        let tintedImage = image?.withRenderingMode(.alwaysTemplate)
-        settingsButton.setImage(tintedImage, for: .normal)
-        settingsButton.addTarget(self, action: #selector(presentSettingsScreen(_:)), for: .touchUpInside)
-        configureSettingsButtonConstaraints()
-    }
-
-    func configureSettingsButtonConstaraints() {
-        let safeAreaView = self.view.safeAreaLayoutGuide
-        settingsButton.snp.makeConstraints { make in
-            make.width.equalTo(65)
-            make.height.equalTo(65)
-            make.bottom.equalTo(safeAreaView.snp.bottom).offset(-20)
-            make.left.equalTo(safeAreaView.snp.left).offset(20)
-        }
     }
 
     private func configureTriangleImageView() {
@@ -119,13 +99,5 @@ class MainViewController: BaseViewController {
             make.top.equalTo(safeAreaView.snp.top).offset(5)
             make.left.equalTo(safeAreaView.snp.left).offset(5)
         }
-    }
-
-    @objc private func presentSettingsScreen(_ sender: UIButton) {
-        let secondViewController = SettingsViewController()
-        let model = SettingsModel(localStorage: DataBaseManager())
-        let settingsVewModel = SettingsViewModel(model: model)
-        secondViewController.attach(viewModel: settingsVewModel)
-        navigationController?.pushViewController(secondViewController, animated: true)
     }
 }
