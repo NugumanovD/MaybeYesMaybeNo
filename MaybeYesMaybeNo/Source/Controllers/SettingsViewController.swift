@@ -12,10 +12,11 @@ import SnapKit
 
 class SettingsViewController: BaseViewController {
 
-    private var viewModel: SettingsViewModel!
+    private var viewModel: SettingsViewModel?
     private let tableView = UITableView()
     var answersHistory = [PresentableAnswer]()
-
+    let defaultValueAnswer = [PresentableAnswer(text: "", timeStamp: "")]
+    
     func attach(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
     }
@@ -32,7 +33,7 @@ class SettingsViewController: BaseViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.answersHistory = viewModel.dataBaseStorage()
+        self.answersHistory = viewModel?.dataBaseStorage() ?? defaultValueAnswer
         self.tableView.reloadData()
     }
 
@@ -78,7 +79,7 @@ class SettingsViewController: BaseViewController {
             let savingItem = PresentableAnswer(text: text, timeStamp: "")
             self.viewModel?.addItem(with: savingItem)
             DispatchQueue.main.async {
-                self.answersHistory = self.viewModel.dataBaseStorage()
+                self.answersHistory = self.viewModel?.dataBaseStorage() ?? self.defaultValueAnswer
                 self.tableView.reloadData()
             }
         }
@@ -95,7 +96,7 @@ class SettingsViewController: BaseViewController {
 extension SettingsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return answersHistory.count  //viewModel?.numberOfRows() ?? 0
+        return answersHistory.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -116,8 +117,10 @@ extension SettingsViewController: UITableViewDelegate {
         let deleteAction = UITableViewRowAction(style: .default, title: L10n.RowAction.delete) { [weak self] _, _ in
             guard let self = self else { return }
             self.viewModel?.removeItem(from: editingRow)
-            self.answersHistory = self.viewModel.dataBaseStorage()
-            tableView.reloadData()
+            DispatchQueue.main.async {
+                self.answersHistory = self.viewModel?.dataBaseStorage() ?? self.defaultValueAnswer
+                tableView.reloadData()
+            }
         }
         return [deleteAction]
     }
