@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import RealmSwift
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -28,5 +29,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
         return true
+    }
+
+    private func migrationRealmDataBase() {
+        let config = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { _, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                }
+            })
+        Realm.Configuration.defaultConfiguration = config
     }
 }
