@@ -16,7 +16,7 @@ protocol ShakesCounting {
 
 class KeychainManager: ShakesCounting {
 
-    let keychain = KeychainSwift()
+    private let keychain = KeychainSwift()
     var currentCount = ""
     init() {
         currentCount = keychain.get(Key.countShake) ?? "0"

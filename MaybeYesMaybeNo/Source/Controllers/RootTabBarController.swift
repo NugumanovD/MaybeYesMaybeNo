@@ -13,20 +13,28 @@ class RootTabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+
+    init() {
+        super.init(nibName: nil, bundle: nil)
         configureTabBarItems()
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 
     private func configureTabBarItems() {
         let model = MainModel(networker: NetworkManager(), localStorage: DataBaseManager(), keychain: KeychainManager())
         let viewModel = MainViewModel(model: model)
-        let mainViewController = MainViewController()
-        mainViewController.attach(viewModel: viewModel)
-        let secondViewController = SettingsViewController()
+        let mainViewController = MainViewController(mainViewModel: viewModel)
         let settingsModel = SettingsModel(localStorage: DataBaseManager())
         let settingsVewModel = SettingsViewModel(model: settingsModel)
-        secondViewController.attach(viewModel: settingsVewModel)
+        let secondViewController = SettingsViewController(viewModel: settingsVewModel)
         setupTabBarElement(with: mainViewController, title: L10n.TabbarItem.Title.magic, image: Asset.ball.name)
         setupTabBarElement(with: secondViewController, title: L10n.TabbarItem.Title.history, image: Asset.list.name)
+        UITabBar.appearance().isTranslucent = false
+        UITabBar.appearance().barTintColor = .black
     }
 
     private func setupTabBarElement(with viewController: UIViewController, title: String, image: String) {

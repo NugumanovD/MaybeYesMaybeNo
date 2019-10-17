@@ -23,11 +23,11 @@ class SettingsViewModel {
         return settingsModel.localStorageItems().sorted { $0.timeStamp > $1.timeStamp }
     }
 
-    func removeItem(from dataBase: PresentableAnswer) {
+    func removeItem(_ dataBase: PresentableAnswer) {
         return settingsModel.deleteItem(dataBase)
     }
 
     func addItem(with property: PresentableAnswer) {
-        settingsModel.addCustomAnswer(with: property)
+        settingsModel.addCustomAnswer(property)
     }
 }

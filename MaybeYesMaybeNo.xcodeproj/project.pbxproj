@@ -18,7 +18,6 @@
 		7B9E265823416D0C0070F3D7 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9E265723416D0C0070F3D7 /* MainModel.swift */; };
 		7BC56B53230DD664008F13A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B52230DD664008F13A7 /* AppDelegate.swift */; };
 		7BC56B55230DD664008F13A7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B54230DD664008F13A7 /* MainViewController.swift */; };
-		7BC56B5B230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B59230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld */; };
 		7BC56B5D230DD665008F13A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BC56B5C230DD665008F13A7 /* Assets.xcassets */; };
 		7BC56B6C230DD7E7008F13A7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B6B230DD7E7008F13A7 /* NetworkManager.swift */; };
 		7BC56B6F230DD7FF008F13A7 /* AnswerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B6E230DD7FF008F13A7 /* AnswerEntity.swift */; };
@@ -52,7 +51,6 @@
 		7BC56B4F230DD664008F13A7 /* MaybeYesMaybeNo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaybeYesMaybeNo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BC56B52230DD664008F13A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7BC56B54230DD664008F13A7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		7BC56B5A230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MaybeYesMaybeNo.xcdatamodel; sourceTree = "<group>"; };
 		7BC56B5C230DD665008F13A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7BC56B61230DD665008F13A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BC56B6B230DD7E7008F13A7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -155,7 +153,6 @@
 				7B55156A233A57B600F47437 /* swiftgen.yml */,
 				7BC56B5C230DD665008F13A7 /* Assets.xcassets */,
 				7BC56B61230DD665008F13A7 /* Info.plist */,
-				7BC56B59230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -413,7 +410,6 @@
 				7B6C570B234E877100B67366 /* PresentableShakeCount.swift in Sources */,
 				7BC56B74230DE4F8008F13A7 /* Common.swift in Sources */,
 				7BCC61FF2316562E008BE745 /* UINavigationController.swift in Sources */,
-				7BC56B5B230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld in Sources */,
 				7B6C5708234E63FE00B67366 /* KeychainManager.swift in Sources */,
 				7BE4E9D82356728A00FE4D28 /* RootTabBarController.swift in Sources */,
 			);
@@ -619,19 +615,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		7BC56B59230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				7BC56B5A230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodel */,
-			);
-			currentVersion = 7BC56B5A230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodel */;
-			path = MaybeYesMaybeNo.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 7BC56B47230DD664008F13A7 /* Project object */;
 }

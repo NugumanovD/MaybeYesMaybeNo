@@ -15,8 +15,8 @@ class SettingsModel {
         self.localStorage = localStorage
     }
 
-    func addCustomAnswer(with model: PresentableAnswer) {
-        localStorage.addItem(with: model)
+    func addCustomAnswer(_ answer: PresentableAnswer) {
+        localStorage.addItem(with: answer)
     }
 
     func numberOfRows() -> Int {

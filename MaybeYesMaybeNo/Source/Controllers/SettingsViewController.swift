@@ -12,11 +12,19 @@ import SnapKit
 
 class SettingsViewController: BaseViewController {
 
-    private var viewModel: SettingsViewModel?
+    private var viewModel: SettingsViewModel
     private let tableView = UITableView()
     var answersHistory = [PresentableAnswer]()
-    let defaultValueAnswer = [PresentableAnswer(text: "", timeStamp: "")]
-    
+
+    init(viewModel: SettingsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
     func attach(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
     }
@@ -33,8 +41,8 @@ class SettingsViewController: BaseViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        self.answersHistory = viewModel?.dataBaseStorage() ?? defaultValueAnswer
-        self.tableView.reloadData()
+        answersHistory = viewModel.dataBaseStorage()
+        tableView.reloadData()
     }
 
     private func registerTableViewCell() {
@@ -74,12 +82,11 @@ class SettingsViewController: BaseViewController {
         }
 
         let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { [weak self] _ in
-            guard let text = alertTextField.text, !text.isEmpty else { return }
-            guard let self = self else { return }
+            guard let text = alertTextField.text, !text.isEmpty, let self = self else { return }
             let savingItem = PresentableAnswer(text: text, timeStamp: "")
-            self.viewModel?.addItem(with: savingItem)
+            self.viewModel.addItem(with: savingItem)
             DispatchQueue.main.async {
-                self.answersHistory = self.viewModel?.dataBaseStorage() ?? self.defaultValueAnswer
+                self.answersHistory = self.viewModel.dataBaseStorage()
                 self.tableView.reloadData()
             }
         }
@@ -111,17 +118,12 @@ extension SettingsViewController: UITableViewDataSource {
 
 extension SettingsViewController: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let editingRows = answersHistory
-        let editingRow = editingRows[indexPath.row]
-        let deleteAction = UITableViewRowAction(style: .default, title: L10n.RowAction.delete) { [weak self] _, _ in
-            guard let self = self else { return }
-            self.viewModel?.removeItem(from: editingRow)
-            DispatchQueue.main.async {
-                self.answersHistory = self.viewModel?.dataBaseStorage() ?? self.defaultValueAnswer
-                tableView.reloadData()
-            }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            let item = answersHistory.remove(at: indexPath.row)
+            viewModel.removeItem(item)
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
         }
-        return [deleteAction]
     }
 }

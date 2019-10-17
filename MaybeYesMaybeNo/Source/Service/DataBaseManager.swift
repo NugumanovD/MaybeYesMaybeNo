@@ -50,13 +50,32 @@ class DataBaseManager: LocalDataStorable {
     }
 
     func deleteItem(item: PresentableAnswer) {
-        let dataBaseItems = realm.objects(DefaultAnswersModel.self).map({ $0 })
-        for dataBaseItem in dataBaseItems {
-            if dataBaseItem.convertTo().timeStamp == item.timeStamp {
-                try? self.realm.write {
-                    self.realm.delete(dataBaseItem)
+        DispatchQueue.global().async {
+            autoreleasepool {
+                do {
+                    let backgroundRealm = try Realm()
+                    let dataBaseItems = backgroundRealm.objects(DefaultAnswersModel.self).map({ $0 })
+                    for dataBaseItem in dataBaseItems {
+                        if dataBaseItem.convertTo().timeStamp == item.timeStamp {
+                            try backgroundRealm.write {
+                                backgroundRealm.delete(dataBaseItem)
+                            }
+                        }
+                    }
+                } catch {
+                    print(error.localizedDescription)
                 }
             }
         }
+    }
+
+    func migrationRealmDataBase() {
+        let config = Realm.Configuration(
+            schemaVersion: 1,
+            migrationBlock: { _, oldSchemaVersion in
+                if oldSchemaVersion < 1 {
+                }
+        })
+        Realm.Configuration.defaultConfiguration = config
     }
 }
