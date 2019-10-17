@@ -16,11 +16,7 @@ class DefaultAnswersModel: Object {
 }
 
 extension DefaultAnswersModel {
-    func convertTo() -> PresentableAnswer {
-        let formatter = DateFormatter()
-               formatter.timeStyle = .medium
-               formatter.dateStyle = .medium
-        let timeStampString = formatter.string(from: timeStamp)
-        return PresentableAnswer(text: answerDefault, timeStamp: timeStampString)
+    func convertToAnswerModel() -> AnswerModel {
+        return AnswerModel(answer: answerDefault, timeStamp: timeStamp)
     }
 }

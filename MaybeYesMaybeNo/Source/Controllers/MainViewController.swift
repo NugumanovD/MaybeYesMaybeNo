@@ -40,7 +40,7 @@ class MainViewController: BaseViewController {
             mainViewModel.didShaken()
             mainViewModel.getAnswer(completion: { [weak self] answer in
                 DispatchQueue.main.async {
-                    self?.answerLabel.text = answer?.text.uppercased()
+                    self?.answerLabel.text = answer?.text
                 }
             })
         default:

@@ -12,3 +12,9 @@ struct PresentableAnswer {
     var text: String
     var timeStamp: String
 }
+
+extension PresentableAnswer {
+    func convertToAnswerModel() -> AnswerModel {
+        return AnswerModel(answer: text, timeStamp: Date())
+    }
+}

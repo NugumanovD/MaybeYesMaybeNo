@@ -32,6 +32,7 @@
 		7BD24E6B23463B1D009944B2 /* PresentableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD24E6A23463B1D009944B2 /* PresentableModel.swift */; };
 		7BE14F2D2340C293004B0627 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE14F2C2340C293004B0627 /* MainViewModel.swift */; };
 		7BE4E9D82356728A00FE4D28 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE4E9D72356728A00FE4D28 /* RootTabBarController.swift */; };
+		7BE4E9DA23589AF400FE4D28 /* AnswerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE4E9D923589AF400FE4D28 /* AnswerModel.swift */; };
 		DBD9D32A227D12B8191EC1DC /* Pods_MaybeYesMaybeNo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A575923B28DD48ABCABFAC /* Pods_MaybeYesMaybeNo.framework */; };
 /* End PBXBuildFile section */
 
@@ -66,6 +67,7 @@
 		7BD24E6A23463B1D009944B2 /* PresentableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentableModel.swift; sourceTree = "<group>"; };
 		7BE14F2C2340C293004B0627 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		7BE4E9D72356728A00FE4D28 /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
+		7BE4E9D923589AF400FE4D28 /* AnswerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerModel.swift; sourceTree = "<group>"; };
 		99A575923B28DD48ABCABFAC /* Pods_MaybeYesMaybeNo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MaybeYesMaybeNo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -209,6 +211,7 @@
 				7BD24E602342BF0D009944B2 /* SettingsModel.swift */,
 				7BD24E6A23463B1D009944B2 /* PresentableModel.swift */,
 				7B6C570A234E877100B67366 /* PresentableShakeCount.swift */,
+				7BE4E9D923589AF400FE4D28 /* AnswerModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				7BD24E612342BF0D009944B2 /* SettingsModel.swift in Sources */,
 				7BC56B6F230DD7FF008F13A7 /* AnswerEntity.swift in Sources */,
 				7BC56B6C230DD7E7008F13A7 /* NetworkManager.swift in Sources */,
+				7BE4E9DA23589AF400FE4D28 /* AnswerModel.swift in Sources */,
 				7B55156523397ACA00F47437 /* assets.swift in Sources */,
 				7BC56B77230DF4E3008F13A7 /* SettingsViewController.swift in Sources */,
 				7BD24E632342BF40009944B2 /* SettingsViewModel.swift in Sources */,

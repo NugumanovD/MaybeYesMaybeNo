@@ -23,7 +23,7 @@ class MainModel {
     }
 
     // MARK: - Public Function
-     func getAnswer(completion: @escaping (PresentableAnswer?) -> Void) {
+     func getAnswer(completion: @escaping (AnswerModel?) -> Void) {
         networker.request { (result, error) in
             DispatchQueue.main.async {
                 if let error = error {
@@ -34,8 +34,8 @@ class MainModel {
                     completion(self.localStorage.allItems().randomElement())
                     return
                 }
-                self.localStorage.addItem(with: fetchResult.magic.convertToPresentable())
-                completion(fetchResult.magic.convertToPresentable())
+                self.localStorage.addItem(with: fetchResult.magic.convertTo())
+                completion(fetchResult.magic.convertTo())
             }
         }
     }

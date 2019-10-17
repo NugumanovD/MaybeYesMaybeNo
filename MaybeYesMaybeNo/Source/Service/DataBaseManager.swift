@@ -10,9 +10,9 @@ import Foundation
 import RealmSwift
 
 protocol LocalDataStorable: class {
-    func allItems() -> [PresentableAnswer]
-    func addItem(with text: PresentableAnswer)
-    func deleteItem(item: PresentableAnswer)
+    func allItems() -> [AnswerModel]
+    func addItem(with text: AnswerModel)
+    func deleteItem(item: AnswerModel)
 }
 
 class DataBaseManager: LocalDataStorable {
@@ -26,17 +26,15 @@ class DataBaseManager: LocalDataStorable {
         }
     }
 
-    func allItems() -> [PresentableAnswer] {
-        return realm.objects(DefaultAnswersModel.self).map({ $0.convertTo() })
+    func allItems() -> [AnswerModel] {
+        return realm.objects(DefaultAnswersModel.self).map({ $0.convertToAnswerModel() })
     }
 
-    func addItem(with text: PresentableAnswer) {
-        let answersList = DefaultAnswersModel()
-        let currentData = Date()
-        answersList.answerDefault = text.text
-        answersList.timeStamp = currentData
+    func addItem(with text: AnswerModel) {
         DispatchQueue.global().async {
             autoreleasepool {
+                let answersList = DefaultAnswersModel()
+                answersList.answerDefault = text.answer
                 do {
                     let backgroundRealm = try Realm()
                     try backgroundRealm.write {
@@ -49,17 +47,15 @@ class DataBaseManager: LocalDataStorable {
         }
     }
 
-    func deleteItem(item: PresentableAnswer) {
+    func deleteItem(item: AnswerModel) {
         DispatchQueue.global().async {
             autoreleasepool {
                 do {
                     let backgroundRealm = try Realm()
                     let dataBaseItems = backgroundRealm.objects(DefaultAnswersModel.self).map({ $0 })
-                    for dataBaseItem in dataBaseItems {
-                        if dataBaseItem.convertTo().timeStamp == item.timeStamp {
-                            try backgroundRealm.write {
-                                backgroundRealm.delete(dataBaseItem)
-                            }
+                    for dataBaseItem in dataBaseItems where item.timeStamp == dataBaseItem.timeStamp {
+                        try backgroundRealm.write {
+                            backgroundRealm.delete(dataBaseItem)
                         }
                     }
                 } catch {

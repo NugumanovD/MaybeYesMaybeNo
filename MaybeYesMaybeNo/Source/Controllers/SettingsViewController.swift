@@ -83,7 +83,8 @@ class SettingsViewController: BaseViewController {
 
         let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { [weak self] _ in
             guard let text = alertTextField.text, !text.isEmpty, let self = self else { return }
-            let savingItem = PresentableAnswer(text: text, timeStamp: "")
+            let date = self.viewModel.convert(date: Date())
+            let savingItem = PresentableAnswer(text: text, timeStamp: date)
             self.viewModel.addItem(with: savingItem)
             DispatchQueue.main.async {
                 self.answersHistory = self.viewModel.dataBaseStorage()
