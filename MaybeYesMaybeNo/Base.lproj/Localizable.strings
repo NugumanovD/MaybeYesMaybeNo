@@ -29,4 +29,7 @@
 "alertController.action.save" = "Save";
 "alertController.action.cancel" = "Cancel";
 
+// Tabbar Screen Name
+"tabbarItem.title.history" = "History";
+"tabbarItem.title.magic" = "Magic Ball";
 

@@ -12,10 +12,12 @@ import RealmSwift
 class DefaultAnswersModel: Object {
 
     @objc dynamic var answerDefault = L10n.DefaultAnswer.type
+    @objc dynamic var timeStamp = Date()
+    @objc dynamic var identifier = ""
 }
 
 extension DefaultAnswersModel {
-    func convertTo() -> PresentableAnswer {
-        return PresentableAnswer(text: answerDefault)
+    func convertToAnswerModel() -> AnswerModel {
+        return AnswerModel(answer: answerDefault, timeStamp: timeStamp, identifier: identifier)
     }
 }

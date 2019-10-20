@@ -10,7 +10,7 @@ import Foundation
 
 class MainViewModel {
     private let answerModel: MainModel
-
+    lazy var formmater = DateFormatter()
     init(model: MainModel) {
         self.answerModel = model
     }
@@ -18,7 +18,11 @@ class MainViewModel {
     func getAnswer(completion: @escaping (PresentableAnswer?) -> Void) {
         answerModel.getAnswer { answer in
             guard let answerResult = answer else { return }
-            completion(answerResult)
+            completion(answerResult.convertToPresentableAnswer(
+                text: answerResult.answer.uppercased(),
+                time: self.convert(date: answerResult.timeStamp),
+                identifier: answerResult.identifier ?? "MainViewModel")
+            )
         }
     }
 
@@ -31,5 +35,12 @@ class MainViewModel {
 
     func didShaken() {
         answerModel.didShaken()
+    }
+
+    private func convert(date: Date) -> String {
+        formmater.timeStyle = .medium
+        formmater.dateStyle = .medium
+        let dateString = formmater.string(from: date)
+        return dateString
     }
 }

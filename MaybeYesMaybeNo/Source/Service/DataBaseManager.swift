@@ -10,15 +10,16 @@ import Foundation
 import RealmSwift
 
 protocol LocalDataStorable: class {
-    func allItems() -> [PresentableAnswer]
-    func addItem(text: String)
-    func deleteItem(item: String)
+    func allItems() -> [AnswerModel]
+    func addItem(with text: AnswerModel)
+    func deleteItem(item: AnswerModel)
 }
 
 class DataBaseManager: LocalDataStorable {
 
-    var realm: Realm!
+    private var realm: Realm!
     init() {
+        migrationRealmDataBase()
         do {
             try self.realm = Realm()
         } catch {
@@ -26,24 +27,53 @@ class DataBaseManager: LocalDataStorable {
         }
     }
 
-    func allItems() -> [PresentableAnswer] {
-        return realm.objects(DefaultAnswersModel.self).map({ $0.convertTo() })
+    func allItems() -> [AnswerModel] {
+        return realm.objects(DefaultAnswersModel.self).map({ $0.convertToAnswerModel() })
     }
 
-    func addItem(text: String) {
-        let answersList = DefaultAnswersModel()
-        answersList.answerDefault = text
-        try? self.realm.write {
-            self.realm.add(answersList)
-        }
-    }
-
-    func deleteItem(item: String) {
-        let elementsLocalStorage = realm.objects(DefaultAnswersModel.self)
-        for currentItem in elementsLocalStorage where currentItem.answerDefault == item {
-            try? self.realm.write {
-                self.realm.delete(currentItem)
+    func addItem(with text: AnswerModel) {
+        DispatchQueue.global().async {
+            autoreleasepool {
+                let answersList = DefaultAnswersModel()
+                answersList.answerDefault = text.answer
+                answersList.identifier = UUID().uuidString
+                do {
+                    let backgroundRealm = try Realm()
+                    try backgroundRealm.write {
+                        backgroundRealm.add(answersList)
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
             }
         }
+    }
+
+    func deleteItem(item: AnswerModel) {
+        DispatchQueue.global().async {
+            autoreleasepool {
+                do {
+                    let backgroundRealm = try Realm()
+                    guard let identifier = item.identifier else { return }
+                    let dataBaseItems = backgroundRealm.objects(DefaultAnswersModel.self)
+                        .filter("identifier == %@", identifier)
+                    try backgroundRealm.write {
+                        backgroundRealm.delete(dataBaseItems)
+                    }
+                } catch {
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+
+    func migrationRealmDataBase() {
+        let config = Realm.Configuration(
+            schemaVersion: 2,
+            migrationBlock: { _, oldSchemaVersion in
+                if oldSchemaVersion < 2 {
+                }
+        })
+        Realm.Configuration.defaultConfiguration = config
     }
 }

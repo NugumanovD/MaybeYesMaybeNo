@@ -8,6 +8,14 @@
 
 import UIKit
 import CoreData
+import RealmSwift
+
+enum UIStyle {
+    static func application(_ application: UIApplication) {
+        UITabBar.appearance().isTranslucent = false
+        UITabBar.appearance().barTintColor = .black
+    }
+}
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -18,14 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-
+        UIStyle.application(application)
         window = UIWindow(frame: UIScreen.main.bounds)
-        let model = MainModel(networker: NetworkManager(), localStorage: DataBaseManager(), keychain: KeychainManager())
-        let viewModel = MainViewModel(model: model)
-        let mainViewController = MainViewController()
-        mainViewController.attach(viewModel: viewModel)
-        let navigationController = UINavigationController(rootViewController: mainViewController)
-        window?.rootViewController = navigationController
+        window?.rootViewController = UITabBarController.makeRootController()
         window?.makeKeyAndVisible()
         return true
     }

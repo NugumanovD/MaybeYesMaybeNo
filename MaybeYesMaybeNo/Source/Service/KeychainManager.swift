@@ -16,9 +16,10 @@ protocol ShakesCounting {
 
 class KeychainManager: ShakesCounting {
 
-    let keychain = KeychainSwift()
+    private let keychain = KeychainSwift()
+    var currentCount = ""
     init() {
-        _ = keychain.set("0", forKey: Key.countShake)
+        currentCount = keychain.get(Key.countShake) ?? "0"
     }
 
     func getShakesCount(completion: @escaping ShakeMotionHandler) {
@@ -29,8 +30,8 @@ class KeychainManager: ShakesCounting {
 
     func didShaken() {
         let count = keychain.get(Key.countShake)
-        guard let countr = count else { return }
-        let addedCount = 1 + (Int(countr) ?? 0)
+        guard let curerrentForAdded = count else { return }
+        let addedCount = 1 + (Int(curerrentForAdded) ?? 0)
         keychain.set("\(addedCount)", forKey: Key.countShake)
     }
 }

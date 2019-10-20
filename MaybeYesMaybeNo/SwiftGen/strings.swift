@@ -66,6 +66,15 @@ internal enum L10n {
     /// 
     internal static let type = L10n.tr("Localizable", "defaultAnswer.type")
   }
+
+  internal enum TabbarItem {
+    internal enum Title {
+      /// History
+      internal static let history = L10n.tr("Localizable", "tabbarItem.title.history")
+      /// Magic Ball
+      internal static let magic = L10n.tr("Localizable", "tabbarItem.title.magic")
+    }
+  }
 }
 // swiftlint:enable explicit_type_interface function_parameter_count identifier_name line_length
 // swiftlint:enable nesting type_body_length type_name

@@ -18,7 +18,6 @@
 		7B9E265823416D0C0070F3D7 /* MainModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B9E265723416D0C0070F3D7 /* MainModel.swift */; };
 		7BC56B53230DD664008F13A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B52230DD664008F13A7 /* AppDelegate.swift */; };
 		7BC56B55230DD664008F13A7 /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B54230DD664008F13A7 /* MainViewController.swift */; };
-		7BC56B5B230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B59230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld */; };
 		7BC56B5D230DD665008F13A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7BC56B5C230DD665008F13A7 /* Assets.xcassets */; };
 		7BC56B6C230DD7E7008F13A7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B6B230DD7E7008F13A7 /* NetworkManager.swift */; };
 		7BC56B6F230DD7FF008F13A7 /* AnswerEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC56B6E230DD7FF008F13A7 /* AnswerEntity.swift */; };
@@ -32,6 +31,8 @@
 		7BD24E632342BF40009944B2 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD24E622342BF40009944B2 /* SettingsViewModel.swift */; };
 		7BD24E6B23463B1D009944B2 /* PresentableModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BD24E6A23463B1D009944B2 /* PresentableModel.swift */; };
 		7BE14F2D2340C293004B0627 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE14F2C2340C293004B0627 /* MainViewModel.swift */; };
+		7BE4E9D82356728A00FE4D28 /* RootTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE4E9D72356728A00FE4D28 /* RootTabBarController.swift */; };
+		7BE4E9DA23589AF400FE4D28 /* AnswerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE4E9D923589AF400FE4D28 /* AnswerModel.swift */; };
 		DBD9D32A227D12B8191EC1DC /* Pods_MaybeYesMaybeNo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 99A575923B28DD48ABCABFAC /* Pods_MaybeYesMaybeNo.framework */; };
 /* End PBXBuildFile section */
 
@@ -51,7 +52,6 @@
 		7BC56B4F230DD664008F13A7 /* MaybeYesMaybeNo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaybeYesMaybeNo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7BC56B52230DD664008F13A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7BC56B54230DD664008F13A7 /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
-		7BC56B5A230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = MaybeYesMaybeNo.xcdatamodel; sourceTree = "<group>"; };
 		7BC56B5C230DD665008F13A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7BC56B61230DD665008F13A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7BC56B6B230DD7E7008F13A7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
@@ -66,6 +66,8 @@
 		7BD24E622342BF40009944B2 /* SettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		7BD24E6A23463B1D009944B2 /* PresentableModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PresentableModel.swift; sourceTree = "<group>"; };
 		7BE14F2C2340C293004B0627 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		7BE4E9D72356728A00FE4D28 /* RootTabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootTabBarController.swift; sourceTree = "<group>"; };
+		7BE4E9D923589AF400FE4D28 /* AnswerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnswerModel.swift; sourceTree = "<group>"; };
 		99A575923B28DD48ABCABFAC /* Pods_MaybeYesMaybeNo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MaybeYesMaybeNo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -153,7 +155,6 @@
 				7B55156A233A57B600F47437 /* swiftgen.yml */,
 				7BC56B5C230DD665008F13A7 /* Assets.xcassets */,
 				7BC56B61230DD665008F13A7 /* Info.plist */,
-				7BC56B59230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -179,6 +180,7 @@
 			children = (
 				7BC56B54230DD664008F13A7 /* MainViewController.swift */,
 				7BC56B76230DF4E3008F13A7 /* SettingsViewController.swift */,
+				7BE4E9D72356728A00FE4D28 /* RootTabBarController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -209,6 +211,7 @@
 				7BD24E602342BF0D009944B2 /* SettingsModel.swift */,
 				7BD24E6A23463B1D009944B2 /* PresentableModel.swift */,
 				7B6C570A234E877100B67366 /* PresentableShakeCount.swift */,
+				7BE4E9D923589AF400FE4D28 /* AnswerModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				7BD24E612342BF0D009944B2 /* SettingsModel.swift in Sources */,
 				7BC56B6F230DD7FF008F13A7 /* AnswerEntity.swift in Sources */,
 				7BC56B6C230DD7E7008F13A7 /* NetworkManager.swift in Sources */,
+				7BE4E9DA23589AF400FE4D28 /* AnswerModel.swift in Sources */,
 				7B55156523397ACA00F47437 /* assets.swift in Sources */,
 				7BC56B77230DF4E3008F13A7 /* SettingsViewController.swift in Sources */,
 				7BD24E632342BF40009944B2 /* SettingsViewModel.swift in Sources */,
@@ -410,8 +414,8 @@
 				7B6C570B234E877100B67366 /* PresentableShakeCount.swift in Sources */,
 				7BC56B74230DE4F8008F13A7 /* Common.swift in Sources */,
 				7BCC61FF2316562E008BE745 /* UINavigationController.swift in Sources */,
-				7BC56B5B230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld in Sources */,
 				7B6C5708234E63FE00B67366 /* KeychainManager.swift in Sources */,
+				7BE4E9D82356728A00FE4D28 /* RootTabBarController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -615,19 +619,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		7BC56B59230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				7BC56B5A230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodel */,
-			);
-			currentVersion = 7BC56B5A230DD664008F13A7 /* MaybeYesMaybeNo.xcdatamodel */;
-			path = MaybeYesMaybeNo.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = 7BC56B47230DD664008F13A7 /* Project object */;
 }

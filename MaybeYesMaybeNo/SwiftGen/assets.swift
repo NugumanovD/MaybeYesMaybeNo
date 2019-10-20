@@ -20,6 +20,8 @@
 internal enum Asset {
   internal static let background = ColorAsset(name: "background")
   internal static let text = ColorAsset(name: "text")
+  internal static let ball = ImageAsset(name: "ball")
+  internal static let list = ImageAsset(name: "list")
   internal static let settings = ImageAsset(name: "settings")
   internal static let triangle = ImageAsset(name: "triangle")
 }

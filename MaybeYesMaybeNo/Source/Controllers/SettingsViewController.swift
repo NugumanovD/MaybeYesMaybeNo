@@ -12,8 +12,20 @@ import SnapKit
 
 class SettingsViewController: BaseViewController {
 
-    private var viewModel: SettingsViewModel!
+    private var viewModel: SettingsViewModel
     private let tableView = UITableView()
+    var answersHistory = [PresentableAnswer]()
+
+    init(viewModel: SettingsViewModel) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+        tabBarItem.title = L10n.TabbarItem.Title.history
+        tabBarItem.image = Asset.list.image
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     func attach(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
@@ -26,6 +38,13 @@ class SettingsViewController: BaseViewController {
         registerTableViewCell()
         cofigureNavigationBar()
         configureTableViewConstraints()
+        navigationItem.title = L10n.TabbarItem.Title.history
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        answersHistory = viewModel.dataBaseStorage()
+        tableView.reloadData()
     }
 
     private func registerTableViewCell() {
@@ -65,9 +84,14 @@ class SettingsViewController: BaseViewController {
         }
 
         let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { [weak self] _ in
-            guard let text = alertTextField.text, !text.isEmpty else { return }
-            self?.viewModel.addItem(with: text)
-            self?.tableView.reloadData()
+            guard let text = alertTextField.text, !text.isEmpty, let self = self else { return }
+            let date = self.viewModel.convert(date: Date())
+            let savingItem = PresentableAnswer(text: text, timeStamp: date, identifier: "")
+            self.viewModel.addItem(with: savingItem)
+            DispatchQueue.main.async {
+                self.answersHistory = self.viewModel.dataBaseStorage()
+                self.tableView.reloadData()
+            }
         }
 
         let cancelAction = UIAlertAction(title: L10n.AlertController.Action.cancel, style: .destructive, handler: nil)
@@ -82,14 +106,13 @@ class SettingsViewController: BaseViewController {
 extension SettingsViewController: UITableViewDataSource {
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return viewModel.numberOfRows()
+        return answersHistory.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath)
+        let item = answersHistory[indexPath.row]
         cell.backgroundColor = .clear
-        let items = viewModel.dataBaseStorage()
-        let item = items[indexPath.row]
         cell.textLabel?.text = item.text
         cell.textLabel?.textColor = Asset.text.color
         return cell
@@ -98,13 +121,12 @@ extension SettingsViewController: UITableViewDataSource {
 
 extension SettingsViewController: UITableViewDelegate {
 
-    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let editingRows = viewModel.dataBaseStorage()
-        let editingRow = editingRows[indexPath.row]
-        let deleteAction = UITableViewRowAction(style: .default, title: L10n.RowAction.delete) { [weak self] _, _ in
-            self?.viewModel.removeItem(from: editingRow)
-            tableView.reloadData()
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            let item = answersHistory.remove(at: indexPath.row)
+            viewModel.removeItem(item)
+            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
         }
-        return [deleteAction]
     }
 }

@@ -10,7 +10,7 @@ import Foundation
 
 class SettingsViewModel {
     private let settingsModel: SettingsModel
-
+    lazy var formmater = DateFormatter()
     init(model: SettingsModel) {
         self.settingsModel = model
     }
@@ -20,14 +20,39 @@ class SettingsViewModel {
     }
 
     func dataBaseStorage() -> [PresentableAnswer] {
-        return settingsModel.localStorageItems()
+        let items = settingsModel.localStorageItems().map {
+            $0.convertToPresentableAnswer(
+                text: $0.answer,
+                time: convert(date: $0.timeStamp),
+                identifier: $0.identifier ?? "SettingsViewModel")
+        }
+        return items.sorted { $0.timeStamp > $1.timeStamp}
     }
 
-    func removeItem(from dataBase: PresentableAnswer) {
-        return settingsModel.deleteItem(item: dataBase.text)
+    func removeItem(_ dataBase: PresentableAnswer) {
+        let answerModel = AnswerModel(
+            answer: dataBase.text,
+            timeStamp: reverseConvertTo(string: dataBase.timeStamp),
+            identifier: dataBase.identifier)
+        return settingsModel.deleteItem(answerModel)
     }
 
-    func addItem(with property: String) {
-        settingsModel.addCustomAnswer(with: property)
+    func addItem(with property: PresentableAnswer) {
+        settingsModel.addCustomAnswer(property.convertToAnswerModel())
+    }
+
+     func convert(date: Date) -> String {
+        formmater.timeStyle = .medium
+        formmater.dateStyle = .medium
+        let dateString = formmater.string(from: date)
+        return dateString
+    }
+
+     private func reverseConvertTo(string: String) -> Date {
+        formmater.timeStyle = .medium
+        formmater.dateStyle = .medium
+        let date = formmater.date(from: string)
+        guard let test = date  else { return Date()}
+        return test
     }
 }

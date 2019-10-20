@@ -13,7 +13,7 @@ struct Magic: Codable {
 }
 
 extension Magic {
-    func convertToPresentable() -> PresentableAnswer {
-        return PresentableAnswer(text: answer)
+    func convertTo() -> AnswerModel {
+        return AnswerModel(answer: answer, timeStamp: Date())
     }
 }
