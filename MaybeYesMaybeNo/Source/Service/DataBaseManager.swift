@@ -35,6 +35,7 @@ class DataBaseManager: LocalDataStorable {
             autoreleasepool {
                 let answersList = DefaultAnswersModel()
                 answersList.answerDefault = text.answer
+                answersList.identifier = UUID().uuidString
                 do {
                     let backgroundRealm = try Realm()
                     try backgroundRealm.write {
@@ -52,11 +53,11 @@ class DataBaseManager: LocalDataStorable {
             autoreleasepool {
                 do {
                     let backgroundRealm = try Realm()
-                    let dataBaseItems = backgroundRealm.objects(DefaultAnswersModel.self).map({ $0 })
-                    for dataBaseItem in dataBaseItems where item.timeStamp == dataBaseItem.timeStamp {
-                        try backgroundRealm.write {
-                            backgroundRealm.delete(dataBaseItem)
-                        }
+                    guard let identifier = item.identifier else { return }
+                    let dataBaseItems = backgroundRealm.objects(DefaultAnswersModel.self)
+                        .filter("identifier == %@", identifier)
+                    try backgroundRealm.write {
+                        backgroundRealm.delete(dataBaseItems)
                     }
                 } catch {
                     print(error.localizedDescription)
@@ -67,9 +68,9 @@ class DataBaseManager: LocalDataStorable {
 
     func migrationRealmDataBase() {
         let config = Realm.Configuration(
-            schemaVersion: 1,
+            schemaVersion: 2,
             migrationBlock: { _, oldSchemaVersion in
-                if oldSchemaVersion < 1 {
+                if oldSchemaVersion < 2 {
                 }
         })
         Realm.Configuration.defaultConfiguration = config

@@ -20,7 +20,8 @@ class MainViewModel {
             guard let answerResult = answer else { return }
             completion(answerResult.convertToPresentableAnswer(
                 text: answerResult.answer.uppercased(),
-                time: self.convert(date: answerResult.timeStamp))
+                time: self.convert(date: answerResult.timeStamp),
+                identifier: answerResult.identifier ?? "MainViewModel")
             )
         }
     }

@@ -11,10 +11,11 @@ import Foundation
 struct AnswerModel {
     var answer: String
     var timeStamp: Date
+    var identifier: String?
 }
 
 extension AnswerModel {
-     func convertToPresentableAnswer(text: String, time: String) -> PresentableAnswer {
-        return PresentableAnswer(text: text, timeStamp: time)
+    func convertToPresentableAnswer(text: String, time: String, identifier: String) -> PresentableAnswer {
+        return PresentableAnswer(text: text, timeStamp: time, identifier: identifier)
     }
 }

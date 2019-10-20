@@ -10,6 +10,13 @@ import UIKit
 import CoreData
 import RealmSwift
 
+enum UIStyle {
+    static func application(_ application: UIApplication) {
+        UITabBar.appearance().isTranslucent = false
+        UITabBar.appearance().barTintColor = .black
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -19,11 +26,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
     ) -> Bool {
-        let dataBase = DataBaseManager()
-        dataBase.migrationRealmDataBase()
+        UIStyle.application(application)
         window = UIWindow(frame: UIScreen.main.bounds)
-        let tabbarController = RootTabBarController()
-        window?.rootViewController = tabbarController
+        window?.rootViewController = UITabBarController.makeRootController()
         window?.makeKeyAndVisible()
         return true
     }

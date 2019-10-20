@@ -19,6 +19,8 @@ class MainViewController: BaseViewController {
     init(mainViewModel: MainViewModel) {
         self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)
+        tabBarItem.title = L10n.TabbarItem.Title.magic
+        tabBarItem.image = Asset.ball.image
     }
 
     required init?(coder: NSCoder) {

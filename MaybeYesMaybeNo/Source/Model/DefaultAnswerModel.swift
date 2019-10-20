@@ -13,10 +13,11 @@ class DefaultAnswersModel: Object {
 
     @objc dynamic var answerDefault = L10n.DefaultAnswer.type
     @objc dynamic var timeStamp = Date()
+    @objc dynamic var identifier = ""
 }
 
 extension DefaultAnswersModel {
     func convertToAnswerModel() -> AnswerModel {
-        return AnswerModel(answer: answerDefault, timeStamp: timeStamp)
+        return AnswerModel(answer: answerDefault, timeStamp: timeStamp, identifier: identifier)
     }
 }

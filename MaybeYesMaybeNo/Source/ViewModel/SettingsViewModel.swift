@@ -21,13 +21,19 @@ class SettingsViewModel {
 
     func dataBaseStorage() -> [PresentableAnswer] {
         let items = settingsModel.localStorageItems().map {
-            $0.convertToPresentableAnswer(text: $0.answer, time: convert(date: $0.timeStamp))
+            $0.convertToPresentableAnswer(
+                text: $0.answer,
+                time: convert(date: $0.timeStamp),
+                identifier: $0.identifier ?? "SettingsViewModel")
         }
         return items.sorted { $0.timeStamp > $1.timeStamp}
     }
 
     func removeItem(_ dataBase: PresentableAnswer) {
-        let answerModel = AnswerModel(answer: dataBase.text, timeStamp: reverseConvertTo(string: dataBase.timeStamp))
+        let answerModel = AnswerModel(
+            answer: dataBase.text,
+            timeStamp: reverseConvertTo(string: dataBase.timeStamp),
+            identifier: dataBase.identifier)
         return settingsModel.deleteItem(answerModel)
     }
 

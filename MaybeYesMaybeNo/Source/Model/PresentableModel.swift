@@ -11,6 +11,7 @@ import Foundation
 struct PresentableAnswer {
     var text: String
     var timeStamp: String
+    var identifier: String
 }
 
 extension PresentableAnswer {
