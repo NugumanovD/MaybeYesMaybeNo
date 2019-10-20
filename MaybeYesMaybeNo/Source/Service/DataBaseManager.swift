@@ -19,6 +19,7 @@ class DataBaseManager: LocalDataStorable {
 
     private var realm: Realm!
     init() {
+        migrationRealmDataBase()
         do {
             try self.realm = Realm()
         } catch {
