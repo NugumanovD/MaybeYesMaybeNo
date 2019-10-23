@@ -45,7 +45,6 @@
 		7B55156A233A57B600F47437 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = SOURCE_ROOT; };
 		7B6C5703234E52BB00B67366 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B6C5707234E63FE00B67366 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
-		7B6C5709234E7CB200B67366 /* MaybeYesMaybeNo.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaybeYesMaybeNo.entitlements; sourceTree = "<group>"; };
 		7B6C570A234E877100B67366 /* PresentableShakeCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableShakeCount.swift; sourceTree = "<group>"; };
 		7B9E265423416CA10070F3D7 /* MagicEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MagicEntity.swift; sourceTree = "<group>"; };
 		7B9E265723416D0C0070F3D7 /* MainModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainModel.swift; sourceTree = "<group>"; };
@@ -140,7 +139,6 @@
 		7BC56B51230DD664008F13A7 /* MaybeYesMaybeNo */ = {
 			isa = PBXGroup;
 			children = (
-				7B6C5709234E7CB200B67366 /* MaybeYesMaybeNo.entitlements */,
 				7B5515622339756A00F47437 /* SwiftGen */,
 				7BC56B68230DD7B4008F13A7 /* Source */,
 				7BC56B67230DD79F008F13A7 /* Resource */,
@@ -554,7 +552,7 @@
 			baseConfigurationReference = 2EF541D99880B8DC1B1B7C9A /* Pods-MaybeYesMaybeNo.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = MaybeYesMaybeNo/MaybeYesMaybeNo.entitlements;
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5P369B9Z7K;
@@ -578,7 +576,6 @@
 			baseConfigurationReference = 33AB7FEBCD23D02B9390207A /* Pods-MaybeYesMaybeNo.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = MaybeYesMaybeNo/MaybeYesMaybeNo.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5P369B9Z7K;
