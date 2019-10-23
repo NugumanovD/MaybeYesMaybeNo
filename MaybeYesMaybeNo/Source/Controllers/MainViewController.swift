@@ -15,7 +15,7 @@ class MainViewController: BaseViewController {
     private let triangleImageView = UIImageView()
     private let shakesCounterLabel = UILabel()
     private var mainViewModel: MainViewModel
-
+    var isFinished = true
     init(mainViewModel: MainViewModel) {
         self.mainViewModel = mainViewModel
         super.init(nibName: nil, bundle: nil)
@@ -40,6 +40,8 @@ class MainViewController: BaseViewController {
         switch motion {
         case .motionShake:
             mainViewModel.didShaken()
+            self.rotationAnimation()
+            clearAnswerLabel()
             mainViewModel.getAnswer(completion: { [weak self] answer in
                 DispatchQueue.main.async {
                     self?.answerLabel.text = answer?.text
@@ -106,5 +108,22 @@ class MainViewController: BaseViewController {
             make.top.equalTo(safeAreaView.snp.top).offset(5)
             make.left.equalTo(safeAreaView.snp.left).offset(5)
         }
+    }
+
+    private func rotationAnimation() {
+        UIView.transition(
+            with: self.triangleImageView,
+            duration: 0.5,
+            options: .transitionFlipFromLeft,
+            animations: {
+        }, completion: { _ in
+            if self.answerLabel.text?.isEmpty ?? false {
+                self.rotationAnimation()
+            }
+        })
+    }
+
+    private func clearAnswerLabel() {
+        answerLabel.text = ""
     }
 }

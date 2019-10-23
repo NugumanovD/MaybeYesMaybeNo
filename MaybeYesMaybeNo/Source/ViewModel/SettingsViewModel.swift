@@ -24,7 +24,7 @@ class SettingsViewModel {
             $0.convertToPresentableAnswer(
                 text: $0.answer,
                 time: convert(date: $0.timeStamp),
-                identifier: $0.identifier ?? "SettingsViewModel")
+                identifier: $0.identifier ?? "")
         }
         return items.sorted { $0.timeStamp > $1.timeStamp}
     }
