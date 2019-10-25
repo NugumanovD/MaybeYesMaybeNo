@@ -15,6 +15,7 @@ class MainViewController: BaseViewController {
     private let triangleImageView = UIImageView()
     private let shakesCounterLabel = UILabel()
     private var mainViewModel: MainViewModel
+    private var shouldRestartAnimation = true
 
     init(mainViewModel: MainViewModel) {
         self.mainViewModel = mainViewModel
@@ -34,12 +35,17 @@ class MainViewController: BaseViewController {
         configureShakesCounterLabel()
         fetchShakesCount()
         navigationItem.title = L10n.TabbarItem.Title.magic
+        mainViewModel.shouldAnimateLoadingStateHandler = { [ weak self] shouldAnimate in
+            self?.shouldRestartAnimation = shouldAnimate
+        }
     }
 
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         switch motion {
         case .motionShake:
             mainViewModel.didShaken()
+            self.rotationAnimation()
+            clearAnswerLabel()
             mainViewModel.getAnswer(completion: { [weak self] answer in
                 DispatchQueue.main.async {
                     self?.answerLabel.text = answer?.text
@@ -106,5 +112,22 @@ class MainViewController: BaseViewController {
             make.top.equalTo(safeAreaView.snp.top).offset(5)
             make.left.equalTo(safeAreaView.snp.left).offset(5)
         }
+    }
+
+    private func rotationAnimation() {
+        UIView.transition(
+            with: self.triangleImageView,
+            duration: 0.5,
+            options: .transitionFlipFromLeft,
+            animations: {
+        }, completion: { _ in
+            if self.shouldRestartAnimation {
+                self.rotationAnimation()
+            }
+        })
+    }
+
+    private func clearAnswerLabel() {
+        answerLabel.text = ""
     }
 }

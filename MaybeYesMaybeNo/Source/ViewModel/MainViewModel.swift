@@ -9,8 +9,15 @@
 import Foundation
 
 class MainViewModel {
+
     private let answerModel: MainModel
     lazy var formmater = DateFormatter()
+    var shouldAnimateLoadingStateHandler: ((Bool) -> Void)? {
+        didSet {
+            answerModel.isLoadingDataStateHandler = shouldAnimateLoadingStateHandler
+        }
+    }
+
     init(model: MainModel) {
         self.answerModel = model
     }
@@ -21,7 +28,7 @@ class MainViewModel {
             completion(answerResult.convertToPresentableAnswer(
                 text: answerResult.answer.uppercased(),
                 time: self.convert(date: answerResult.timeStamp),
-                identifier: answerResult.identifier ?? "MainViewModel")
+                identifier: answerResult.identifier ?? "")
             )
         }
     }
