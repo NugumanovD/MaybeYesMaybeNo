@@ -11,6 +11,7 @@ import KeychainSwift
 protocol ShakesCounting {
     typealias ShakeMotionHandler = (PresentableShakeCount?) -> Void
     func getShakesCount(completion: @escaping ShakeMotionHandler)
+    func getShakeCount() -> PresentableShakeCount
     func didShaken()
 }
 
@@ -26,6 +27,12 @@ class KeychainManager: ShakesCounting {
         guard let unwrappedCount = keychain.get(Key.countShake) else { return }
         let shakeModel = PresentableShakeCount(shakeCount: unwrappedCount)
         completion(shakeModel)
+    }
+    
+    func getShakeCount() -> PresentableShakeCount {
+        let count = keychain.get(Key.countShake)
+        let shakeModel = PresentableShakeCount(shakeCount: count ?? "")
+        return shakeModel
     }
 
     func didShaken() {

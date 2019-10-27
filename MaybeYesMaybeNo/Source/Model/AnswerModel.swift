@@ -15,7 +15,10 @@ struct AnswerModel {
 }
 
 extension AnswerModel {
-    func convertToPresentableAnswer(text: String, time: String, identifier: String) -> PresentableAnswer {
-        return PresentableAnswer(text: text, timeStamp: time, identifier: identifier)
+    func convertToPresentableAnswer(answer: AnswerModel) -> PresentableAnswer {
+        return PresentableAnswer(text: answer.answer,
+                                 timeStamp: answer.timeStamp,
+                                 identifier: answer.identifier ?? ""
+        )
     }
 }

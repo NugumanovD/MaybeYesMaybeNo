@@ -5,6 +5,12 @@ PODS:
   - Realm/Headers (3.17.3)
   - RealmSwift (3.17.3):
     - Realm (= 3.17.3)
+  - RxCocoa (5.0.0):
+    - RxRelay (~> 5)
+    - RxSwift (~> 5)
+  - RxRelay (5.0.0):
+    - RxSwift (~> 5)
+  - RxSwift (5.0.0)
   - SnapKit (5.0.1)
   - SwiftGen (6.1.0)
   - SwiftLint (0.35.0)
@@ -12,6 +18,8 @@ PODS:
 DEPENDENCIES:
   - KeychainSwift (~> 17.0)
   - RealmSwift (~> 3.17.3)
+  - RxCocoa (~> 5)
+  - RxSwift (~> 5)
   - SnapKit (~> 5.0.0)
   - SwiftGen (~> 6.1)
   - SwiftLint (~> 0.35.0)
@@ -21,6 +29,9 @@ SPEC REPOS:
     - KeychainSwift
     - Realm
     - RealmSwift
+    - RxCocoa
+    - RxRelay
+    - RxSwift
     - SnapKit
     - SwiftGen
     - SwiftLint
@@ -29,10 +40,13 @@ SPEC CHECKSUMS:
   KeychainSwift: 9f43f562dffc88af6efadb57d74b14c598eb337f
   Realm: 5a1d9d47bfc101dd597668b1a8af4288a2557f6d
   RealmSwift: b7fdc2d18616621c31df5c7a398a45a2163f8eb0
+  RxCocoa: fcf32050ac00d801f34a7f71d5e8e7f23026dcd8
+  RxRelay: 4f7409406a51a55cd88483f21ed898c234d60f18
+  RxSwift: 8b0671caa829a763bbce7271095859121cbd895f
   SnapKit: 97b92857e3df3a0c71833cce143274bf6ef8e5eb
   SwiftGen: f872ca75cbd17bf7103c17f13dcfa0d9a15667b0
   SwiftLint: 5553187048b900c91aa03552807681bb6b027846
 
-PODFILE CHECKSUM: 75533cbae257b8588a49bbff7e11f336501784d7
+PODFILE CHECKSUM: 9506a91158ccc27474c0891cdf5318c6c079344c
 
 COCOAPODS: 1.8.0.beta.2

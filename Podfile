@@ -12,5 +12,7 @@ target 'MaybeYesMaybeNo' do
   pod 'SwiftGen', '~> 6.1'
   pod 'SnapKit', '~> 5.0.0'
   pod 'KeychainSwift', '~> 17.0'
+  pod 'RxSwift', '~> 5'
+  pod 'RxCocoa', '~> 5'
   
 end

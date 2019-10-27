@@ -8,6 +8,8 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class MainViewController: BaseViewController {
 
@@ -16,6 +18,7 @@ class MainViewController: BaseViewController {
     private let shakesCounterLabel = UILabel()
     private var mainViewModel: MainViewModel
     private var shouldRestartAnimation = true
+    private let disposedBag = DisposeBag()
 
     init(mainViewModel: MainViewModel) {
         self.mainViewModel = mainViewModel
@@ -35,6 +38,7 @@ class MainViewController: BaseViewController {
         configureShakesCounterLabel()
         fetchShakesCount()
         navigationItem.title = L10n.TabbarItem.Title.magic
+        setupBindings()
         mainViewModel.shouldAnimateLoadingStateHandler = { [ weak self] shouldAnimate in
             self?.shouldRestartAnimation = shouldAnimate
         }
@@ -43,18 +47,20 @@ class MainViewController: BaseViewController {
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         switch motion {
         case .motionShake:
-            mainViewModel.didShaken()
-            self.rotationAnimation()
+            rotationAnimation()
             clearAnswerLabel()
-            mainViewModel.getAnswer(completion: { [weak self] answer in
-                DispatchQueue.main.async {
-                    self?.answerLabel.text = answer?.text
-                }
-            })
+            mainViewModel.requestAnswer()
+            didShaken()
         default:
             break
         }
         fetchShakesCount()
+    }
+
+    func setupBindings() {
+        mainViewModel.text
+            .asObservable().bind(to: answerLabel.rx.text)
+            .disposed(by: disposedBag)
     }
 
     func fetchShakesCount() {
@@ -64,7 +70,11 @@ class MainViewController: BaseViewController {
                 L10n.CountLabel.Placeholer.text + shake.shakeCount
         }
     }
-
+    
+    private func didShaken() {
+        mainViewModel.didShakenEvent.onNext(())
+    }
+    
     private func configureShakesCounterLabel() {
         shakesCounterLabel.font = UIFont(name: Fonts.helveticaNeue, size: 20)
         shakesCounterLabel.textColor = .systemBlue

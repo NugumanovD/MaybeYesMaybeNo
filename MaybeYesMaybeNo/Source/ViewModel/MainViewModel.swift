@@ -7,30 +7,47 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
 class MainViewModel {
-
-    private let answerModel: MainModel
-    lazy var formmater = DateFormatter()
+    let text = BehaviorRelay(value: "Shake Me")
+    let reactiveAnswerModel = BehaviorSubject<PresentableAnswer?>(value: nil)
+    let didUpdateCounter = BehaviorSubject<PresentableShakeCount?>(value: nil)
+    let getShakeCount = BehaviorSubject<PresentableShakeCount?>(value: nil)
+    
     var shouldAnimateLoadingStateHandler: ((Bool) -> Void)? {
         didSet {
             answerModel.isLoadingDataStateHandler = shouldAnimateLoadingStateHandler
         }
     }
 
+    let didShakenEvent = PublishSubject<Void>()
+
+    private let answerModel: MainModel
+    private let disposedBag = DisposeBag()
+
     init(model: MainModel) {
         self.answerModel = model
+        setupBindings()
     }
 
-    func getAnswer(completion: @escaping (PresentableAnswer?) -> Void) {
-        answerModel.getAnswer { answer in
-            guard let answerResult = answer else { return }
-            completion(answerResult.convertToPresentableAnswer(
-                text: answerResult.answer.uppercased(),
-                time: self.convert(date: answerResult.timeStamp),
-                identifier: answerResult.identifier ?? "")
-            )
-        }
+    private func setupBindings() {
+        answerModel.answer.subscribe(onNext: { [weak self] answer in
+            guard let answerResult = answer,
+                  let self = self else { return }
+            self.reactiveAnswerModel
+                .onNext(answerResult.convertToPresentableAnswer(answer: answerResult))
+            self.text.accept(answerResult.answer.uppercased())
+        }).disposed(by: disposedBag)
+        
+        didShakenEvent
+            .bind(to: answerModel.didShakenEvent)
+            .disposed(by: disposedBag)
+    }
+
+    func requestAnswer() {
+        answerModel.requestAnswer()
     }
 
     func getShakeCount(completion: @escaping (PresentableShakeCount?) -> Void) {
@@ -38,16 +55,5 @@ class MainViewModel {
             guard let shake = shake else { return }
             completion(shake)
         }
-    }
-
-    func didShaken() {
-        answerModel.didShaken()
-    }
-
-    private func convert(date: Date) -> String {
-        formmater.timeStyle = .medium
-        formmater.dateStyle = .medium
-        let dateString = formmater.string(from: date)
-        return dateString
     }
 }
