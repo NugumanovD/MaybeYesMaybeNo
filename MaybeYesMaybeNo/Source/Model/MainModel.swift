@@ -9,16 +9,18 @@
 import Foundation
 import RxSwift
 
-
 class MainModel {
-
+    
+    // MARK: - Public Properties
+    
     var isLoadingDataStateHandler: ((Bool) -> Void)?
     let answer = BehaviorSubject<AnswerModel?>(value: nil)
     let updateShakeCounter = BehaviorSubject<PresentableShakeCount?>(value: nil)
-    let requestShakeCounter = PublishSubject<Void>()
     let didShakenEvent = PublishSubject<Void>()
-    
+    let getShakeCount = PublishSubject<Void>()
+
     // MARK: - Private Properties
+    
     private let networker: DataFetching
     private let localStorage: LocalDataStorable
     private let keychainStorage: ShakesCounting
@@ -31,24 +33,29 @@ class MainModel {
     }
 
     // MARK: - Init
+    
     init(networker: DataFetching, localStorage: LocalDataStorable, keychain: ShakesCounting) {
         self.networker = networker
         self.localStorage = localStorage
         self.keychainStorage = keychain
         setupBindigs()
     }
-
-    func setupBindigs() {
-        requestShakeCounter.subscribe(onNext: {[weak self] _ in
-            guard let self = self else { return }
+    
+    // MARK: - Private Function
+    
+    private func setupBindigs() {
+        getShakeCount.subscribe(onNext: { _ in
             self.updateShakeCounter.onNext(self.keychainStorage.getShakeCount())
         }).disposed(by: disposebag)
         
-        didShakenEvent.asObserver().subscribe(onNext: { _ in
+        didShakenEvent.asObserver().subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
             self.keychainStorage.didShaken()
+            self.updateShakeCounter.onNext(self.keychainStorage.getShakeCount())
         }).disposed(by: disposebag)
+        
     }
-    
+
     // MARK: - Public Function
 
     func requestAnswer() {
@@ -72,13 +79,6 @@ class MainModel {
             self.answer.onNext(fetchingResult.magic.convertTo())
             self.localStorage.addItem(with: fetchingResult.magic.convertTo())
             self.isLoadingData = false
-        }
-    }
-    
-    func getCount(completion: @escaping (PresentableShakeCount?) -> Void) {
-        keychainStorage.getShakesCount { (shakeCount)  in
-            guard let shake = shakeCount else { return }
-            completion(shake)
         }
     }
 }

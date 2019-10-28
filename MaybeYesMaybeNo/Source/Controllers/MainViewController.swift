@@ -12,6 +12,8 @@ import RxSwift
 import RxCocoa
 
 class MainViewController: BaseViewController {
+    
+    // MARK: - Private Properties
 
     private let answerLabel = UILabel()
     private let triangleImageView = UIImageView()
@@ -19,6 +21,8 @@ class MainViewController: BaseViewController {
     private var mainViewModel: MainViewModel
     private var shouldRestartAnimation = true
     private let disposedBag = DisposeBag()
+    
+    // MARK: - Init
 
     init(mainViewModel: MainViewModel) {
         self.mainViewModel = mainViewModel
@@ -36,7 +40,6 @@ class MainViewController: BaseViewController {
         configureTriangleImageView()
         configureAnswerLabel()
         configureShakesCounterLabel()
-        fetchShakesCount()
         navigationItem.title = L10n.TabbarItem.Title.magic
         setupBindings()
         mainViewModel.shouldAnimateLoadingStateHandler = { [ weak self] shouldAnimate in
@@ -54,27 +57,24 @@ class MainViewController: BaseViewController {
         default:
             break
         }
-        fetchShakesCount()
     }
 
-    func setupBindings() {
-        mainViewModel.text
+    // MARK: - Private Function
+
+    private func setupBindings() {
+        mainViewModel.answerText
             .asObservable().bind(to: answerLabel.rx.text)
+            .disposed(by: disposedBag)
+
+        mainViewModel.shakeCountText
+            .asObservable().bind(to: shakesCounterLabel.rx.text)
             .disposed(by: disposedBag)
     }
 
-    func fetchShakesCount() {
-        mainViewModel.getShakeCount { [weak self] shakes in
-            guard let shake = shakes else { return }
-            self?.shakesCounterLabel.text =
-                L10n.CountLabel.Placeholer.text + shake.shakeCount
-        }
-    }
-    
     private func didShaken() {
         mainViewModel.didShakenEvent.onNext(())
     }
-    
+
     private func configureShakesCounterLabel() {
         shakesCounterLabel.font = UIFont(name: Fonts.helveticaNeue, size: 20)
         shakesCounterLabel.textColor = .systemBlue
