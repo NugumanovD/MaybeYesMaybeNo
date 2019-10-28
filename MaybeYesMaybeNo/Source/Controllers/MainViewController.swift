@@ -12,16 +12,16 @@ import RxSwift
 import RxCocoa
 
 class MainViewController: BaseViewController {
-    
+
     // MARK: - Private Properties
 
     private let answerLabel = UILabel()
     private let triangleImageView = UIImageView()
     private let shakesCounterLabel = UILabel()
     private var mainViewModel: MainViewModel
-    private var shouldRestartAnimation = true
+    private var shouldRestartAnimation = BehaviorRelay(value: true)
     private let disposedBag = DisposeBag()
-    
+
     // MARK: - Init
 
     init(mainViewModel: MainViewModel) {
@@ -42,9 +42,6 @@ class MainViewController: BaseViewController {
         configureShakesCounterLabel()
         navigationItem.title = L10n.TabbarItem.Title.magic
         setupBindings()
-        mainViewModel.shouldAnimateLoadingStateHandler = { [ weak self] shouldAnimate in
-            self?.shouldRestartAnimation = shouldAnimate
-        }
     }
 
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
@@ -68,6 +65,11 @@ class MainViewController: BaseViewController {
 
         mainViewModel.shakeCountText
             .asObservable().bind(to: shakesCounterLabel.rx.text)
+            .disposed(by: disposedBag)
+
+        mainViewModel.isLoadingDataStateHandler
+            .asObservable()
+            .bind(to: shouldRestartAnimation)
             .disposed(by: disposedBag)
     }
 
@@ -131,7 +133,7 @@ class MainViewController: BaseViewController {
             options: .transitionFlipFromLeft,
             animations: {
         }, completion: { _ in
-            if self.shouldRestartAnimation {
+            if self.shouldRestartAnimation.value {
                 self.rotationAnimation()
             }
         })

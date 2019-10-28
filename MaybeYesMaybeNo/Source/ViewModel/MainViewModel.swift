@@ -17,11 +17,7 @@ class MainViewModel {
     let answerText = BehaviorRelay(value: "Shake Me")
     let shakeCountText = BehaviorRelay(value: L10n.CountLabel.Placeholer.text)
     let didShakenEvent = PublishSubject<Void>()
-    var shouldAnimateLoadingStateHandler: ((Bool) -> Void)? {
-        didSet {
-            answerModel.isLoadingDataStateHandler = shouldAnimateLoadingStateHandler
-        }
-    }
+    let isLoadingDataStateHandler = PublishSubject<Bool>()
 
     // MARK: - Private Properties
 
@@ -34,7 +30,6 @@ class MainViewModel {
 
     init(model: MainModel) {
         self.answerModel = model
-
         setupBindings()
     }
 
@@ -59,8 +54,12 @@ class MainViewModel {
             self.updateShakeCount.onNext(shakeCount)
             self.shakeCountText.accept(L10n.CountLabel.Placeholer.text + modifiedShakeCountText)
         }).disposed(by: disposedBag)
+
+        answerModel.isLoadingData
+            .bind(to: isLoadingDataStateHandler)
+            .disposed(by: disposedBag)
     }
-    
+
     // MARK: - Public Function
 
     func requestAnswer() {

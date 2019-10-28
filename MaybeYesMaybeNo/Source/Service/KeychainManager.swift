@@ -28,7 +28,7 @@ class KeychainManager: ShakesCounting {
         let shakeModel = PresentableShakeCount(shakeCount: unwrappedCount)
         completion(shakeModel)
     }
-    
+
     func getShakeCount() -> PresentableShakeCount {
         let count = keychain.get(Key.countShake)
         let shakeModel = PresentableShakeCount(shakeCount: count ?? "")

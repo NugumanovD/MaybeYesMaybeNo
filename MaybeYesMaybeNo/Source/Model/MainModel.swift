@@ -10,75 +10,70 @@ import Foundation
 import RxSwift
 
 class MainModel {
-    
+
     // MARK: - Public Properties
-    
+
     var isLoadingDataStateHandler: ((Bool) -> Void)?
     let answer = BehaviorSubject<AnswerModel?>(value: nil)
     let updateShakeCounter = BehaviorSubject<PresentableShakeCount?>(value: nil)
     let didShakenEvent = PublishSubject<Void>()
     let getShakeCount = PublishSubject<Void>()
+    let isLoadingData = BehaviorSubject<Bool>(value: false)
 
     // MARK: - Private Properties
-    
+
     private let networker: DataFetching
     private let localStorage: LocalDataStorable
     private let keychainStorage: ShakesCounting
     private let disposebag = DisposeBag()
 
-    private var isLoadingData = false {
-        didSet {
-            isLoadingDataStateHandler?(isLoadingData)
-        }
-    }
-
     // MARK: - Init
-    
+
     init(networker: DataFetching, localStorage: LocalDataStorable, keychain: ShakesCounting) {
         self.networker = networker
         self.localStorage = localStorage
         self.keychainStorage = keychain
         setupBindigs()
     }
-    
+
     // MARK: - Private Function
-    
+
     private func setupBindigs() {
         getShakeCount.subscribe(onNext: { _ in
             self.updateShakeCounter.onNext(self.keychainStorage.getShakeCount())
         }).disposed(by: disposebag)
-        
+
         didShakenEvent.asObserver().subscribe(onNext: { [weak self] _ in
             guard let self = self else { return }
             self.keychainStorage.didShaken()
             self.updateShakeCounter.onNext(self.keychainStorage.getShakeCount())
         }).disposed(by: disposebag)
-        
+
     }
 
     // MARK: - Public Function
 
     func requestAnswer() {
-        isLoadingData = true
+        isLoadingData.onNext(true)// = true
         networker.request { [weak self] (result, error) in
             guard let self = self else { return }
             if let error = error {
                 DispatchQueue.main.async {
                     self.answer.onNext(self.localStorage.allItems().randomElement())
                 }
-                self.isLoadingData = false
+                self.isLoadingData.onNext(false)// = false
                 print(error.localizedDescription)
             }
             guard let fetchingResult = result else {
                 DispatchQueue.main.async {
                     self.answer.onNext(self.localStorage.allItems().randomElement())
                 }
-                self.isLoadingData = false
+                self.isLoadingData.onNext(false)// = false
                 return
             }
             self.answer.onNext(fetchingResult.magic.convertTo())
             self.localStorage.addItem(with: fetchingResult.magic.convertTo())
-            self.isLoadingData = false
+            self.isLoadingData.onNext(false)// = false
         }
     }
 }
