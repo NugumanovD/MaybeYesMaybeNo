@@ -7,24 +7,35 @@
 //
 
 import Foundation
+import RxSwift
 
 class SettingsModel {
+    let answers = [PresentableAnswer]()
+    let allDataStorage = PublishSubject<[PresentableAnswer]>()
+    let deletingEvent = PublishSubject<AnswerModel>()
+    private let disposeBag = DisposeBag()
     private let localStorage: LocalDataStorable
 
     init(localStorage: LocalDataStorable) {
         self.localStorage = localStorage
+        setupBindings()
     }
 
+    private func setupBindings() {
+        deletingEvent.asObservable().subscribe(onNext: { [weak self] (answerModel) in
+            guard let self = self else { return }
+            self.deleteItem(answerModel)
+        }).disposed(by: disposeBag)
+
+    }
     func addCustomAnswer(_ answer: AnswerModel) {
         localStorage.addItem(with: answer)
     }
 
-    func numberOfRows() -> Int {
-        return localStorage.allItems().count
-    }
-
-    func localStorageItems() -> [AnswerModel] {
-        return localStorage.allItems().compactMap({ $0 })
+    func localStorageItems() {
+        let items = localStorage.allItems()
+            .compactMap({ $0.convertToPresentableAnswer(answer: $0) })
+        allDataStorage.onNext(items.sorted { $0.timeStamp > $1.timeStamp })
     }
 
     func deleteItem(_ item: AnswerModel) {

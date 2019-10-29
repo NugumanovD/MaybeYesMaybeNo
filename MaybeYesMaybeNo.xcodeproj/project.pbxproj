@@ -11,6 +11,7 @@
 		7B55156623397ACA00F47437 /* strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B55156423397ACA00F47437 /* strings.swift */; };
 		7B55156923397B6000F47437 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7B55156723397B6000F47437 /* Localizable.strings */; };
 		7B55156B233A57B600F47437 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = 7B55156A233A57B600F47437 /* swiftgen.yml */; };
+		7B6522BB23688C2A00133C0D /* SectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6522BA23688C2A00133C0D /* SectionViewModel.swift */; };
 		7B6C5704234E52BB00B67366 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B6C5703234E52BB00B67366 /* LaunchScreen.storyboard */; };
 		7B6C5708234E63FE00B67366 /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C5707234E63FE00B67366 /* KeychainManager.swift */; };
 		7B6C570B234E877100B67366 /* PresentableShakeCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B6C570A234E877100B67366 /* PresentableShakeCount.swift */; };
@@ -43,6 +44,7 @@
 		7B55156423397ACA00F47437 /* strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = strings.swift; sourceTree = "<group>"; };
 		7B55156823397B6000F47437 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7B55156A233A57B600F47437 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = SOURCE_ROOT; };
+		7B6522BA23688C2A00133C0D /* SectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionViewModel.swift; sourceTree = "<group>"; };
 		7B6C5703234E52BB00B67366 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B6C5707234E63FE00B67366 /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		7B6C570A234E877100B67366 /* PresentableShakeCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentableShakeCount.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 				7BD24E6A23463B1D009944B2 /* PresentableModel.swift */,
 				7B6C570A234E877100B67366 /* PresentableShakeCount.swift */,
 				7BE4E9D923589AF400FE4D28 /* AnswerModel.swift */,
+				7B6522BA23688C2A00133C0D /* SectionViewModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -398,6 +401,7 @@
 				7BE4E9DA23589AF400FE4D28 /* AnswerModel.swift in Sources */,
 				7B55156523397ACA00F47437 /* assets.swift in Sources */,
 				7BC56B77230DF4E3008F13A7 /* SettingsViewController.swift in Sources */,
+				7B6522BB23688C2A00133C0D /* SectionViewModel.swift in Sources */,
 				7BD24E632342BF40009944B2 /* SettingsViewModel.swift in Sources */,
 				7BC56B55230DD664008F13A7 /* MainViewController.swift in Sources */,
 				7BCC61FA23151B49008BE745 /* DataBaseManager.swift in Sources */,

@@ -14,8 +14,8 @@ class MainModel {
     // MARK: - Public Properties
 
     var isLoadingDataStateHandler: ((Bool) -> Void)?
-    let answer = BehaviorSubject<AnswerModel?>(value: nil)
-    let updateShakeCounter = BehaviorSubject<PresentableShakeCount?>(value: nil)
+    let answer = PublishSubject<AnswerModel?>()
+    let updateShakeCounter = PublishSubject<PresentableShakeCount?>()
     let didShakenEvent = PublishSubject<Void>()
     let getShakeCount = PublishSubject<Void>()
     let isLoadingData = BehaviorSubject<Bool>(value: false)
@@ -39,7 +39,8 @@ class MainModel {
     // MARK: - Private Function
 
     private func setupBindigs() {
-        getShakeCount.subscribe(onNext: { _ in
+        getShakeCount.asObserver().subscribe(onNext: { [weak self] _ in
+            guard let self = self else { return }
             self.updateShakeCounter.onNext(self.keychainStorage.getShakeCount())
         }).disposed(by: disposebag)
 
@@ -48,32 +49,31 @@ class MainModel {
             self.keychainStorage.didShaken()
             self.updateShakeCounter.onNext(self.keychainStorage.getShakeCount())
         }).disposed(by: disposebag)
-
     }
 
     // MARK: - Public Function
 
     func requestAnswer() {
-        isLoadingData.onNext(true)// = true
+        isLoadingData.onNext(true)
         networker.request { [weak self] (result, error) in
             guard let self = self else { return }
             if let error = error {
                 DispatchQueue.main.async {
                     self.answer.onNext(self.localStorage.allItems().randomElement())
                 }
-                self.isLoadingData.onNext(false)// = false
+                self.isLoadingData.onNext(false)
                 print(error.localizedDescription)
             }
             guard let fetchingResult = result else {
                 DispatchQueue.main.async {
                     self.answer.onNext(self.localStorage.allItems().randomElement())
                 }
-                self.isLoadingData.onNext(false)// = false
+                self.isLoadingData.onNext(false)
                 return
             }
             self.answer.onNext(fetchingResult.magic.convertTo())
             self.localStorage.addItem(with: fetchingResult.magic.convertTo())
-            self.isLoadingData.onNext(false)// = false
+            self.isLoadingData.onNext(false)
         }
     }
 }

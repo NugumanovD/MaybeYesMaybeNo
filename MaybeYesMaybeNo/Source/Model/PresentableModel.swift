@@ -7,15 +7,30 @@
 //
 
 import Foundation
+import RxDataSources
 
-struct PresentableAnswer {
+class PresentableAnswer: IdentifiableType, Equatable {
+    typealias Identity = String
+
+    var identity: Identity { return identifier }
+
+    static func == (lhs: PresentableAnswer, rhs: PresentableAnswer) -> Bool {
+        lhs.identifier == rhs.identifier
+    }
+
     var text: String
     var timeStamp: Date
     var identifier: String
+
+    init(text: String, timeStamp: Date, identifier: String) {
+        self.text = text
+        self.timeStamp = timeStamp
+        self.identifier = identifier
+    }
 }
 
 extension PresentableAnswer {
     func convertToAnswerModel() -> AnswerModel {
-        return AnswerModel(answer: text, timeStamp: timeStamp)
+        return AnswerModel(answer: text, timeStamp: timeStamp, identifier: identifier)
     }
 }
