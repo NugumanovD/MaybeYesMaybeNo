@@ -8,14 +8,21 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 class MainViewController: BaseViewController {
+
+    // MARK: - Private Properties
 
     private let answerLabel = UILabel()
     private let triangleImageView = UIImageView()
     private let shakesCounterLabel = UILabel()
-    private var mainViewModel: MainViewModel
-    private var shouldRestartAnimation = true
+    private let mainViewModel: MainViewModel
+    private let shouldRestartAnimation = BehaviorRelay(value: true)
+    private let disposedBag = DisposeBag()
+
+    // MARK: - Init
 
     init(mainViewModel: MainViewModel) {
         self.mainViewModel = mainViewModel
@@ -33,36 +40,43 @@ class MainViewController: BaseViewController {
         configureTriangleImageView()
         configureAnswerLabel()
         configureShakesCounterLabel()
-        fetchShakesCount()
         navigationItem.title = L10n.TabbarItem.Title.magic
-        mainViewModel.shouldAnimateLoadingStateHandler = { [ weak self] shouldAnimate in
-            self?.shouldRestartAnimation = shouldAnimate
-        }
+        setupBindings()
     }
 
     override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
         switch motion {
         case .motionShake:
-            mainViewModel.didShaken()
-            self.rotationAnimation()
+            rotationAnimation()
             clearAnswerLabel()
-            mainViewModel.getAnswer(completion: { [weak self] answer in
-                DispatchQueue.main.async {
-                    self?.answerLabel.text = answer?.text
-                }
-            })
+            mainViewModel.requestAnswer()
+            didShake()
         default:
             break
         }
-        fetchShakesCount()
     }
 
-    func fetchShakesCount() {
-        mainViewModel.getShakeCount { [weak self] shakes in
-            guard let shake = shakes else { return }
-            self?.shakesCounterLabel.text =
-                L10n.CountLabel.Placeholer.text + shake.shakeCount
-        }
+    // MARK: - Private Function
+
+    private func setupBindings() {
+        mainViewModel.answerText
+            .asObservable()
+            .bind(to: answerLabel.rx.text)
+            .disposed(by: disposedBag)
+
+        mainViewModel.shakeCountText
+            .asObservable()
+            .bind(to: shakesCounterLabel.rx.text)
+            .disposed(by: disposedBag)
+
+        mainViewModel.isLoadingDataStateHandler
+            .asObservable()
+            .bind(to: shouldRestartAnimation)
+            .disposed(by: disposedBag)
+    }
+
+    private func didShake() {
+        mainViewModel.didShakeEvent.onNext(())
     }
 
     private func configureShakesCounterLabel() {
@@ -121,7 +135,7 @@ class MainViewController: BaseViewController {
             options: .transitionFlipFromLeft,
             animations: {
         }, completion: { _ in
-            if self.shouldRestartAnimation {
+            if self.shouldRestartAnimation.value {
                 self.rotationAnimation()
             }
         })

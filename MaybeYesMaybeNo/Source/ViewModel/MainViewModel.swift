@@ -7,47 +7,68 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
 class MainViewModel {
 
+    // MARK: - Public Properties
+
+    let answerText = BehaviorRelay(value: L10n.AnswerLabel.Placeholder.text)
+    let shakeCountText = BehaviorRelay(value: L10n.CountLabel.Placeholer.text)
+    let didShakeEvent = PublishSubject<Void>()
+    let isLoadingDataStateHandler = PublishSubject<Bool>()
+
+    // MARK: - Private Properties
+
+    private let updateShakeCount = BehaviorSubject<PresentableShakeCount?>(value: nil)
+    private let reactiveAnswerModel = BehaviorSubject<PresentableAnswer?>(value: nil)
     private let answerModel: MainModel
-    lazy var formmater = DateFormatter()
-    var shouldAnimateLoadingStateHandler: ((Bool) -> Void)? {
-        didSet {
-            answerModel.isLoadingDataStateHandler = shouldAnimateLoadingStateHandler
-        }
-    }
+    private let disposedBag = DisposeBag()
+
+    // MARK: - Init
 
     init(model: MainModel) {
         self.answerModel = model
+        setupBindings()
     }
 
-    func getAnswer(completion: @escaping (PresentableAnswer?) -> Void) {
-        answerModel.getAnswer { answer in
-            guard let answerResult = answer else { return }
-            completion(answerResult.convertToPresentableAnswer(
-                text: answerResult.answer.uppercased(),
-                time: self.convert(date: answerResult.timeStamp),
-                identifier: answerResult.identifier ?? "")
-            )
-        }
+    // MARK: - Private Function
+
+    private func setupBindings() {
+        answerModel.answer
+            .map {$0?.answer.uppercased()}
+            .bind(onNext: { [weak self]  answer in
+                guard let answerResult = answer, let self = self else { return }
+                self.answerText.accept(answerResult)
+            }).disposed(by: disposedBag)
+
+        answerModel.answer
+            .map {$0?.convertToPresentableAnswer(answer: $0!)}
+            .bind(onNext: { [weak self] answer in
+                guard let answerResult = answer, let self = self else { return }
+                self.reactiveAnswerModel
+                    .onNext(answerResult)
+        }).disposed(by: disposedBag)
+
+        answerModel.updateShakeCounter.bind(onNext: { [weak self] (shakeCount) in
+            guard let modifiedShakeCountText = shakeCount?.shakeCount,
+                let self = self else { return }
+            self.shakeCountText.accept(L10n.CountLabel.Placeholer.text + modifiedShakeCountText)
+        }).disposed(by: disposedBag)
+
+        didShakeEvent
+            .bind(to: answerModel.didShakeEvent)
+            .disposed(by: disposedBag)
+
+        answerModel.isLoadingData
+            .bind(to: isLoadingDataStateHandler)
+            .disposed(by: disposedBag)
     }
 
-    func getShakeCount(completion: @escaping (PresentableShakeCount?) -> Void) {
-        answerModel.getCount { (shake) in
-            guard let shake = shake else { return }
-            completion(shake)
-        }
-    }
+    // MARK: - Public Function
 
-    func didShaken() {
-        answerModel.didShaken()
-    }
-
-    private func convert(date: Date) -> String {
-        formmater.timeStyle = .medium
-        formmater.dateStyle = .medium
-        let dateString = formmater.string(from: date)
-        return dateString
+    func requestAnswer() {
+        answerModel.requestAnswer()
     }
 }

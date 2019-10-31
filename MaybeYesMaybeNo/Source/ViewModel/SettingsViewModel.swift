@@ -7,52 +7,58 @@
 //
 
 import Foundation
+import RxSwift
+import RxRelay
 
 class SettingsViewModel {
+
+    // MARK: - Public Properties
+
+    let allDataStorage = BehaviorSubject<[PresentableAnswer]>(value: [])
+    let deletingEvent = PublishSubject<PresentableAnswer>()
+    let updateAnswers = PublishSubject<[PresentableAnswer]>()
+    let addAnswer = PublishSubject<PresentableAnswer>()
+    // MARK: - Private Properties
+
     private let settingsModel: SettingsModel
-    lazy var formmater = DateFormatter()
+    private let disposedBag = DisposeBag()
+
+    // MARK: - Init
+
     init(model: SettingsModel) {
         self.settingsModel = model
+        setupBindigs()
     }
 
-    func numberOfRows() -> Int {
-        return settingsModel.numberOfRows()
+    // MARK: - Private Function
+
+    private func setupBindigs() {
+        settingsModel.allDataStorage.bind(onNext: { [weak self] presentable in
+            guard let self = self else { return }
+            let items = presentable.map { $0 }
+            self.allDataStorage.onNext(items)
+        }).disposed(by: disposedBag)
+
+        deletingEvent.asObservable().bind(onNext: { [weak self] answerModel in
+            guard let self = self else { return }
+            self.settingsModel.deletingEvent.onNext(answerModel.convertToAnswerModel())
+        }).disposed(by: disposedBag)
+
+        addAnswer.bind(onNext: { presentableAnswer in
+            self.settingsModel.addAnswer.onNext(presentableAnswer.convertToAnswerModel())
+        }).disposed(by: disposedBag)
     }
 
-    func dataBaseStorage() -> [PresentableAnswer] {
-        let items = settingsModel.localStorageItems().map {
-            $0.convertToPresentableAnswer(
-                text: $0.answer,
-                time: convert(date: $0.timeStamp),
-                identifier: $0.identifier ?? "")
-        }
-        return items.sorted { $0.timeStamp > $1.timeStamp}
+    // MARK: - Public Function
+
+    func reloadDataBaseStorage() {
+        settingsModel.getlocalStorageItems()
     }
 
-    func removeItem(_ dataBase: PresentableAnswer) {
-        let answerModel = AnswerModel(
-            answer: dataBase.text,
-            timeStamp: reverseConvertTo(string: dataBase.timeStamp),
-            identifier: dataBase.identifier)
-        return settingsModel.deleteItem(answerModel)
-    }
-
-    func addItem(with property: PresentableAnswer) {
-        settingsModel.addCustomAnswer(property.convertToAnswerModel())
-    }
-
-     func convert(date: Date) -> String {
-        formmater.timeStyle = .medium
-        formmater.dateStyle = .medium
-        let dateString = formmater.string(from: date)
-        return dateString
-    }
-
-     private func reverseConvertTo(string: String) -> Date {
-        formmater.timeStyle = .medium
-        formmater.dateStyle = .medium
-        let date = formmater.date(from: string)
-        guard let test = date  else { return Date()}
-        return test
+    func removeItem(_ dataBase: IndexPath) {
+        guard var items = try? allDataStorage.value() else { return }
+        deletingEvent.onNext(items[dataBase.row])
+        items.remove(at: dataBase.row)
+        allDataStorage.onNext(items)
     }
 }

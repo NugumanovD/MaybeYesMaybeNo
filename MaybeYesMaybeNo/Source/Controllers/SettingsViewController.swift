@@ -9,12 +9,23 @@
 import Foundation
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
+import RxDataSources
 
-class SettingsViewController: BaseViewController {
+class SettingsViewController: BaseViewController, UITableViewDelegate {
+
+    // MARK: - Public Properties
+
+    var dataSource: RxTableViewSectionedAnimatedDataSource<SectionOfCustomData>?
+
+    // MARK: - Private Properties
 
     private var viewModel: SettingsViewModel
     private let tableView = UITableView()
-    var answersHistory = [PresentableAnswer]()
+    private let disposeBag = DisposeBag()
+
+    // MARK: - Init
 
     init(viewModel: SettingsViewModel) {
         self.viewModel = viewModel
@@ -33,18 +44,45 @@ class SettingsViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        tableView.delegate = self
-        tableView.dataSource = self
         registerTableViewCell()
+        setupDataSource()
+        setupDelegateTableView()
         cofigureNavigationBar()
         configureTableViewConstraints()
         navigationItem.title = L10n.TabbarItem.Title.history
     }
 
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        answersHistory = viewModel.dataBaseStorage()
-        tableView.reloadData()
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.reloadDataBaseStorage()
+    }
+
+    private func setupDataSource() {
+        dataSource = RxTableViewSectionedAnimatedDataSource<SectionOfCustomData>(
+            configureCell: { _, tableView, indexPath, item in
+                let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath)
+                cell.textLabel?.text = item.text
+                return cell
+        }, canEditRowAtIndexPath: { _, _ in
+            return true
+        })
+        viewModel.allDataStorage
+            .asObservable()
+            .map { [SectionOfCustomData(header: "", items: $0)]}
+            .bind(to: tableView.rx.items(dataSource: dataSource!))
+            .disposed(by: disposeBag)
+    }
+
+    private func setupDelegateTableView() {
+        tableView.rx
+            .setDelegate(self)
+            .disposed(by: disposeBag)
+        tableView.rx
+            .itemDeleted
+            .bind(onNext: { [weak self] indexPath in
+                guard let self = self else { return }
+                self.viewModel.removeItem(indexPath)
+            }).disposed(by: disposeBag)
     }
 
     private func registerTableViewCell() {
@@ -52,7 +90,6 @@ class SettingsViewController: BaseViewController {
     }
 
     private func cofigureNavigationBar() {
-        tableView.backgroundColor = Asset.background.color
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: L10n.BarButtonItem.Title.add,
                                                             style: .plain,
                                                             target: self,
@@ -71,7 +108,6 @@ class SettingsViewController: BaseViewController {
     }
 
     private func presentAlertForNewAnswer() {
-
         let alertController = UIAlertController(title: L10n.AlertController.title,
                                                 message: L10n.AlertController.message,
                                                 preferredStyle: .alert)
@@ -85,48 +121,15 @@ class SettingsViewController: BaseViewController {
 
         let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { [weak self] _ in
             guard let text = alertTextField.text, !text.isEmpty, let self = self else { return }
-            let date = self.viewModel.convert(date: Date())
-            let savingItem = PresentableAnswer(text: text, timeStamp: date, identifier: "")
-            self.viewModel.addItem(with: savingItem)
+            let savingItem = PresentableAnswer(text: text, timeStamp: Date(), identifier: "")
+            self.viewModel.addAnswer.onNext(savingItem)
             DispatchQueue.main.async {
-                self.answersHistory = self.viewModel.dataBaseStorage()
-                self.tableView.reloadData()
+                self.viewModel.reloadDataBaseStorage()
             }
         }
-
         let cancelAction = UIAlertAction(title: L10n.AlertController.Action.cancel, style: .destructive, handler: nil)
-
         alertController.addAction(saveAction)
         alertController.addAction(cancelAction)
-
         present(alertController, animated: true, completion: nil)
-    }
-}
-
-extension SettingsViewController: UITableViewDataSource {
-
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return answersHistory.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Cell.identifier, for: indexPath)
-        let item = answersHistory[indexPath.row]
-        cell.backgroundColor = .clear
-        cell.textLabel?.text = item.text
-        cell.textLabel?.textColor = Asset.text.color
-        return cell
-    }
-}
-
-extension SettingsViewController: UITableViewDelegate {
-
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
-                   forRowAt indexPath: IndexPath) {
-        if editingStyle == UITableViewCell.EditingStyle.delete {
-            let item = answersHistory.remove(at: indexPath.row)
-            viewModel.removeItem(item)
-            tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.automatic)
-        }
     }
 }
