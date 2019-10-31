@@ -17,7 +17,7 @@ class SettingsViewModel {
     let allDataStorage = BehaviorSubject<[PresentableAnswer]>(value: [])
     let deletingEvent = PublishSubject<PresentableAnswer>()
     let updateAnswers = PublishSubject<[PresentableAnswer]>()
-
+    let addAnswer = PublishSubject<PresentableAnswer>()
     // MARK: - Private Properties
 
     private let settingsModel: SettingsModel
@@ -33,20 +33,26 @@ class SettingsViewModel {
     // MARK: - Private Function
 
     private func setupBindigs() {
-        settingsModel.allDataStorage.subscribe(onNext: { [weak self] presentable in
+        settingsModel.allDataStorage.bind(onNext: { [weak self] presentable in
             guard let self = self else { return }
             let items = presentable.map { $0 }
             self.allDataStorage.onNext(items)
         }).disposed(by: disposedBag)
-        deletingEvent.asObservable().subscribe(onNext: { (answerModel) in
+
+        deletingEvent.asObservable().bind(onNext: { [weak self] answerModel in
+            guard let self = self else { return }
             self.settingsModel.deletingEvent.onNext(answerModel.convertToAnswerModel())
+        }).disposed(by: disposedBag)
+
+        addAnswer.bind(onNext: { presentableAnswer in
+            self.settingsModel.addAnswer.onNext(presentableAnswer.convertToAnswerModel())
         }).disposed(by: disposedBag)
     }
 
     // MARK: - Public Function
 
-    func dataBaseStorage() {
-        settingsModel.localStorageItems()
+    func reloadDataBaseStorage() {
+        settingsModel.getlocalStorageItems()
     }
 
     func removeItem(_ dataBase: IndexPath) {
@@ -54,9 +60,5 @@ class SettingsViewModel {
         deletingEvent.onNext(items[dataBase.row])
         items.remove(at: dataBase.row)
         allDataStorage.onNext(items)
-    }
-
-    func addItem(with property: PresentableAnswer) {
-        settingsModel.addCustomAnswer(property.convertToAnswerModel())
     }
 }

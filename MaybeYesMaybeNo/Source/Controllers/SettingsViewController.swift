@@ -54,7 +54,7 @@ class SettingsViewController: BaseViewController, UITableViewDelegate {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.dataBaseStorage()
+        viewModel.reloadDataBaseStorage()
     }
 
     private func setupDataSource() {
@@ -74,15 +74,14 @@ class SettingsViewController: BaseViewController, UITableViewDelegate {
     }
 
     private func setupDelegateTableView() {
-        tableView.rx.setDelegate(self)
+        tableView.rx
+            .setDelegate(self)
             .disposed(by: disposeBag)
-        tableView.rx.itemDeleted
-            .subscribe(onNext: { indexPath in
-                guard let deletingItem = try? self.viewModel.allDataStorage.value() else { return }
-                let item = deletingItem[indexPath.row]
+        tableView.rx
+            .itemDeleted
+            .bind(onNext: { [weak self] indexPath in
+                guard let self = self else { return }
                 self.viewModel.removeItem(indexPath)
-                self.viewModel.deletingEvent.onNext(item)
-                print(indexPath)
             }).disposed(by: disposeBag)
     }
 
@@ -123,13 +122,11 @@ class SettingsViewController: BaseViewController, UITableViewDelegate {
         let saveAction = UIAlertAction(title: L10n.AlertController.Action.save, style: .default) { [weak self] _ in
             guard let text = alertTextField.text, !text.isEmpty, let self = self else { return }
             let savingItem = PresentableAnswer(text: text, timeStamp: Date(), identifier: "")
-            self.viewModel.addItem(with: savingItem)
+            self.viewModel.addAnswer.onNext(savingItem)
             DispatchQueue.main.async {
-                self.viewModel.dataBaseStorage()
-                self.tableView.reloadData()
+                self.viewModel.reloadDataBaseStorage()
             }
         }
-
         let cancelAction = UIAlertAction(title: L10n.AlertController.Action.cancel, style: .destructive, handler: nil)
         alertController.addAction(saveAction)
         alertController.addAction(cancelAction)

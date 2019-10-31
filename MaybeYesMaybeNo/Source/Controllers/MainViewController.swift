@@ -18,8 +18,8 @@ class MainViewController: BaseViewController {
     private let answerLabel = UILabel()
     private let triangleImageView = UIImageView()
     private let shakesCounterLabel = UILabel()
-    private var mainViewModel: MainViewModel
-    private var shouldRestartAnimation = BehaviorRelay(value: true)
+    private let mainViewModel: MainViewModel
+    private let shouldRestartAnimation = BehaviorRelay(value: true)
     private let disposedBag = DisposeBag()
 
     // MARK: - Init
@@ -50,7 +50,7 @@ class MainViewController: BaseViewController {
             rotationAnimation()
             clearAnswerLabel()
             mainViewModel.requestAnswer()
-            didShaken()
+            didShake()
         default:
             break
         }
@@ -60,11 +60,13 @@ class MainViewController: BaseViewController {
 
     private func setupBindings() {
         mainViewModel.answerText
-            .asObservable().bind(to: answerLabel.rx.text)
+            .asObservable()
+            .bind(to: answerLabel.rx.text)
             .disposed(by: disposedBag)
 
         mainViewModel.shakeCountText
-            .asObservable().bind(to: shakesCounterLabel.rx.text)
+            .asObservable()
+            .bind(to: shakesCounterLabel.rx.text)
             .disposed(by: disposedBag)
 
         mainViewModel.isLoadingDataStateHandler
@@ -73,8 +75,8 @@ class MainViewController: BaseViewController {
             .disposed(by: disposedBag)
     }
 
-    private func didShaken() {
-        mainViewModel.didShakenEvent.onNext(())
+    private func didShake() {
+        mainViewModel.didShakeEvent.onNext(())
     }
 
     private func configureShakesCounterLabel() {

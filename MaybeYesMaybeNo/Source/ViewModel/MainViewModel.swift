@@ -14,9 +14,9 @@ class MainViewModel {
 
     // MARK: - Public Properties
 
-    let answerText = BehaviorRelay(value: "Shake Me")
+    let answerText = BehaviorRelay(value: L10n.AnswerLabel.Placeholder.text)
     let shakeCountText = BehaviorRelay(value: L10n.CountLabel.Placeholer.text)
-    let didShakenEvent = PublishSubject<Void>()
+    let didShakeEvent = PublishSubject<Void>()
     let isLoadingDataStateHandler = PublishSubject<Bool>()
 
     // MARK: - Private Properties
@@ -36,24 +36,30 @@ class MainViewModel {
     // MARK: - Private Function
 
     private func setupBindings() {
-        answerModel.answer.subscribe(onNext: { [weak self] answer in
-            guard let answerResult = answer,
-                let self = self else { return }
-            self.reactiveAnswerModel
-                .onNext(answerResult.convertToPresentableAnswer(answer: answerResult))
-            self.answerText.accept(answerResult.answer.uppercased())
+        answerModel.answer
+            .map {$0?.answer.uppercased()}
+            .bind(onNext: { [weak self]  answer in
+                guard let answerResult = answer, let self = self else { return }
+                self.answerText.accept(answerResult)
+            }).disposed(by: disposedBag)
+
+        answerModel.answer
+            .map {$0?.convertToPresentableAnswer(answer: $0!)}
+            .bind(onNext: { [weak self] answer in
+                guard let answerResult = answer, let self = self else { return }
+                self.reactiveAnswerModel
+                    .onNext(answerResult)
         }).disposed(by: disposedBag)
 
-        didShakenEvent
-            .bind(to: answerModel.didShakenEvent)
-            .disposed(by: disposedBag)
-
-        answerModel.updateShakeCounter.subscribe(onNext: { [weak self] (shakeCount) in
+        answerModel.updateShakeCounter.bind(onNext: { [weak self] (shakeCount) in
             guard let modifiedShakeCountText = shakeCount?.shakeCount,
                 let self = self else { return }
-            self.updateShakeCount.onNext(shakeCount)
             self.shakeCountText.accept(L10n.CountLabel.Placeholer.text + modifiedShakeCountText)
         }).disposed(by: disposedBag)
+
+        didShakeEvent
+            .bind(to: answerModel.didShakeEvent)
+            .disposed(by: disposedBag)
 
         answerModel.isLoadingData
             .bind(to: isLoadingDataStateHandler)
